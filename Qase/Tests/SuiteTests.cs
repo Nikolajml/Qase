@@ -36,5 +36,23 @@ namespace Qase.Tests
 
             Assert.True(Driver.FindElement(By.XPath("//a[text()='Test_Suite_23']")).Displayed);
         }
+
+        [Test]
+        public void EditSuiteTest()
+        {
+            Suite suite = new SuiteBuilder()
+                .SetSuiteName("Suite_Edit")
+                .SetSuiteDescription("Suite was edited")
+                .SetSuitePreconditions("Pr")
+                .Build();
+
+            var ProjectTPPage = new ProjectTPPage(Driver);
+
+            ProjectTPPage.OpenPage();
+            Thread.Sleep(2000);
+            ProjectTPPage.EditSuit(suite);
+
+            Assert.True(Driver.FindElement(By.XPath("//a[text()='Suite_Edit']")).Displayed);
+        }
     }
 }
