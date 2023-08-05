@@ -10,17 +10,16 @@ using System.Threading.Tasks;
 
 namespace Qase.Tests
 {
-    public class CreateSuiteTest : BaseTest
+    public class SuiteTests : BaseTest
     {
         [SetUp]
         public void SetUp()
         {            
-            LoginPage.TryToLogin(Configurator.Admin);
-            Thread.Sleep(2000);
+            
         }
 
         [Test]
-        public void CreateNewSuiteTest()
+        public void CreateSuiteTest()
         {            
             Suite suite = new SuiteBuilder()
                 .SetSuiteName("Test_Suite_23")
@@ -32,18 +31,17 @@ namespace Qase.Tests
 
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
-            ProjectTPPage.CreateSuit(suite);                       
+            ProjectTPPage.CreateSuit(suite);
+            Thread.Sleep(2000);
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='Test_Suite_23']")).Displayed);
+            Assert.True(Driver.FindElement(By.XPath("//a[text()='Test_Suite_23']")).Displayed);            
         }
 
         [Test]
         public void EditSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Suite_Edit")
-                .SetSuiteDescription("Suite was edited")
-                .SetSuitePreconditions("Pr")
+                .SetSuiteName("Suite_Edit")                
                 .Build();
 
             var ProjectTPPage = new ProjectTPPage(Driver);
@@ -51,6 +49,7 @@ namespace Qase.Tests
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.EditSuit(suite);
+            Thread.Sleep(2000);
 
             Assert.True(Driver.FindElement(By.XPath("//a[text()='Suite_Edit']")).Displayed);
         }

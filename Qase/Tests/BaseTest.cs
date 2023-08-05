@@ -32,6 +32,8 @@ namespace Qase.Tests
             LoginPage = new LoginPage(Driver);
 
             LoginPage.OpenPage();
+            LoginPage.TryToLogin(Configurator.Admin);
+            Thread.Sleep(2000);
         }
 
         [TearDown]
