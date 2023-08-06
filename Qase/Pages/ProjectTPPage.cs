@@ -19,27 +19,21 @@ namespace Qase.Pages
         private static readonly By SuitePreconditionsInputBy = By.Id("preconditions");
         private static readonly By CreateSuiteButtonBy = By.CssSelector(".CCVJRT .u0i1tV .ZwgkIF");
 
-
         private static readonly By EllipsisEditBy = By.CssSelector("#layout .SmsctB .fa-ellipsis-h");
         private static readonly By EditButtonBy = By.CssSelector(".yxKHfs .Cr3S77 .fa-pencil");
-
         private static readonly By SuiteNameInputForClearBy = By.CssSelector(".tsnqft .XRXnTf");
         private static readonly By SuiteNameFieldClearBy = By.CssSelector(".tsnqft .XRXnTf");
-        private static readonly By SuiteNameEditBy = By.Id("title");
-
-        //private static readonly By SuiteDescriptionInputForClearBy = By.ClassName(".toastui-editor-main-container"); 
-        //private static readonly By SuiteDescriptionFieldClearBy = By.Id("description");
-        //private static readonly By SuiteDescriptionEditBy = By.Id("description");
-        //private static readonly By SuitePreconditionsEditBy = By.Id("preconditions");
+        private static readonly By SuiteNameEditBy = By.Id("title");                
         private static readonly By SaveEditedSuiteButtonBy = By.CssSelector(".CCVJRT .u0i1tV .ZwgkIF");
 
-        private static readonly By CreateCaseButtonBy = By.CssSelector("a[href$='12']");
-        private static readonly By CaseTitileInputBy = By.Id("title");
+        private static readonly By CreateCaseButtonBy = By.CssSelector("a[href$='12']");        
         private static readonly By CaseNameInputBy = By.Id("title");
         private static readonly By SaveCaseButtonBy = By.Id("save-case");
 
-        private static readonly By GetCaseTitleBy = By.ClassName(".wq7uNh");
+        private static readonly By CaseTitleBy = By.ClassName("wq7uNh");
 
+        private static readonly By CaseEditBy = By.CssSelector(".tgn4gT .J4xngT");
+        
 
         public ProjectTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -61,7 +55,7 @@ namespace Qase.Pages
         }
 
 
-        // Create Suite
+        // CREATE SUITE
         private void ClickToSuiteButton()
         {
             Driver.FindElement(SuiteButtonBy).Click();
@@ -97,7 +91,7 @@ namespace Qase.Pages
         }
 
 
-        //Edit Suite
+        //EDIT SUITE
         private void ClickToEllipsis()
         {
             Driver.FindElement(EllipsisEditBy).Click();
@@ -121,29 +115,8 @@ namespace Qase.Pages
         private void EditSuiteName(string suiteName)
         {
             Driver.FindElement(SuiteNameEditBy).SendKeys(suiteName);
-        }
-
+        }             
         
-        //private void ClickToDescriptionField()
-        //{
-        //    Driver.FindElement(SuiteDescriptionInputForClearBy).Click();
-        //}
-
-        //private void ClearDescriptionField()
-        //{
-        //    Driver.FindElement(SuiteDescriptionFieldClearBy).Clear();
-        //}
-
-        //
-        //private void EditSuiteDescriptione(string suiteDescription)
-        //{
-        //    Driver.FindElement(SuiteDescriptionEditBy).SendKeys(suiteDescription);
-        //}
-        //private void EditSuitePreconditionse(string suitePreconditions)
-        //{
-        //    Driver.FindElement(SuitePreconditionsEditBy).SendKeys(suitePreconditions);
-        //}
-
         private void ClickToSaveEditButton()
         {
             Driver.FindElement(SaveEditedSuiteButtonBy).Click();
@@ -155,27 +128,17 @@ namespace Qase.Pages
             ClickToEdit();
             ClickToClearNameField();
             ClearNameField();
-            EditSuiteName(suite.Name);
-            //ClickToDescriptionField();
-            //ClearDescriptionField();            
-            //EditSuiteDescriptione(suite.Description);
-            //EditSuitePreconditionse(suite.Preconditions);
+            EditSuiteName(suite.Name);            
             ClickToSaveEditButton();
             return this;
         }
 
 
-        // Create Case
-
+        // CREATED CASE
         private void ClickToCaseButton()
         {
             Driver.FindElement(CreateCaseButtonBy).Click();
-        }
-
-        //private void ClickToTitleField()
-        //{
-        //    Driver.FindElement(CaseTitileInputBy).Click();
-        //}
+        }                
 
         private void SetCaseName(string caseName)
         {
@@ -192,8 +155,7 @@ namespace Qase.Pages
         {
             ClickToEllipsis();
             ClickToCaseButton();
-            Thread.Sleep(2000);
-            //ClickToTitleField();
+            Thread.Sleep(2000);            
             SetCaseName(Case.Title);                        
             ClickToSaveCaseButton();
             return this;
@@ -201,9 +163,46 @@ namespace Qase.Pages
 
         public string GetCaseTitle()
         {
-            return Driver.FindElement(GetCaseTitleBy).GetAttribute("");
+            return Driver.FindElement(CaseTitleBy).GetAttribute("innerText");
         }
 
+        // EDIT CASE
+        private void ClickToCaseTitle()
+        {
+            Driver.FindElement(CaseTitleBy).Click();
+        }
 
-    }
+        private void ClickToCaseEdit()
+        {
+            Driver.FindElement(CaseEditBy).Click();
+        }
+
+        private void ClickToCaseTitleField()
+        {
+            Driver.FindElement(CaseNameInputBy).Click();
+        }
+
+        private void ClearCaseTitleField()
+        {
+            Driver.FindElement(CaseNameInputBy).Clear();
+        }
+
+        private void SetEditedCaseName(string caseName)
+        {
+            Driver.FindElement(CaseNameInputBy).SendKeys(caseName);
+        }
+
+        public ProjectTPPage EditCase(Case Case)
+        {
+            ClickToCaseTitle();
+            Thread.Sleep(1000);
+            ClickToCaseEdit();
+            Thread.Sleep(1000);
+            ClickToCaseTitleField();
+            ClearCaseTitleField();
+            SetEditedCaseName(Case.Title);  
+            ClickToSaveCaseButton();
+            return this;
+        }
+    }    
 }

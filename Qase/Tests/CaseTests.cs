@@ -24,27 +24,25 @@ namespace Qase.Tests
             Thread.Sleep(2000);
             ProjectTPPage.CreateCase(Case);
             Thread.Sleep(2000);
-
-            //Assert.True(Driver.FindElement(By.XPath("//a[text()='New Test Case']")).Displayed);
-
+            
             Assert.That(ProjectTPPage.GetCaseTitle(), Is.EqualTo("New Case Test"));
         }
 
-        //[Test]
-        //public void EditCaseTest()
-        //{
-            //Suite suite = new SuiteBuilder()
-            //    .SetSuiteName("Suite_Edit")
-            //    .Build();
+        [Test]
+        public void EditCaseTest()
+        {
+            Case Case = new CaseBuilder()
+                .SetCaseTitle("Edited Case Test")
+                .Build();
 
-            //var ProjectTPPage = new ProjectTPPage(Driver);
+            var ProjectTPPage = new ProjectTPPage(Driver);
 
-            //ProjectTPPage.OpenPage();
-            //Thread.Sleep(2000);
-            //ProjectTPPage.EditSuit(suite);
-            //Thread.Sleep(2000);
+            ProjectTPPage.OpenPage();
+            Thread.Sleep(2000);
+            ProjectTPPage.EditCase(Case);
+            Thread.Sleep(2000);
 
-            //Assert.True(Driver.FindElement(By.XPath("//a[text()='Suite_Edit']")).Displayed);
-        //}
+            Assert.That(ProjectTPPage.GetCaseTitle(), Is.EqualTo("Edited Case Test"));
+        }
     }
 }
