@@ -50,8 +50,8 @@ namespace Qase.Tests
                 _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
             }
 
-            //Driver.Quit();
-            //Driver.Dispose();
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

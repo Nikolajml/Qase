@@ -23,7 +23,12 @@ namespace Qase.Pages
         private static readonly By DoneButtonBy = By.CssSelector(".CCVJRT .u0i1tV");
 
         private static readonly By SavePlanButtonBy = By.Id("save-plan");
-        
+
+        private static readonly By EllipsisButtonForPlanEditBy = By.CssSelector(".HWdDFk .ZwgkIF");
+        private static readonly By PlanEditButtonBy = By.CssSelector("a[href^='/plan/TP/edit/']");        
+        private static readonly By PlanTitleInputForClearBy = By.Id("title");
+        private static readonly By PlanTitleFieldClearBy = By.Id("title");   
+
 
         public PlanTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -94,10 +99,49 @@ namespace Qase.Pages
 
             return this;
         }
-              
-        
 
 
-        
+        // EDIT PLAN
+        private void ClickToEllipsis()
+        {
+            Driver.FindElement(EllipsisButtonForPlanEditBy).Click();
+        }
+
+        private void ClickToEdit()
+        {
+            Driver.FindElement(PlanEditButtonBy).Click();
+        }
+
+        private void ClickToClearTitlePlanField()
+        {
+            Driver.FindElement(PlanTitleInputForClearBy).Click();
+        }
+
+        private void ClearTitlePlanField()
+        {
+            Driver.FindElement(PlanTitleFieldClearBy).Clear();
+        }
+
+        private void EditPlanTitle(string planTitle)
+        {
+            Driver.FindElement(PlanTitleInputBy).SendKeys(planTitle);
+        }
+
+        private void ClickToSaveEditButton()
+        {
+            Driver.FindElement(SavePlanButtonBy).Click();
+        }
+
+        public PlanTPPage EditPlan(Plan plan)
+        {
+            ClickToEllipsis();
+            ClickToEdit();
+            Thread.Sleep(2000);
+            ClickToClearTitlePlanField();
+            ClearTitlePlanField();
+            EditPlanTitle(plan.Title);
+            ClickToSaveEditButton();
+            return this;
+        }
     }
 }

@@ -166,6 +166,7 @@ namespace Qase.Pages
             return Driver.FindElement(CaseTitleBy).GetAttribute("innerText");
         }
 
+
         // EDIT CASE
         private void ClickToCaseTitle()
         {

@@ -28,5 +28,22 @@ namespace Qase.Tests
 
             Assert.True(Driver.FindElement(By.XPath("//a[text()='New Plan']")).Displayed);
         }
+
+        [Test]
+        public void EditPlanTest()
+        {
+            Plan plan = new PlanBuilder()
+                .SetPlanTitle("Plan_Edit")
+                .Build();
+
+            var PlanTPPage = new PlanTPPage(Driver);
+
+            PlanTPPage.OpenPage();
+            Thread.Sleep(2000);
+            PlanTPPage.EditPlan(plan);
+            Thread.Sleep(2000);
+
+            Assert.True(Driver.FindElement(By.XPath("//a[text()='Plan_Edit']")).Displayed);
+        }
     }
 }
