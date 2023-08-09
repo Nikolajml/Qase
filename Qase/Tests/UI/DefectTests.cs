@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qase.Tests
+namespace Qase.Tests.UI
 {
     public class DefectTests : BaseTest
     {
@@ -25,7 +25,7 @@ namespace Qase.Tests
             Thread.Sleep(2000);
             DefectTPPage.CreateDefect(defect);
             Thread.Sleep(2000);
-                        
+
             Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("New Defect_4"));
         }
 

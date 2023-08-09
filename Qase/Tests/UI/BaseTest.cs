@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using NUnit.Framework.Interfaces;
 using Qase.Utilities.Configuration;
 
-namespace Qase.Tests
+namespace Qase.Tests.UI
 {
     [AllureNUnit]
     public class BaseTest
@@ -27,7 +27,7 @@ namespace Qase.Tests
         [SetUp]
         public void Setup()
         {
-            Driver = new Browser().Driver;                       
+            Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
             LoginPage = new LoginPage(Driver);
 

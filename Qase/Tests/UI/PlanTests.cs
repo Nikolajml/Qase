@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qase.Tests
+namespace Qase.Tests.UI
 {
     public class PlanTests : BaseTest
     {
@@ -17,14 +17,14 @@ namespace Qase.Tests
             Plan plan = new PlanBuilder()
                 .SetPlanTitle("New Plan")
                 .SetPlanDescription("Description for New Plan")
-                .Build();                        
+                .Build();
 
             var PlanTPPage = new PlanTPPage(Driver);
 
             PlanTPPage.OpenPage();
             Thread.Sleep(2000);
             PlanTPPage.CreatePlan(plan);
-            Thread.Sleep(2000);                        
+            Thread.Sleep(2000);
 
             Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo("New Plan"));
         }

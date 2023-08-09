@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using Qase.Core;
 using Qase.Models;
-using Qase.Tests;
+using Qase.Tests.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
