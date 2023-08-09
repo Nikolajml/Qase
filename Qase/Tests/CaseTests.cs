@@ -25,7 +25,7 @@ namespace Qase.Tests
             ProjectTPPage.CreateCase(Case);
             Thread.Sleep(2000);
             
-            Assert.That(ProjectTPPage.GetCaseTitle(), Is.EqualTo("New Case Test"));
+            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo("New Case Test"));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Qase.Tests
             ProjectTPPage.EditCase(Case);
             Thread.Sleep(2000);
 
-            Assert.That(ProjectTPPage.GetCaseTitle(), Is.EqualTo("Edited Case Test"));
+            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo("Edited Case Test"));
         }
     }
 }

@@ -24,9 +24,9 @@ namespace Qase.Tests
             PlanTPPage.OpenPage();
             Thread.Sleep(2000);
             PlanTPPage.CreatePlan(plan);
-            Thread.Sleep(2000);
+            Thread.Sleep(2000);                        
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='New Plan']")).Displayed);
+            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo("New Plan"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Qase.Tests
             PlanTPPage.EditPlan(plan);
             Thread.Sleep(2000);
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='Plan_Edit']")).Displayed);
+            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo("Plan_Edit"));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Qase.Tests
         public void CreateDefectTest()
         {
             Defect defect = new DefectBuilder()
-                .SetDefectTitle("New Defect_1")
+                .SetDefectTitle("New Defect_4")
                 .SetActualResult("New actual result")
                 .Build();
 
@@ -25,8 +25,26 @@ namespace Qase.Tests
             Thread.Sleep(2000);
             DefectTPPage.CreateDefect(defect);
             Thread.Sleep(2000);
+                        
+            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("New Defect_4"));
+        }
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='New Defect_1']")).Displayed);                        
+        [Test]
+        public void EditDefectTest()
+        {
+            Defect defect = new DefectBuilder()
+                .SetDefectTitle("Edit Defect_3")
+                .SetActualResult("Edit actual result_1")
+                .Build();
+
+            var DefectTPPage = new DefectsTPPage(Driver);
+
+            DefectTPPage.OpenPage();
+            Thread.Sleep(2000);
+            DefectTPPage.CreateDefect(defect);
+            Thread.Sleep(2000);
+
+            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("Edit Defect_3"));
         }
     }
 }

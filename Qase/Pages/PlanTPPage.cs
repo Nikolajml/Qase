@@ -18,8 +18,8 @@ namespace Qase.Pages
         private static readonly By PlanTitleInputBy = By.Id("title");
         private static readonly By PlanDescriptionInputBy = By.CssSelector(".ww-mode .ProseMirror");
         
-        private static readonly By AddCasesButtonBy = By.Id("edit-plan-add-cases-button");
-        private static readonly By ControlCaseIndicatorBy = By.ClassName("custom-control-indicator");
+        private static readonly By AddCasesButtonBy = By.Id("edit-plan-add-cases-button");        
+        private static readonly By ControlCaseIndicatorBy = By.CssSelector(".suites-column .suite:last-child .custom-control-indicator");
         private static readonly By DoneButtonBy = By.CssSelector(".CCVJRT .u0i1tV");
 
         private static readonly By SavePlanButtonBy = By.Id("save-plan");
@@ -27,7 +27,9 @@ namespace Qase.Pages
         private static readonly By EllipsisButtonForPlanEditBy = By.CssSelector(".HWdDFk .ZwgkIF");
         private static readonly By PlanEditButtonBy = By.CssSelector("a[href^='/plan/TP/edit/']");        
         private static readonly By PlanTitleInputForClearBy = By.Id("title");
-        private static readonly By PlanTitleFieldClearBy = By.Id("title");   
+        private static readonly By PlanTitleFieldClearBy = By.Id("title");
+
+        private static readonly By GetPlanTitleBy = By.ClassName("defect-title");
 
 
         public PlanTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
@@ -92,7 +94,9 @@ namespace Qase.Pages
             Thread.Sleep(2000);
             SetPlanTitle(plan.Title);
             SetPlanDescription(plan.Description);
+            Thread.Sleep(1000);
             ClickToAddCaseButton();
+            Thread.Sleep(1000);
             ClickToControlIndicatorToChooseCase();
             ClickToDoneButton();
             ClickToSavePlanButton();
@@ -142,6 +146,14 @@ namespace Qase.Pages
             EditPlanTitle(plan.Title);
             ClickToSaveEditButton();
             return this;
+        }
+
+
+        // METHOD TO ASSERT
+
+        public string GetPlanTitle()
+        {
+            return Driver.FindElement(GetPlanTitleBy).GetAttribute("innerText");
         }
     }
 }

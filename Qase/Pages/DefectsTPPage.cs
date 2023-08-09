@@ -17,21 +17,9 @@ namespace Qase.Pages
         private static readonly By DefectTitleInputBy = By.Id("title");
         private static readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .gYZSEd");
         private static readonly By SaveDefectButtonBy = By.ClassName("save-button");
-
-        
-        
-        
-        
-        private static readonly By AddCasesButtonBy = By.Id("edit-plan-add-cases-button");
-        private static readonly By ControlCaseIndicatorBy = By.ClassName("custom-control-indicator");
-        private static readonly By DoneButtonBy = By.CssSelector(".CCVJRT .u0i1tV");
-
-        
-
-        private static readonly By EllipsisButtonForPlanEditBy = By.CssSelector(".HWdDFk .ZwgkIF");
-        private static readonly By PlanEditButtonBy = By.CssSelector("a[href^='/plan/TP/edit/']");
-        private static readonly By PlanTitleInputForClearBy = By.Id("title");
-        private static readonly By PlanTitleFieldClearBy = By.Id("title");
+        private static readonly By DefectTitleBy = By.ClassName("defect-title");
+        private static readonly By EditDefectButtonBy = By.CssSelector(".me-2 .fa-pen");
+        private static readonly By UpdateDefectButtonBy = By.ClassName("save-button");
 
 
         public DefectsTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
@@ -82,51 +70,76 @@ namespace Qase.Pages
             SetDefectTitle(defect.DefectTitle);            
             SetActualresult(defect.ActualResult);
             ClickToCreateDefectButton();
+
             return this;
         }
 
+        public string GetDefectTitle()
+        {
+            return Driver.FindElement(DefectTitleBy).GetAttribute("innerText");
+        }               
+
 
         // EDIT DEFECTS
-        //private void ClickToEllipsis()
-        //{
-        //    Driver.FindElement(EllipsisButtonForPlanEditBy).Click();
-        //}
+        private void ClickToDefectTitle()
+        {
+            Driver.FindElement(DefectTitleBy).Click();
+        }
 
-        //private void ClickToEdit()
-        //{
-        //    Driver.FindElement(PlanEditButtonBy).Click();
-        //}
+        private void ClickToDefectEdit()
+        {
+            Driver.FindElement(EditDefectButtonBy).Click();
+        }
 
-        //private void ClickToClearTitlePlanField()
-        //{
-        //    Driver.FindElement(PlanTitleInputForClearBy).Click();
-        //}
+        private void ClickToClearTitleDefectField()
+        {
+            Driver.FindElement(DefectTitleInputBy).Click();
+        }
 
-        //private void ClearTitlePlanField()
-        //{
-        //    Driver.FindElement(PlanTitleFieldClearBy).Clear();
-        //}
+        private void ClearTitleDefectField()
+        {
+            Driver.FindElement(DefectTitleInputBy).Clear();
+        }
 
-        //private void EditPlanTitle(string planTitle)
-        //{
-        //    Driver.FindElement(PlanTitleInputBy).SendKeys(planTitle);
-        //}
+        private void SetEditedDefectTitle(string defectTitle)
+        {
+            Driver.FindElement(DefectTitleInputBy).SendKeys(defectTitle);
+        }
 
-        //private void ClickToSaveEditButton()
-        //{
-        //    Driver.FindElement(SavePlanButtonBy).Click();
-        //}
+        private void ClickToClearActualResult()
+        {
+            Driver.FindElement(ActualResultInputBy).Click();
+        }
 
-        //public PlanTPPage EditPlan(Plan plan)
-        //{
-        //    ClickToEllipsis();
-        //    ClickToEdit();
-        //    Thread.Sleep(2000);
-        //    ClickToClearTitlePlanField();
-        //    ClearTitlePlanField();
-        //    EditPlanTitle(plan.Title);
-        //    ClickToSaveEditButton();
-        //    return this;
-        //}
+        private void ClearActualResultField()
+        {
+            Driver.FindElement(ActualResultInputBy).Clear();
+        }
+
+        private void SetEditedActualResult(string actualResult)
+        {
+            Driver.FindElement(ActualResultInputBy).SendKeys(actualResult);
+        }
+
+        private void ClickToUpdateDefectButton()
+        {
+            Driver.FindElement(UpdateDefectButtonBy).Click();
+        }
+
+        public DefectsTPPage EditPlan(Defect defect)
+        {
+            ClickToDefectTitle();
+            ClickToDefectEdit();
+            ClickToClearTitleDefectField();
+            Thread.Sleep(2000);
+            SetEditedDefectTitle(defect.DefectTitle);
+            ClearTitleDefectField();
+            ClickToClearActualResult();
+            ClearActualResultField();
+            SetEditedActualResult(defect.ActualResult);
+            ClickToUpdateDefectButton();
+            
+            return this;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Qase.Tests
         public void CreateSuiteTest()
         {            
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Test_Suite_23")
+                .SetSuiteName("Test_Suite_Last Suite")
                 .SetSuiteDescription("Created suite")
                 .SetSuitePreconditions("Precondition")
                 .Build();
@@ -32,16 +32,16 @@ namespace Qase.Tests
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.CreateSuit(suite);
-            Thread.Sleep(2000);
+            Thread.Sleep(2000);                        
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='Test_Suite_23']")).Displayed);            
+            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Test_Suite_Last Suite"));
         }
 
         [Test]
         public void EditSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Suite_Edit")                
+                .SetSuiteName("Suite_Edit_Last2")                
                 .Build();
 
             var ProjectTPPage = new ProjectTPPage(Driver);
@@ -49,9 +49,10 @@ namespace Qase.Tests
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.EditSuit(suite);
-            Thread.Sleep(2000);
+            Thread.Sleep(2000);            
 
-            Assert.True(Driver.FindElement(By.XPath("//a[text()='Suite_Edit']")).Displayed);
+            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Suite_Edit_Last2"));
+
         }
     }
 }
