@@ -62,7 +62,8 @@ namespace Qase.Utilities.Configuration
                     var user = new User
                     {
                         Password = section["Password"],
-                        Username = section["Username"]
+                        Username = section["Username"],
+                        Token = section["Token"]
                     };
                     user.UserType = section["UserType"]?.ToLower() switch
                     {
