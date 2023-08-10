@@ -41,7 +41,7 @@ namespace Qase.Tests.UI
 
             DefectTPPage.OpenPage();
             Thread.Sleep(2000);
-            DefectTPPage.CreateDefect(defect);
+            DefectTPPage.EditDefect(defect);
             Thread.Sleep(2000);
 
             Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("Edit Defect_3"));

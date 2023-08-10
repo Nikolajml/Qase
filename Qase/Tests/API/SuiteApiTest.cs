@@ -26,15 +26,14 @@ namespace Qase.Tests.API
             //var actualSuite = _suiteService.CreateSuite(expectedSuite);
 
             var expectedSuite = new Suite();
-            expectedSuite.Code = "55";
-            expectedSuite.Name = "Test Project API";
-            
+            expectedSuite.Code = "TP";
+            expectedSuite.Name = "Test Project API";                        
 
             var actualSuite = _suiteService.CreateSuite(expectedSuite);
 
-            Console.WriteLine($"Project Id: {actualSuite.Id}");
-            Console.WriteLine($"Project Code: {actualSuite.Code}");
-            Console.WriteLine($"Project Name: {actualSuite.Name}");
+            Console.WriteLine($"Suite Id: {actualSuite.Id}");
+            Console.WriteLine($"Suite Code: {actualSuite.Code}");
+            Console.WriteLine($"Suite Name: {actualSuite.Name}");
 
 
 
@@ -44,5 +43,8 @@ namespace Qase.Tests.API
                 Assert.AreEqual(expectedSuite.Code, actualSuite.Code);
             });
         }
+
+
+        
     }
 }

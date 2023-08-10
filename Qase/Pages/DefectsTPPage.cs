@@ -15,7 +15,7 @@ namespace Qase.Pages
 
         private static readonly By CreateNewDefectButtonBy = By.ClassName("btn-primary");
         private static readonly By DefectTitleInputBy = By.Id("title");
-        private static readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .gYZSEd");
+        private static readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .ProseMirror");
         private static readonly By SaveDefectButtonBy = By.ClassName("save-button");
         private static readonly By DefectTitleBy = By.ClassName("defect-title");
         private static readonly By EditDefectButtonBy = By.CssSelector(".me-2 .fa-pen");
@@ -72,12 +72,7 @@ namespace Qase.Pages
             ClickToCreateDefectButton();
 
             return this;
-        }
-
-        public string GetDefectTitle()
-        {
-            return Driver.FindElement(DefectTitleBy).GetAttribute("innerText");
-        }               
+        }                       
 
 
         // EDIT DEFECTS
@@ -126,20 +121,28 @@ namespace Qase.Pages
             Driver.FindElement(UpdateDefectButtonBy).Click();
         }
 
-        public DefectsTPPage EditPlan(Defect defect)
+        public DefectsTPPage EditDefect(Defect defect)
         {
             ClickToDefectTitle();
-            ClickToDefectEdit();
-            ClickToClearTitleDefectField();
             Thread.Sleep(2000);
-            SetEditedDefectTitle(defect.DefectTitle);
-            ClearTitleDefectField();
+            ClickToDefectEdit();
+            Thread.Sleep(2000);
+            ClickToClearTitleDefectField();
+            ClearTitleDefectField();            
+            SetEditedDefectTitle(defect.DefectTitle);                     
             ClickToClearActualResult();
             ClearActualResultField();
             SetEditedActualResult(defect.ActualResult);
             ClickToUpdateDefectButton();
             
             return this;
+        }
+
+
+        // METHOD TO ASSERT
+        public string GetDefectTitle()
+        {
+            return Driver.FindElement(DefectTitleBy).GetAttribute("innerText");
         }
     }
 }

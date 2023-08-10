@@ -31,7 +31,7 @@ namespace Qase.Services
             var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
                 .AddUrlSegment("code", suite.Code)
                 .AddHeader("Content-Type", "application/json")
-                .AddBody(suite.Name);
+                .AddBody(suite);
 
             return _apiClient.Execute<Suite>(request);
         }

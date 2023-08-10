@@ -10,11 +10,10 @@ namespace Qase.Models
     public class Suite
     {
         [JsonProperty("title")] public string Name { get; set; }
-        public string Description { get; set; }
-        public string Preconditions { get; set; }
+        [JsonProperty("description")] public string Description { get; set; }
+        [JsonProperty("preconditions")] public string Preconditions { get; set; }
         [JsonProperty("code")] public string Code { get; set; }
 
         [JsonProperty("id")] public int Id { get; set; }
-
     }
 }

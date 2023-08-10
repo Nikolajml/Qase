@@ -21,7 +21,7 @@ namespace Qase.Client
             var options = new RestClientOptions(Configurator.AppSettings.URL)
             {
                 Authenticator = new JwtAuthenticator(Configurator.Admin.Token),
-                ThrowOnAnyError = false,
+                ThrowOnAnyError = true,
                 MaxTimeout = 10000
             };
 
