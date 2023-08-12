@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp.Authenticators.OAuth2;
+using Newtonsoft.Json.Linq;
 
 namespace Qase.Client
 {
@@ -18,9 +20,8 @@ namespace Qase.Client
 
         public ApiClient()
         {
-            var options = new RestClientOptions(Configurator.AppSettings.URL)
-            {
-                Authenticator = new JwtAuthenticator(Configurator.Admin.Token),
+            var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
+            {    
                 ThrowOnAnyError = true,
                 MaxTimeout = 10000
             };
@@ -48,6 +49,6 @@ namespace Qase.Client
             _logger.Info("Response Body: " + response.Content);
 
             return response.Data;
-        }        
+        }
     }
 }

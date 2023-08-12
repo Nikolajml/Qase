@@ -46,6 +46,7 @@ namespace Qase.Utilities.Configuration
                 var child = Configuration.GetSection("AppSettings");
 
                 appSettings.URL = child["URL"];
+                appSettings.ApiURL = child["apiUrl"];
 
                 return appSettings;
             }
@@ -82,7 +83,7 @@ namespace Qase.Utilities.Configuration
         public static User? Admin => Users.Find(x => x?.UserType == UserType.Admin);
 
         public static User? UserByUsername(string username) => Users.Find(x => x?.Username == username);
-
+        public static string? Bearer => Configuration[nameof(Bearer)];
         public static string? BrowserType => Configuration[nameof(BrowserType)];
     }
 }

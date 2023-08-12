@@ -16,9 +16,7 @@ namespace Qase.Tests.UI
         {
             Case Case = new CaseBuilder()
                 .SetCaseTitle("New Case Test")
-                .Build();
-
-            var ProjectTPPage = new ProjectTPPage(Driver);
+                .Build();                      
 
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);

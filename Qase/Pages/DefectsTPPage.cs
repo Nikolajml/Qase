@@ -13,14 +13,15 @@ namespace Qase.Pages
     {
         private static string END_POINT = "defect/TP";
 
-        private static readonly By CreateNewDefectButtonBy = By.ClassName("btn-primary");
-        private static readonly By DefectTitleInputBy = By.Id("title");
-        private static readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .ProseMirror");
-        private static readonly By SaveDefectButtonBy = By.ClassName("save-button");
-        private static readonly By DefectTitleBy = By.ClassName("defect-title");
-        private static readonly By EditDefectButtonBy = By.CssSelector(".me-2 .fa-pen");
-        private static readonly By UpdateDefectButtonBy = By.ClassName("save-button");
+        private readonly By CreateNewDefectButtonBy = By.ClassName("btn-primary");
+        private readonly By DefectTitleInputBy = By.Id("title");
+        private readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .ProseMirror");
+        private readonly By SaveDefectButtonBy = By.ClassName("save-button");
+        private readonly By DefectTitleBy = By.ClassName("defect-title");
+        private readonly By EditDefectButtonBy = By.CssSelector(".me-2 .fa-pen");
+        private readonly By UpdateDefectButtonBy = By.ClassName("save-button"); // replace with XPath
 
+        // Сделать через проперти
 
         public DefectsTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -121,7 +122,7 @@ namespace Qase.Pages
             Driver.FindElement(UpdateDefectButtonBy).Click();
         }
 
-        public DefectsTPPage EditDefect(Defect defect)
+        public DefectsTPPage EditDefect(Defect defect) // DefectsStep
         {
             ClickToDefectTitle();
             Thread.Sleep(2000);

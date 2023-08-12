@@ -17,16 +17,18 @@ namespace Qase.Tests.UI
             Plan plan = new PlanBuilder()
                 .SetPlanTitle("New Plan")
                 .SetPlanDescription("Description for New Plan")
-                .Build();
+                .Build(); // Что, если я буду делать клин-уп
 
-            var PlanTPPage = new PlanTPPage(Driver);
+            
 
             PlanTPPage.OpenPage();
-            Thread.Sleep(2000);
+            Thread.Sleep(2000); // WaitUntil 
             PlanTPPage.CreatePlan(plan);
             Thread.Sleep(2000);
 
-            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo("New Plan"));
+            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title)); // Error message
+            //Assert.That(, Is.EqualTo("New Plan"));                        // Ассерт через объект
+
         }
 
         [Test]

@@ -26,9 +26,7 @@ namespace Qase.Tests.UI
                 .SetSuiteDescription("Created suite")
                 .SetSuitePreconditions("Precondition")
                 .Build();
-
-            var ProjectTPPage = new ProjectTPPage(Driver);
-
+                        
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.CreateSuit(suite);

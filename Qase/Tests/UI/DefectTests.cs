@@ -18,9 +18,7 @@ namespace Qase.Tests.UI
                 .SetDefectTitle("New Defect_4")
                 .SetActualResult("New actual result")
                 .Build();
-
-            var DefectTPPage = new DefectsTPPage(Driver);
-
+                        
             DefectTPPage.OpenPage();
             Thread.Sleep(2000);
             DefectTPPage.CreateDefect(defect);
