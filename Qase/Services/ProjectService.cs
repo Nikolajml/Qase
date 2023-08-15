@@ -1,6 +1,7 @@
 ﻿using NLog;
 using Qase.Client;
 using Qase.Models;
+using Qase.ResponseAPIModels;
 using Qase.Utilities;
 using RestSharp;
 using System;
@@ -20,7 +21,7 @@ namespace Qase.Services
 
         }
                 
-        public Project GetProject(string code)
+        public ProjectApiModel GetProject(string code)
         {            
             var request = new RestRequest(Endpoints.GET_PROJECT)                
                 .AddUrlSegment("code", code)
@@ -29,33 +30,17 @@ namespace Qase.Services
 
             _logger.Info("Request: " + request.Resource);
 
-            return _apiClient.Execute<Project>(request);
+            return _apiClient.Execute<ProjectApiModel>(request);
         }
 
-
-        //public Task<Project> GetAsyncProject(string code)
-        //{
-        //    var request = new RestRequest(Endpoints.GET_PROJECT)
-        //        .AddUrlSegment("code", code)
-        //        .AddHeader("accept", "application/json")
-        //        .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86");
-
-        //    _logger.Info("Request: " + request.Resource);
-
-        //    return _apiClient.ExecuteAsync<Project>(request);
-        //}
-
-
-
-        public Project CreateProject(Project project)
+        public ProjectApiModel CreateProject(Project project)
         {
             var request = new RestRequest(Endpoints.CREATE_PROJECT, Method.Post)  
-                .AddHeader("accept", "application/json")
-                .AddHeader("content-Type", "application/json")
+                .AddHeader("accept", "application/json")                
                 .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
                 .AddBody(project);
 
-            return _apiClient.Execute<Project>(request);            
+            return _apiClient.Execute<ProjectApiModel>(request);            
         }
 
 

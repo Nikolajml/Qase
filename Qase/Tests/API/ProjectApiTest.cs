@@ -15,44 +15,41 @@ namespace Qase.Tests.API
     public class ProjectApiTest : BaseApiTest
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-               
-        [Test]
+
+        public string Code { get; set; }
+
+        [Test, Order(1)]
         public void CreateProjectTest()
         {           
-            var expectedProject = new Project();
-            expectedProject.Title = "Project";
-            expectedProject.Code = "PR";            
+            var projectRequest = new Project();
+            projectRequest.Title = "Project API";
+            projectRequest.Code = "PR";
+            projectRequest.Access = "all";
 
-            _logger.Info("Expected Project: " + expectedProject);
+            _logger.Info("Expected Project: " + projectRequest);
 
-            var actualProject = _projectService.CreateProject(expectedProject);
+            var projectResponse = _projectService.CreateProject(projectRequest);
                         
-            Console.WriteLine($"Project Code: {actualProject.Code}");
-            Console.WriteLine($"Project Title: {actualProject.Title}");
+            Console.WriteLine($"Project Code: {projectResponse.status}");
+
+            Code = projectResponse.result.code.ToString();
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(expectedProject.Title, actualProject.Title);
-                Assert.AreEqual(expectedProject.Code, actualProject.Code);
+                Assert.AreEqual(true, projectResponse.status);
+                Assert.AreEqual(projectRequest.Code, projectResponse.result.code);
             });
         }
 
-        [Test]
+        [Test, Order(2)]
         public void GetProjectTest()
         {            
-            var project = _projectService.GetProject("TP");
-            _logger.Info(project.Title);
+            var project = _projectService.GetProject(Code);
+            _logger.Info(project.result.code);
 
-            Console.WriteLine($"Project Code: {project.Code}");
-            Console.WriteLine($"Project Name: {project.Title}");
+            Console.WriteLine($"Project Code: {project.status}");
 
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(project.Title, project.Title);
-                Assert.AreEqual(project.Code, project.Code);
-            });
-                        
+            Assert.AreEqual(true, project.status);
         }       
-
     }
 }

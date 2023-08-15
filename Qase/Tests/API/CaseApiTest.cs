@@ -1,5 +1,4 @@
 ﻿using NLog;
-using Qase.APIModels;
 using Qase.Models;
 using Qase.Services;
 using System;
@@ -82,7 +81,7 @@ namespace Qase.Tests.API
             var caseRequest = new Case();
             caseRequest.Code = "OE";
 
-            var caseResponse = _caseService.DeleteCase(caseRequest, Id);
+            var caseResponse = _caseService.DeleteSuite(caseRequest, Id);
             _logger.Info("Case: " + caseResponse.ToString);
 
             Console.WriteLine($"Case Status: {caseResponse.status}");

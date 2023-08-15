@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Qase.Models;
 using Qase.Utilities;
+using Qase.ResponseAPIModels;
 
 namespace Qase.Services
 {
@@ -17,25 +18,51 @@ namespace Qase.Services
         {
         }
 
-        public Suite GetSuite(string code, int id)
+        public SuiteApiModel GetSuite(Suite suite, string id)
         {
             var request = new RestRequest(Endpoints.GET_SUITE)
-                .AddUrlSegment("code", code)
-                .AddUrlSegment("project_id", id);
+                .AddUrlSegment("code", suite.Code)
+                .AddUrlSegment("id", id)
+                .AddHeader("accept", "application/json")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddBody(suite);
 
-            return _apiClient.Execute<Suite>(request);
+            return _apiClient.Execute<SuiteApiModel>(request);
+        } 
+
+        public SuiteApiModel CreateSuite(Suite suite)
+        {
+            var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
+                .AddUrlSegment("code", suite.Code)
+                .AddHeader("accept", "application/json")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddBody(suite);
+
+            return _apiClient.Execute<SuiteApiModel>(request);
         }
 
-        //public SuiteApiModel CreateSuite(Suite suite)
-        //{
-        //    var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
-        //        .AddUrlSegment("code", suite.Code)
-        //        .AddHeader("accept", "application/json")
-        //        .AddHeader("content-Type", "application/json")
-        //        .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
-        //        .AddBody(suite);
+        public SuiteApiModel UpdateSuite(Suite suite, string id)
+        {
+            var request = new RestRequest(Endpoints.UPDATE_SUITE, Method.Patch)
+                .AddUrlSegment("code", suite.Code)
+                .AddUrlSegment("id", id)               
+                .AddHeader("accept", "application/json")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddBody(suite);
 
-        //    return _apiClient.Execute<SuiteApiModel>(request);
-        //}
+            return _apiClient.Execute<SuiteApiModel>(request);
+        }
+
+        public SuiteApiModel DeleteSuite(Suite suite, string id)
+        {
+            var request = new RestRequest(Endpoints.DELETE_SUITE, Method.Delete)
+                .AddUrlSegment("code", suite.Code)
+                .AddUrlSegment("id", id)
+                .AddHeader("accept", "application/json")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddBody(suite);
+
+            return _apiClient.Execute<SuiteApiModel>(request);
+        }
     }
 }

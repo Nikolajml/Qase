@@ -1,5 +1,5 @@
 ﻿using NLog;
-using Qase.APIModels;
+using Qase.ResponseAPIModels;
 using Qase.Client;
 using Qase.Models;
 using Qase.Utilities;
@@ -55,7 +55,7 @@ namespace Qase.Services
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
-        public CaseApiModel DeleteCase(Case Case, string id)
+        public CaseApiModel DeleteSuite(Case Case, string id)
         {
             var request = new RestRequest(Endpoints.DELETE_CASE, Method.Delete)
                 .AddUrlSegment("code", Case.Code)

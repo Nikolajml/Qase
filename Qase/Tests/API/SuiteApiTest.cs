@@ -15,37 +15,87 @@ namespace Qase.Tests.API
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        //public int Id { get; set; }
-        //public string Code { get; set; }
-                
-        //public Suite expectedSuite = TestDataHelper.CreateSuite("CreateSuite.json");
+        public string Id { get; set; }
 
-        [Test]
+
+        [Test, Order(1)]
         public void CreateSuiteTest()
         {
-            //var actualSuite = _suiteService.CreateSuite(expectedSuite);
+            var suiteRequest = new Suite();
+            suiteRequest.Code = "OE";
+            suiteRequest.Name = "Case_api_New";
 
-            var expectedSuite = new Suite();
-            expectedSuite.Code = "OE";
-            expectedSuite.Name = "API_33";                        
+            var suiteResponse = _suiteService.CreateSuite(suiteRequest);
 
-           // var actualSuite = _suiteService.CreateSuite(expectedSuite);
+            Console.WriteLine($"Case Status: {suiteResponse.status}");
+            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
 
-            
-            //Console.WriteLine($"Suite Id: {actualSuite.Id}");
-            //Console.WriteLine($"Suite Code: {actualSuite.Code}");
-            //Console.WriteLine($"Suite Name: {actualSuite.Name}");
+            Id = suiteResponse.result.id.ToString();
 
-
-
-            //Assert.Multiple(() =>
-            //{
-            //    Assert.AreEqual(expectedSuite.Name, actualSuite.Name);
-            //    Assert.AreEqual(expectedSuite.Code, actualSuite.Code);
-            //});
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(true, suiteResponse.status);
+                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+            });
         }
 
+        [Test, Order(2)]
+        public void GetSuiteTest()
+        {
+            var suiteRequest = new Suite();
+            suiteRequest.Code = "OE";
 
-        
+            var suiteResponse = _suiteService.GetSuite(suiteRequest, Id);
+            _logger.Info("Case: " + suiteResponse.ToString);
+
+            Console.WriteLine($"Case Status: {suiteResponse.status}");
+            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(true, suiteResponse.status);
+                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+            });
+        }
+
+        [Test, Order(3)]
+        public void UpdateSuiteTest()
+        {
+            var suiteRequest = new Suite();
+            suiteRequest.Code = "OE";
+            suiteRequest.Name = "Updated Suite Name API";
+            suiteRequest.Description = "Updated Description API";
+
+            var suiteResponse = _suiteService.UpdateSuite(suiteRequest, Id);
+
+            Console.WriteLine($"Case Status: {suiteResponse.status}");
+            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(true, suiteResponse.status);
+                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+            });
+        }
+
+        [Test, Order(4)]
+        public void DeleteSuiteTest()
+        {
+            var suiteRequest = new Suite();
+            suiteRequest.Code = "OE";
+
+            var suiteResponse = _suiteService.DeleteSuite(suiteRequest, Id);
+            _logger.Info("Case: " + suiteResponse.ToString);
+
+            Console.WriteLine($"Case Status: {suiteResponse.status}");
+            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(true, suiteResponse.status);
+                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+            });
+        }
+
     }
 }

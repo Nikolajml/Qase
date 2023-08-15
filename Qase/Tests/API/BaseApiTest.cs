@@ -17,7 +17,7 @@ namespace Qase.Tests.API
         protected ProjectService _projectService;
         protected SuiteService _suiteService;   
         protected CaseService _caseService;
-        protected PlanService _planService;
+        protected PlanService _planService;        
 
         [OneTimeSetUp]
         public void InitApiClient()
