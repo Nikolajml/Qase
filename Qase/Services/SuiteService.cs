@@ -26,16 +26,16 @@ namespace Qase.Services
             return _apiClient.Execute<Suite>(request);
         }
 
-        public Suite CreateSuite(Suite suite)
-        {
-            var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
-                .AddUrlSegment("code", suite.Code)
-                .AddHeader("Accept", "application/json")
-                .AddHeader("Content-Type", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
-                .AddBody(suite);
+        //public SuiteApiModel CreateSuite(Suite suite)
+        //{
+        //    var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
+        //        .AddUrlSegment("code", suite.Code)
+        //        .AddHeader("accept", "application/json")
+        //        .AddHeader("content-Type", "application/json")
+        //        .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+        //        .AddBody(suite);
 
-            return _apiClient.Execute<Suite>(request);
-        }
+        //    return _apiClient.Execute<SuiteApiModel>(request);
+        //}
     }
 }

@@ -12,20 +12,23 @@ namespace Qase.Pages
 {
     public  class PlanTPPage : BasePage
     {
-        private static string END_POINT = "plan/TP";
+        private static string END_POINT = "plan/TP";              
 
-        private static readonly By CreatePlanButtonBy = By.Id("createButton");
-        private static readonly By PlanTitleInputBy = By.Id("title");
-        private static readonly By PlanDescriptionInputBy = By.CssSelector(".ww-mode .ProseMirror");        
-        private static readonly By AddCasesButtonBy = By.Id("edit-plan-add-cases-button");        
-        private static readonly By ControlCaseIndicatorBy = By.CssSelector(".suites-column .suite:last-child .custom-control-indicator");
-        private static readonly By DoneButtonBy = By.CssSelector(".CCVJRT .u0i1tV");
-        private static readonly By SavePlanButtonBy = By.Id("save-plan");
-        private static readonly By EllipsisButtonForPlanEditBy = By.CssSelector(".HWdDFk .ZwgkIF");
-        private static readonly By PlanEditButtonBy = By.CssSelector("a[href^='/plan/TP/edit/']");        
-        private static readonly By PlanTitleInputForClearBy = By.Id("title");
-        private static readonly By PlanTitleFieldClearBy = By.Id("title");
-        private static readonly By GetPlanTitleBy = By.ClassName("defect-title");
+        private readonly By CreatePlanButtonBy = By.XPath("//a[@id='createButton']");
+        private readonly By PlanTitleInputBy = By.XPath("//input[@id='title']");     //("title");
+        private readonly By PlanDescriptionInputBy = By.CssSelector(".ww-mode .ProseMirror");
+        private readonly By AddCasesButtonBy = By.XPath("//button[@id='edit-plan-add-cases-button']");       //Id("edit-plan-add-cases-button");        
+        private readonly By ControlCaseIndicatorBy = By.CssSelector(".suites-column .suite:last-child .custom-control-indicator");
+        private readonly By DoneButtonBy = By.CssSelector(".CCVJRT .u0i1tV");
+        private readonly By SavePlanButtonBy = By.Id("save-plan");
+        private readonly By EllipsisButtonForPlanEditBy = By.CssSelector(".HWdDFk .ZwgkIF");
+        private readonly By PlanEditButtonBy = By.CssSelector("a[href^='/plan/TP/edit/']");        
+        private readonly By PlanTitleInputForClearBy = By.Id("title");
+        private readonly By PlanTitleFieldClearBy = By.Id("title");
+        private readonly By GetPlanTitleBy = By.ClassName("defect-title");
+
+        private readonly By GetPlanTitleForSecondAssertBy = By.ClassName("plan-view-header-title");
+        private readonly By GetPlanDescriptionForSecondAssertBy = By.ClassName("toastui-editor-contents");
 
 
         public PlanTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
@@ -39,7 +42,7 @@ namespace Qase.Pages
 
         public override bool IsPageOpened()
         {
-            return WaitService.GetVisibleElement(CreatePlanButtonBy) != null;
+            return WaitService.GetVisibleElement(EllipsisButtonForPlanEditBy) != null;
         }
 
         public override void OpenPage()
@@ -49,100 +52,113 @@ namespace Qase.Pages
 
 
         // CREATE PLAN
-        private void ClickToCreatePlanButton()
+        public void ClickToCreatePlanButton()
         {
             Driver.FindElement(CreatePlanButtonBy).Click();
         }
 
-        private void SetPlanTitle(string planTitle)
+        public void SetPlanTitle(string planTitle)
         {
             Driver.FindElement(PlanTitleInputBy).SendKeys(planTitle);
         }
 
-        private void SetPlanDescription(string planDescription)
+        public void SetPlanDescription(string planDescription)
         {
             Driver.FindElement(PlanDescriptionInputBy).SendKeys(planDescription);
-        }        
+        }
 
-        private void ClickToAddCaseButton()
+        public void ClickToAddCaseButton()
         {
             Driver.FindElement(AddCasesButtonBy).Click();
         }
 
-        private void ClickToControlIndicatorToChooseCase()
+        public void ClickToControlIndicatorToChooseCase()
         {
             Driver.FindElement(ControlCaseIndicatorBy).Click();
         }
 
-        private void ClickToDoneButton()
+        public void ClickToDoneButton()
         {
             Driver.FindElement(DoneButtonBy).Click();
         }
 
-        private void ClickToSavePlanButton()
+        public void ClickToSavePlanButton()
         {
             Driver.FindElement(SavePlanButtonBy).Click();
         }
 
-        public PlanTPPage CreatePlan(Plan plan)
-        {
-            ClickToCreatePlanButton();
-            Thread.Sleep(2000);
-            SetPlanTitle(plan.Title);
-            SetPlanDescription(plan.Description);
-            Thread.Sleep(1000);
-            ClickToAddCaseButton();
-            Thread.Sleep(1000);
-            ClickToControlIndicatorToChooseCase();
-            ClickToDoneButton();
-            ClickToSavePlanButton();
+        // Second assert for created Plan
 
-            return this;
+        public void ClickToCreatedPlanTitleToAssert()
+        {
+            Driver.FindElement(GetPlanTitleBy).Click();
+        }
+
+        public string GetPlanTitleForSecondAssert()
+        {
+            return Driver.FindElement(GetPlanTitleForSecondAssertBy).Text;
+        }
+
+        public string GetPlanDescriptionForSecondAssert()
+        {
+            return Driver.FindElement(GetPlanDescriptionForSecondAssertBy).GetAttribute("innerText");
+        }
+
+        public bool WaitPlan()
+        {
+            return WaitService.GetVisibleElement(GetPlanTitleBy) != null;
+        }
+
+        public bool WaitOpenPlanDetails()
+        {
+            return WaitService.GetVisibleElement(GetPlanTitleForSecondAssertBy) != null;
+        }
+
+        // WaitService for Create Plan
+
+        public bool WaitOpenPlanDetailsToInput()
+        {
+            return WaitService.GetVisibleElement(PlanTitleInputBy) != null;
         }
 
 
+        
+
+
+
+
         // EDIT PLAN
-        private void ClickToEllipsis()
+        public void ClickToEllipsis()
         {
             Driver.FindElement(EllipsisButtonForPlanEditBy).Click();
         }
 
-        private void ClickToEdit()
+        public void ClickToEdit()
         {
             Driver.FindElement(PlanEditButtonBy).Click();
         }
 
-        private void ClickToClearTitlePlanField()
+        public void ClickToClearTitlePlanField()
         {
             Driver.FindElement(PlanTitleInputForClearBy).Click();
         }
 
-        private void ClearTitlePlanField()
+        public void ClearTitlePlanField()
         {
             Driver.FindElement(PlanTitleFieldClearBy).Clear();
         }
 
-        private void EditPlanTitle(string planTitle)
+        public void EditPlanTitle(string planTitle)
         {
             Driver.FindElement(PlanTitleInputBy).SendKeys(planTitle);
         }
 
-        private void ClickToSaveEditButton()
+        public void ClickToSaveEditButton()
         {
             Driver.FindElement(SavePlanButtonBy).Click();
         }
 
-        public PlanTPPage EditPlan(Plan plan)
-        {
-            ClickToEllipsis();
-            ClickToEdit();
-            Thread.Sleep(2000);
-            ClickToClearTitlePlanField();
-            ClearTitlePlanField();
-            EditPlanTitle(plan.Title);
-            ClickToSaveEditButton();
-            return this;
-        }
+        
 
 
         // METHOD TO ASSERT

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework.Interfaces;
 using Qase.Utilities.Configuration;
+using Qase.Steps;
 
 namespace Qase.Tests.UI
 {
@@ -22,22 +23,34 @@ namespace Qase.Tests.UI
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
         public LoginPage LoginPage { get; set; }
+        public ProjectsPage ProjectsPage { get; set; }
         public PlanTPPage PlanTPPage { get; set; }
         public DefectsTPPage DefectTPPage { get; set; }
         public ProjectTPPage ProjectTPPage { get; set; }
 
+        public PlanStepsPage PlanStepsPage { get; set; }
+        public DefectStepsPage DefectStepsPage { get; set; }
 
-        [OneTimeSetUp] // Impliment OneTimeSetup
+
+    [OneTimeSetUp] // Impliment OneTimeSetup
         public void Setup() // Все объекты пэджей должны инициализироваться вне теста
         {
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
             LoginPage = new LoginPage(Driver);
+            ProjectsPage = new ProjectsPage(Driver);
+
             LoginPage.OpenPage();
             LoginPage.TryToLogin(Configurator.Admin);
-            Thread.Sleep(2000);
+            ProjectsPage.IsPageOpened();
+            
             PlanTPPage = new PlanTPPage(Driver);
+            PlanStepsPage = new PlanStepsPage(Driver);
+
             DefectTPPage = new DefectsTPPage(Driver);
+            DefectStepsPage = new DefectStepsPage(Driver);
+
+
             ProjectTPPage = new ProjectTPPage(Driver);
         }
 

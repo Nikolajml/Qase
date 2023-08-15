@@ -22,7 +22,7 @@ namespace Qase.Tests.UI
         public void CreateSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Test_Suite_Last Suite")
+                .SetSuiteName("Test_Suite_Last")
                 .SetSuiteDescription("Created suite")
                 .SetSuitePreconditions("Precondition")
                 .Build();

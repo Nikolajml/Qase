@@ -20,15 +20,15 @@ namespace Qase.Tests.API
         public void CreateProjectTest()
         {           
             var expectedProject = new Project();
-            expectedProject.Title = "MyProject";
-            expectedProject.Code = "DH";            
+            expectedProject.Title = "Project";
+            expectedProject.Code = "PR";            
 
             _logger.Info("Expected Project: " + expectedProject);
 
             var actualProject = _projectService.CreateProject(expectedProject);
                         
             Console.WriteLine($"Project Code: {actualProject.Code}");
-            Console.WriteLine($"Project Name: {actualProject.Title}");
+            Console.WriteLine($"Project Title: {actualProject.Title}");
 
             Assert.Multiple(() =>
             {
@@ -52,8 +52,7 @@ namespace Qase.Tests.API
                 Assert.AreEqual(project.Code, project.Code);
             });
                         
-        }
+        }       
 
-        
     }
 }

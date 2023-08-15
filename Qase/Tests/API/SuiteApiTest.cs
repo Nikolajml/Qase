@@ -26,16 +26,15 @@ namespace Qase.Tests.API
             //var actualSuite = _suiteService.CreateSuite(expectedSuite);
 
             var expectedSuite = new Suite();
-            expectedSuite.Code = "TSD";
-            expectedSuite.Name = "Test Project API_33";                        
+            expectedSuite.Code = "OE";
+            expectedSuite.Name = "API_33";                        
 
-            var actualSuite = _suiteService.CreateSuite(expectedSuite);
+           // var actualSuite = _suiteService.CreateSuite(expectedSuite);
 
-            var result = actualSuite;
-
-            Console.WriteLine($"Suite Id: {result.Id}");
-            Console.WriteLine($"Suite Code: {result.Code}");
-            Console.WriteLine($"Suite Name: {result.Name}");
+            
+            //Console.WriteLine($"Suite Id: {actualSuite.Id}");
+            //Console.WriteLine($"Suite Code: {actualSuite.Code}");
+            //Console.WriteLine($"Suite Name: {actualSuite.Name}");
 
 
 

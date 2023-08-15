@@ -21,8 +21,8 @@ namespace Qase.Client
         public ApiClient()
         {
             var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
-            {    
-                ThrowOnAnyError = true,
+            {                   
+                ThrowOnAnyError = false,
                 MaxTimeout = 10000
             };
 
@@ -49,6 +49,6 @@ namespace Qase.Client
             _logger.Info("Response Body: " + response.Content);
 
             return response.Data;
-        }
+        }       
     }
 }

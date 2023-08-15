@@ -4,6 +4,7 @@ using Qase.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,38 +12,48 @@ namespace Qase.Tests.UI
 {
     public class DefectTests : BaseTest
     {
-        [Test]
+        [Test, Order(1)]
         public void CreateDefectTest()
         {
             Defect defect = new DefectBuilder()
-                .SetDefectTitle("New Defect_4")
+                .SetDefectTitle("Defect")
                 .SetActualResult("New actual result")
                 .Build();
                         
             DefectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            DefectTPPage.CreateDefect(defect);
-            Thread.Sleep(2000);
+            DefectTPPage.IsPageOpened();
+            DefectStepsPage.CreateDefect(defect);
+            DefectTPPage.WaitDefect();
 
-            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("New Defect_4"));
+            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
+                        
+            DefectTPPage.ClickToDefectTitleToSecondAssert();
+            DefectTPPage.WaitDefectDescription();
+
+            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult));
+
         }
 
-        [Test]
+
+        [Test, Order(2)]
         public void EditDefectTest()
         {
             Defect defect = new DefectBuilder()
-                .SetDefectTitle("Edit Defect_3")
-                .SetActualResult("Edit actual result_1")
+                .SetDefectTitle("Edit Defect")
+                .SetActualResult("Edit actual result")
                 .Build();
 
-            var DefectTPPage = new DefectsTPPage(Driver);
-
             DefectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            DefectTPPage.EditDefect(defect);
-            Thread.Sleep(2000);
+            DefectTPPage.IsPageOpened();
+            DefectStepsPage.EditDefect(defect);
+            DefectTPPage.WaitDefect();
 
-            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo("Edit Defect_3"));
+            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
+
+            DefectTPPage.ClickToDefectTitleToSecondAssert();
+            DefectTPPage.WaitDefectDescription();
+
+            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult));
         }
     }
 }

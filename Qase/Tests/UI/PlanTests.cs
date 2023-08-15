@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using Qase.Models;
 using Qase.Pages;
+using Qase.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,41 +12,48 @@ namespace Qase.Tests.UI
 {
     public class PlanTests : BaseTest
     {
-        [Test]
+
+        [Test, Order(1)]
         public void CreatePlanTest()
         {
             Plan plan = new PlanBuilder()
-                .SetPlanTitle("New Plan")
+                .SetPlanTitle("New Plan 333")
                 .SetPlanDescription("Description for New Plan")
-                .Build(); // Что, если я буду делать клин-уп
-
-            
+                .Build();                                                   // Что, если я буду делать клин-уп
 
             PlanTPPage.OpenPage();
-            Thread.Sleep(2000); // WaitUntil 
-            PlanTPPage.CreatePlan(plan);
-            Thread.Sleep(2000);
+            PlanTPPage.IsPageOpened();                                      // I use IsPageOpened method
+            PlanStepsPage.CreatePlan(plan);
+            PlanTPPage.WaitPlan();
 
-            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title)); // Error message
-            //Assert.That(, Is.EqualTo("New Plan"));                        // Ассерт через объект
+            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));                               
+                        
+            PlanTPPage.ClickToCreatedPlanTitleToAssert();
+            PlanTPPage.WaitOpenPlanDetails();            
 
+            Assert.Multiple(() =>                                           // Ассерт через объект
+            {
+                Assert.That(PlanTPPage.GetPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
+                Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(plan.Description));
+            }); 
+                        
         }
 
-        [Test]
+
+
+        [Test, Order(2)]
         public void EditPlanTest()
         {
             Plan plan = new PlanBuilder()
                 .SetPlanTitle("Plan_Edit")
                 .Build();
 
-            var PlanTPPage = new PlanTPPage(Driver);
-
             PlanTPPage.OpenPage();
-            Thread.Sleep(2000);
-            PlanTPPage.EditPlan(plan);
-            Thread.Sleep(2000);
+            PlanTPPage.IsPageOpened();
+            PlanStepsPage.EditPlan(plan);
+            PlanTPPage.WaitPlan();
 
-            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo("Plan_Edit"));
+            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
         }
     }
 }

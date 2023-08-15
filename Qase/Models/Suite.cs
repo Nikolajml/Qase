@@ -16,5 +16,6 @@ namespace Qase.Models
         [JsonPropertyName("code")] public string Code { get; set; }
 
         [JsonPropertyName("id")] public int Id { get; set; }
+
     }
 }

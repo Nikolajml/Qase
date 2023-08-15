@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Qase.Models
 {
     public class Plan
     {
-        public string Title { get; set; }
-        public string Description { get; set; }        
+        [JsonPropertyName("title")] public string Title { get; set; }
+        public string Description { get; set; }
+        [JsonPropertyName("code")] public string Code { get; set; }
+        [JsonPropertyName("cases")] public long Cases { get; set; }
     }
 }
