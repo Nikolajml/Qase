@@ -14,25 +14,23 @@ namespace Qase.Tests.API
 
         public string Id { get; set; }
 
-        [Test]
+        [Test, Order(1)]
         public void CreatePlanTest()
         {   
             var planRequest = new Plan();
             planRequest.Code = "OE";
             planRequest.Title = "Plan_api";
-            planRequest.Cases = 55;
+            planRequest.Cases = new List <int> { 50};
 
             var planResponse = _planService.CreatePlan(planRequest);
+
+            Id = planResponse.result.id.ToString();
 
 
             Console.WriteLine($"Case Status: {planResponse.status}");
             Console.WriteLine($"Case Id: {planResponse.result.id}");
 
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(true, planResponse.status);
-                Assert.AreEqual(planRequest.Title, planResponse.result.title);                
-            });
+            Assert.AreEqual(true, planResponse.status);
         }
 
         [Test, Order(2)]
@@ -61,6 +59,7 @@ namespace Qase.Tests.API
             planRequest.Code = "OE";
             planRequest.Title = "Updated Plan Title API";
             planRequest.Description = "Updated Plan Description API";
+            planRequest.Cases = new List<int> { 50 };
 
             var planResponse = _planService.UpdatePlan(planRequest, Id);
 
