@@ -17,7 +17,6 @@ namespace Qase.Tests.API
 
         public string Id { get; set; }
 
-
         [Test, Order(1)]
         public void CreateSuiteTest()
         {
@@ -96,6 +95,5 @@ namespace Qase.Tests.API
                 Assert.AreEqual(Id, suiteResponse.result.id.ToString());
             });
         }
-
     }
 }

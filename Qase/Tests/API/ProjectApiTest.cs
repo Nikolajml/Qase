@@ -41,15 +41,19 @@ namespace Qase.Tests.API
             });
         }
 
-        [Test, Order(2)]
-        public void GetProjectTest()
-        {            
-            var project = _projectService.GetProject(Code);
-            _logger.Info(project.result.code);
+        [Test, Order(2)]        
+        public void DeleteProjectTest()
+        {
+            var projectRequest = new Project();
+            projectRequest.Code = "PR";
 
-            Console.WriteLine($"Project Code: {project.status}");
+            var projectResponse = _projectService.DeleteSuite(projectRequest);
+            _logger.Info("Case: " + projectResponse.ToString);
 
-            Assert.AreEqual(true, project.status);
-        }       
+            Console.WriteLine($"Case Status: {projectResponse.status}");            
+
+            Assert.AreEqual(true, projectResponse.status);
+        }
+
     }
 }

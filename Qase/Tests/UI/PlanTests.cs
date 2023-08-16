@@ -35,11 +35,8 @@ namespace Qase.Tests.UI
             {
                 Assert.That(PlanTPPage.GetPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
                 Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(plan.Description));
-            }); 
-                        
+            });                         
         }
-
-
 
         [Test, Order(2)]
         public void EditPlanTest()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace Qase.Models
     public class Plan
     {
         [JsonPropertyName("title")] public string Title { get; set; }
-        public string Description { get; set; }
-        [JsonPropertyName("code")] public string Code { get; set; }
-        [JsonPropertyName("cases")] public long Cases { get; set; }
+        [JsonPropertyName("description")] public string Description { get; set; }
+        [JsonPropertyName("code")] public string Code { get; set; }  
+        [JsonPropertyName("cases")] public List<Case> Cases { get; set; }
     }
 }

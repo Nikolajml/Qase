@@ -43,7 +43,17 @@ namespace Qase.Services
             return _apiClient.Execute<ProjectApiModel>(request);            
         }
 
+        public ProjectApiModel DeleteSuite(Project project)
+        {
+            var request = new RestRequest(Endpoints.DELETE_PROJECT, Method.Delete)
+                .AddUrlSegment("code", project.Code)
+                .AddHeader("accept", "application/json")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddBody(project);
 
-                
+            return _apiClient.Execute<ProjectApiModel>(request);
+        }
+
+
     }
 }
