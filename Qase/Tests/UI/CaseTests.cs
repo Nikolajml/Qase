@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qase.Tests
+namespace Qase.Tests.UI
 {
     public class CaseTests : BaseTest
     {
@@ -16,15 +16,13 @@ namespace Qase.Tests
         {
             Case Case = new CaseBuilder()
                 .SetCaseTitle("New Case Test")
-                .Build();
-
-            var ProjectTPPage = new ProjectTPPage(Driver);
+                .Build();                      
 
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.CreateCase(Case);
             Thread.Sleep(2000);
-            
+
             Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo("New Case Test"));
         }
 

@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Qase.Models;
-using Qase.Tests;
+using Qase.Tests.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,13 +58,12 @@ namespace Qase.Pages
         }
 
 
-        public ProjectsPage TryToLogin(User user)
+        public void TryToLogin(User user)
         {
             SetUserName(user.Username);
             SetPassword(user.Password);
             ClickRememberMeCheckBox();
-            ClickSignInButton();
-            return new ProjectsPage(Driver);
+            ClickSignInButton();            
         }
     }
 }

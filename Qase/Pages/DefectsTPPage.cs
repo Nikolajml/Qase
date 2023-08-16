@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Qase.Models;
-using Qase.Tests;
+using Qase.Tests.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +13,29 @@ namespace Qase.Pages
     {
         private static string END_POINT = "defect/TP";
 
-        private static readonly By CreateNewDefectButtonBy = By.ClassName("btn-primary");
-        private static readonly By DefectTitleInputBy = By.Id("title");
-        private static readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .gYZSEd");
-        private static readonly By SaveDefectButtonBy = By.ClassName("save-button");
-        private static readonly By DefectTitleBy = By.ClassName("defect-title");
-        private static readonly By EditDefectButtonBy = By.CssSelector(".me-2 .fa-pen");
-        private static readonly By UpdateDefectButtonBy = By.ClassName("save-button");
+        private readonly By CreateNewDefectButtonBy = By.XPath("//*[@class='btn btn-primary']");
+        private readonly By DefectTitleInputBy = By.XPath("//*[@id='title']");
+        private readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .ProseMirror");
+        private readonly By SaveDefectButtonBy = By.XPath("//button[@class='btn btn-primary me-3 save-button']");
+        private readonly By DefectTitleBy = By.XPath("//*[@class='defect-title']"); 
+        private readonly By EditDefectButtonBy = By.XPath("//*[@class='fa fa-pen']");
+        private readonly By UpdateDefectButtonBy = By.XPath("//*[@class='btn btn-primary me-3 save-button']");
+        private readonly By DefectTitleForSecondAssertBy = By.XPath("//*[@class='col-lg-12']");   
+        private readonly By DefectDescriptionForSecondAssertBy = By.XPath("//*[@class='toastui-editor-contents']");
 
+
+        //private readonly By CreateNewDefectButtonBy = By.XPath("//*[@class='btn btn-primary']");  //btn btn-primary
+        //private readonly By DefectTitleInputBy = By.XPath("//*[@id='title']");
+        //private readonly By ActualResultInputBy = By.XPath("//div[@class='toastui-editor-ww-container']");
+        //private readonly By SaveDefectButtonBy = By.XPath("//button[@class='btn btn-primary me-3 save-button']");
+        //private readonly By DefectTitleBy = By.XPath("//*[@class='defect-title']"); //*[@class="save-button"]
+        //private readonly By EditDefectButtonBy = By.XPath("//*[@class='fa fa-pen']");
+        //private readonly By UpdateDefectButtonBy = By.XPath("//*[@class='save-button']"); // replace with XPath  
+
+        //private readonly By DefectTitleForSecondAssertBy = By.XPath("//*[@class='col-lg-12']");
+        //private readonly By DefectDescriptionForSecondAssertBy = By.XPath("//*[@class='toastui-editor-contents']");
+
+        // Сделать через проперти
 
         public DefectsTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -43,103 +58,120 @@ namespace Qase.Pages
 
 
         // CREATE DEFECTS
-        private void ClickToCreateNewDefectButton()
+        public void ClickToCreateNewDefectButton()
         {
             Driver.FindElement(CreateNewDefectButtonBy).Click();
         }
 
-        private void SetDefectTitle(string defectTitle)
+        public void SetDefectTitle(string defectTitle)
         {
             Driver.FindElement(DefectTitleInputBy).SendKeys(defectTitle);
         }
 
-        private void SetActualresult(string actualResult)
+        public void SetActualresult(string actualResult)
         {
             Driver.FindElement(ActualResultInputBy).SendKeys(actualResult);
         }
 
-        private void ClickToCreateDefectButton()
+        public void ClickToCreateDefectButton()
         {
             Driver.FindElement(SaveDefectButtonBy).Click();
         }
 
-        public DefectsTPPage CreateDefect(Defect defect)
+        // WAIT FOR CREATE DEFECT
+        
+        public bool WaitCreateDefect()
         {
-            ClickToCreateNewDefectButton();
-            Thread.Sleep(2000);
-            SetDefectTitle(defect.DefectTitle);            
-            SetActualresult(defect.ActualResult);
-            ClickToCreateDefectButton();
-
-            return this;
+            return WaitService.GetVisibleElement(DefectTitleInputBy) != null;
         }
 
-        public string GetDefectTitle()
+
+
+
+        // WAIT FOR SECOND ASSERT
+        public bool WaitDefect()
         {
-            return Driver.FindElement(DefectTitleBy).GetAttribute("innerText");
-        }               
+            return WaitService.GetVisibleElement(DefectTitleBy) != null;
+        }
+
+        public bool WaitDefectDescription()
+        {
+            return WaitService.GetVisibleElement(DefectDescriptionForSecondAssertBy) != null;
+        }
+
+        // METHODS FOR SECOND ASSERT
+
+        public void ClickToDefectTitleToSecondAssert()
+        {
+            Driver.FindElement(DefectTitleBy).Click();
+        }
+        
+
+        public string GetDefectTitleForSecondAssert()
+        {
+            return Driver.FindElement(DefectTitleForSecondAssertBy).Text;
+        }
+
+        public string GetDefectDescriptionForSecondAssert()
+        {
+            return Driver.FindElement(DefectDescriptionForSecondAssertBy).Text;
+        }
+
+
+
 
 
         // EDIT DEFECTS
-        private void ClickToDefectTitle()
+        public void ClickToDefectTitle()
         {
             Driver.FindElement(DefectTitleBy).Click();
         }
 
-        private void ClickToDefectEdit()
+        public void ClickToDefectEdit()
         {
             Driver.FindElement(EditDefectButtonBy).Click();
         }
 
-        private void ClickToClearTitleDefectField()
+        public void ClickToClearTitleDefectField()
         {
             Driver.FindElement(DefectTitleInputBy).Click();
         }
 
-        private void ClearTitleDefectField()
+        public void ClearTitleDefectField()
         {
             Driver.FindElement(DefectTitleInputBy).Clear();
         }
 
-        private void SetEditedDefectTitle(string defectTitle)
+        public void SetEditedDefectTitle(string defectTitle)
         {
             Driver.FindElement(DefectTitleInputBy).SendKeys(defectTitle);
         }
 
-        private void ClickToClearActualResult()
+        public void ClickToClearActualResult()
         {
             Driver.FindElement(ActualResultInputBy).Click();
         }
 
-        private void ClearActualResultField()
+        public void ClearActualResultField()
         {
             Driver.FindElement(ActualResultInputBy).Clear();
         }
 
-        private void SetEditedActualResult(string actualResult)
+        public void SetEditedActualResult(string actualResult)
         {
             Driver.FindElement(ActualResultInputBy).SendKeys(actualResult);
         }
 
-        private void ClickToUpdateDefectButton()
+        public void ClickToUpdateDefectButton()
         {
             Driver.FindElement(UpdateDefectButtonBy).Click();
         }
+                
 
-        public DefectsTPPage EditPlan(Defect defect)
+        // METHOD TO ASSERT
+        public string GetDefectTitle()
         {
-            ClickToDefectTitle();
-            ClickToDefectEdit();
-            ClickToClearTitleDefectField();
-            Thread.Sleep(2000);
-            SetEditedDefectTitle(defect.DefectTitle);
-            ClearTitleDefectField();
-            ClickToClearActualResult();
-            ClearActualResultField();
-            SetEditedActualResult(defect.ActualResult);
-            ClickToUpdateDefectButton();
-            
-            return this;
+            return Driver.FindElement(DefectTitleBy).GetAttribute("innerText");
         }
     }
 }

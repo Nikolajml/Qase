@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Qase.Models;
-using Qase.Tests;
+using Qase.Tests.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +18,17 @@ namespace Qase.Pages
         private static readonly By SuiteDescriptionInputBy = By.Id("description");
         private static readonly By SuitePreconditionsInputBy = By.Id("preconditions");
         private static readonly By CreateSuiteButtonBy = By.CssSelector(".CCVJRT .u0i1tV .ZwgkIF");
-
-        private static readonly By EllipsisEditBy = By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h");  //("#layout .SmsctB .fa-ellipsis-h");
-        private static readonly By EditButtonBy = By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus");  //(".yxKHfs .Cr3S77 .fa-pencil");
+        private static readonly By EllipsisEditBy = By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h");        
         private static readonly By EditSuiteButtonBy = By.CssSelector(".yxKHfs .Cr3S77 .fa-pencil");
         private static readonly By SaveEditedSuiteBy = By.CssSelector(".gyRSLD .u0i1tV");
         private static readonly By SuiteNameInputForClearBy = By.CssSelector(".tsnqft .XRXnTf");
         private static readonly By SuiteNameFieldClearBy = By.CssSelector(".tsnqft .XRXnTf");
-        private static readonly By SuiteNameEditBy = By.Id("title");                
-        //private static readonly By SaveEditedSuiteButtonBy = By.CssSelector(".aEViRD .u0i1tV .ZwgkIF");
-
+        private static readonly By SuiteNameEditBy = By.Id("title");
         private static readonly By CreateCaseButtonBy = By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus");        
         private static readonly By CaseNameInputBy = By.Id("title");
-        private static readonly By SaveCaseButtonBy = By.Id("save-case");
-
-        private static readonly By CaseTitleBy = By.ClassName("wq7uNh");
+        private static readonly By SaveCaseButtonBy = By.Id("save-case");        
         private static readonly By CreatedCaseTitle = By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh");
-        //.Azji8w .EllwN3:nth-last-child(2)
-
         private static readonly By CaseEditBy = By.CssSelector(".tgn4gT .J4xngT");
-
         private static readonly By SuiteNameTitleBy = By.CssSelector(".hHBzWZ:last-child .fXc2Go");
         
 
@@ -65,12 +56,7 @@ namespace Qase.Pages
         public string GetSuiteName()
         {
             return Driver.FindElement(SuiteNameTitleBy).GetAttribute("innerText");
-        }
-
-        //public string GetCaseTitle()
-        //{
-        //    return Driver.FindElement(CaseTitleBy).GetAttribute("innerText");
-        //}
+        }                
 
         public string GetCreatedCaseTitle()
         {

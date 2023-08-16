@@ -8,31 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qase.Tests
+namespace Qase.Tests.UI
 {
     public class SuiteTests : BaseTest
     {
         [SetUp]
         public void SetUp()
-        {            
-            
+        {
+
         }
 
         [Test]
         public void CreateSuiteTest()
-        {            
+        {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Test_Suite_Last Suite")
+                .SetSuiteName("Test_Suite_Last")
                 .SetSuiteDescription("Created suite")
                 .SetSuitePreconditions("Precondition")
                 .Build();
-            
-            var ProjectTPPage = new ProjectTPPage(Driver);
-
+                        
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.CreateSuit(suite);
-            Thread.Sleep(2000);                        
+            Thread.Sleep(2000);
 
             Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Test_Suite_Last Suite"));
         }
@@ -41,7 +39,7 @@ namespace Qase.Tests
         public void EditSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Suite_Edit_Last2")                
+                .SetSuiteName("Suite_Edit_Last2")
                 .Build();
 
             var ProjectTPPage = new ProjectTPPage(Driver);
@@ -49,7 +47,7 @@ namespace Qase.Tests
             ProjectTPPage.OpenPage();
             Thread.Sleep(2000);
             ProjectTPPage.EditSuit(suite);
-            Thread.Sleep(2000);            
+            Thread.Sleep(2000);
 
             Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Suite_Edit_Last2"));
 
