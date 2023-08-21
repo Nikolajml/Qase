@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Qase.Models;
+﻿
+using BusinessObject.Models;
 
-namespace Qase.Utilities.Helpers
+namespace Core.Utilities.Helpers
 {
     public class TestDataHelper
     {
@@ -13,7 +9,5 @@ namespace Qase.Utilities.Helpers
         {
             return JsonHelper.FromJson(fileName).ToObject<Suite>();
         }
-
-        
     }
 }

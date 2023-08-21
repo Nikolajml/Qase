@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Qase.Utilities
+﻿namespace Core.Utilities
 {
     public class Endpoints
     {
@@ -25,7 +19,7 @@ namespace Qase.Utilities
         public static readonly string CREATE_PLAN = "v1/plan/{code}";
         public static readonly string GET_PLAN = "v1/plan/{code}/{id}";
         public static readonly string UPDATE_PLAN = "v1/plan/{code}/{id}";
-        public static readonly string DELETE_PLAN = "v1/plan/{code}/{id}";        
+        public static readonly string DELETE_PLAN = "v1/plan/{code}/{id}";
 
         public const string CREATE_DEFECT = "v1/defect/{code}";
         public const string GET_DEFECT = "v1/defect/{code}/{id}";

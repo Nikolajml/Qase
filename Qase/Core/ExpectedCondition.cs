@@ -1,13 +1,6 @@
-﻿using AngleSharp.Dom;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using OpenQA.Selenium;
 
-namespace Qase.Core
+namespace Core.Core
 {
     public static class ExpectedCondition
     {

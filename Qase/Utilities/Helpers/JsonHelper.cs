@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Qase.Utilities.Helpers
+namespace Core.Utilities.Helpers
 {
     public class JsonHelper
     {

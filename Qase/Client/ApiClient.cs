@@ -1,16 +1,8 @@
 ﻿using NLog;
-using Qase.Utilities.Configuration;
-using RestSharp.Authenticators;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp.Authenticators.OAuth2;
-using Newtonsoft.Json.Linq;
+using Core.Utilities.Configuration;
 
-namespace Qase.Client
+namespace Core.Client
 {
     public class ApiClient
     {
@@ -21,14 +13,15 @@ namespace Qase.Client
         public ApiClient()
         {
             var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
-            {   
+            {
                 ThrowOnAnyError = false,
                 MaxTimeout = 10000
-
-                // добавить хэдеры
             };
 
             _restClient = new RestClient(options);
+            _restClient.AddDefaultHeader("accept", "application/json");
+            _restClient.AddDefaultHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86");
+
         }
 
         public RestResponse Execute(RestRequest request)
@@ -51,6 +44,6 @@ namespace Qase.Client
             _logger.Info("Response Body: " + response.Content);
 
             return response.Data;
-        }       
+        }
     }
 }

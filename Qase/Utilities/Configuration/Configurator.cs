@@ -1,15 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BusinessObject.Models;
+using BusinessObject.Models.Enum;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Qase.Models.Enum;
-using Qase.Models;
 
 
-namespace Qase.Utilities.Configuration
+namespace Core.Utilities.Configuration
 {
     public static class Configurator
     {

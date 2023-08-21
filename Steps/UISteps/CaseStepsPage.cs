@@ -1,0 +1,31 @@
+﻿using BusinessObject.Models;
+using OpenQA.Selenium;
+
+namespace BusinessObject.Steps
+{
+    public class CaseStepsPage : BaseStep
+    {
+        public CaseStepsPage(IWebDriver driver) : base(driver)
+        {
+
+        }
+
+        public void CreateCase(Case Case)
+        {
+            ProjectTPPage.ClickToEllipsis();
+            ProjectTPPage.ClickToCaseButton();
+            ProjectTPPage.SetCaseName(Case.Title);
+            ProjectTPPage.ClickToSaveCaseButton();
+        }
+
+        public void EditCase(Case Case)
+        {
+            ProjectTPPage.ClickToCaseTitle();
+            ProjectTPPage.ClickToCaseEdit();
+            ProjectTPPage.ClickToCaseTitleField();
+            ProjectTPPage.ClearCaseTitleField();
+            ProjectTPPage.SetEditedCaseName(Case.Title);
+            ProjectTPPage.ClickToSaveCaseButton();
+        }
+    }
+}
