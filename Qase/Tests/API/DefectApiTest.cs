@@ -1,4 +1,5 @@
 ﻿using NLog;
+using NUnit.Allure.Attributes;
 using Qase.Models;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,14 @@ namespace Qase.Tests.API
 {
     public class DefectApiTest : BaseApiTest
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public string Id { get; set; }
 
         [Test, Order(1)]
+        [Description("Successful API test to create a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreateDefectTest()
         {
             var defectRequest = new Defect();
@@ -38,6 +42,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(2)]
+        [Description("Successful API test to get a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void GetDefectTest()
         {
             var defectRequest = new Defect();
@@ -57,6 +64,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(3)]
+        [Description("Successful API test to update a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void UpdateSuiteTest()
         {
             var defectRequest = new Defect();
@@ -78,6 +88,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(4)]
+        [Description("Successful API test to delete a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void DeleteSuiteTest()
         {
             var defectRequest = new Defect();

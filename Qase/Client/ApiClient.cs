@@ -14,16 +14,18 @@ namespace Qase.Client
 {
     public class ApiClient
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger(); // в параметры конструктора
 
         private readonly RestClient _restClient;
 
         public ApiClient()
         {
             var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
-            {                   
+            {   
                 ThrowOnAnyError = false,
                 MaxTimeout = 10000
+
+                // добавить хэдеры
             };
 
             _restClient = new RestClient(options);

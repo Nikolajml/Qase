@@ -19,13 +19,11 @@ namespace Qase.Steps
         public PlanTPPage CreatePlan(Plan plan)
         {
             PlanTPPage.ClickToCreatePlanButton();
-            PlanTPPage.WaitOpenPlanDetailsToInput();            
+            PlanTPPage.WaitOpenPlanDetailsToInput();
             PlanTPPage.SetPlanTitle(plan.Title);
             PlanTPPage.SetPlanDescription(plan.Description);
-            //Thread.Sleep(2000);            
             PlanTPPage.ClickToAddCaseButton();
-            //Thread.Sleep(2000);
-            PlanTPPage.ClickToControlIndicatorToChooseCase();            
+            PlanTPPage.ClickToControlIndicatorToChooseCase();
             PlanTPPage.ClickToDoneButton();
             PlanTPPage.ClickToSavePlanButton();
 
@@ -36,13 +34,12 @@ namespace Qase.Steps
         {
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
-            //Thread.Sleep(2000);
             PlanTPPage.WaitOpenPlanDetailsToInput();
             PlanTPPage.ClickToClearTitlePlanField();
             PlanTPPage.ClearTitlePlanField();
             PlanTPPage.EditPlanTitle(plan.Title);
             PlanTPPage.ClickToSaveEditButton();
-            
+
             return PlanTPPage;
         }
     }

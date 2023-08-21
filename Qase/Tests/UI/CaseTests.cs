@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Qase.Models;
 using Qase.Pages;
 using System;
@@ -11,36 +12,40 @@ namespace Qase.Tests.UI
 {
     public class CaseTests : BaseTest
     {
-        [Test]
+        [Test, Order(1)]
+        [Description("Successful UI test to create a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]        
         public void CreateCaseTest()
         {
             Case Case = new CaseBuilder()
-                .SetCaseTitle("New Case Test")
+                .SetCaseTitle("New Case Test UI")
                 .Build();                      
 
             ProjectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            ProjectTPPage.CreateCase(Case);
-            Thread.Sleep(2000);
+            ProjectTPPage.IsPageOpened();
+            CaseStepsPage.CreateCase(Case);
+            ProjectTPPage.WaitCaseTitle();
 
-            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo("New Case Test"));
+            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
         }
 
-        [Test]
+        [Test, Order(2)]
+        [Description("Successful UI test to edit a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void EditCaseTest()
         {
             Case Case = new CaseBuilder()
-                .SetCaseTitle("Edited Case Test")
-                .Build();
-
-            var ProjectTPPage = new ProjectTPPage(Driver);
+                .SetCaseTitle("Edited Case UI")
+                .Build();                       
 
             ProjectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            ProjectTPPage.EditCase(Case);
-            Thread.Sleep(2000);
+            ProjectTPPage.IsPageOpened();
+            CaseStepsPage.EditCase(Case);
+            ProjectTPPage.WaitCaseTitle();
 
-            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo("Edited Case Test"));
+            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
         }
     }
 }

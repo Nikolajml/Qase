@@ -1,4 +1,5 @@
 ﻿using NLog;
+using NUnit.Allure.Attributes;
 using Qase.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace Qase.Tests.API
         public string Id { get; set; }
 
         [Test, Order(1)]
+        [Description("Successful API test to create a Plan")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreatePlanTest()
         {   
             var planRequest = new Plan();
@@ -34,6 +38,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(2)]
+        [Description("Successful API test to get a Plan")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void GetPlanTest()
         {
             var planRequest = new Plan();
@@ -53,6 +60,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(3)]
+        [Description("Successful API test to update a Plan")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void UpdatePlanTest()
         {
             var planRequest = new Plan();
@@ -74,6 +84,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(4)]
+        [Description("Successful API test to delete a Plan")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void DeletePlanTest()
         {
             var planRequest = new Plan();

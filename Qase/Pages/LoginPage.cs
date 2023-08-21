@@ -13,10 +13,16 @@ namespace Qase.Pages
     {
         private static string END_POINT = "";
 
-        private static readonly By EmailInputBy = By.Name("email");
-        private static readonly By PasswordInputBy = By.Name("password");
-        private static readonly By RememberMeCheckboxBy = By.Name("remember");
-        private static readonly By SignInButtonBy = By.ClassName("FzFLHc");
+        //private readonly By EmailInputBy = By.XPath("//*[@name='email']");                   //By.Name("email");
+        //private readonly By PasswordInputBy = By.XPath("//*[@name='password']");             //Name("password");
+        //private readonly By RememberMeCheckboxBy = By.XPath("//*[@name='remember']");          //Name("remember");
+        //private By SignInButtonBy = By.XPath("//*[@class='FzFLHc']");                        //ClassName("FzFLHc");
+
+        private IWebElement EmailInputBy => Driver.FindElement(By.XPath("//*[@name='email']"));
+        private IWebElement PasswordInputBy => Driver.FindElement(By.XPath("//*[@name='password']"));
+        private IWebElement RememberMeCheckboxBy => Driver.FindElement(By.XPath("//*[@name='remember']"));
+        private IWebElement SignInButtonBy => Driver.FindElement(By.XPath("//*[@class='FzFLHc']"));
+                
 
         public LoginPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -29,7 +35,7 @@ namespace Qase.Pages
 
         public override bool IsPageOpened()
         {
-            return WaitService.GetVisibleElement(SignInButtonBy) != null;
+            return WaitService.GetVisibleElement(RememberMeCheckboxBy) != null;
         }
 
         public override void OpenPage()
@@ -39,22 +45,22 @@ namespace Qase.Pages
 
         private void SetUserName(string username)
         {
-            Driver.FindElement(EmailInputBy).SendKeys(username);
+            EmailInputBy.SendKeys(username);
         }
 
         private void SetPassword(string password)
         {
-            Driver.FindElement(PasswordInputBy).SendKeys(password);
+            PasswordInputBy.SendKeys(password);
         }
 
         private void ClickRememberMeCheckBox()
         {
-            Driver.FindElement(RememberMeCheckboxBy).Click();
+            RememberMeCheckboxBy.Click();
         }
 
         private void ClickSignInButton()
         {
-            Driver.FindElement(SignInButtonBy).Click();
+            SignInButtonBy.Click();
         }
 
 

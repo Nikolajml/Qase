@@ -27,9 +27,9 @@ namespace Qase.Utilities
         public static readonly string UPDATE_PLAN = "v1/plan/{code}/{id}";
         public static readonly string DELETE_PLAN = "v1/plan/{code}/{id}";        
 
-        public static readonly string CREATE_DEFECT = "v1/defect/{code}";
-        public static readonly string GET_DEFECT = "v1/defect/{code}/{id}";
-        public static readonly string UPDATE_DEFECT = "v1/defect/{code}/{id}";
-        public static readonly string DELETE_DEFECT = "v1/defect/{code}/{id}";
+        public const string CREATE_DEFECT = "v1/defect/{code}";
+        public const string GET_DEFECT = "v1/defect/{code}/{id}";
+        public const string UPDATE_DEFECT = "v1/defect/{code}/{id}";
+        public const string DELETE_DEFECT = "v1/defect/{code}/{id}";
     }
 }

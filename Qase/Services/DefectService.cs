@@ -20,11 +20,11 @@ namespace Qase.Services
 
         public DefectApiModel GetDefect(Defect defect, string id)
         {
-            var request = new RestRequest(Endpoints.GET_DEFECT)
+            var request = new RestRequest(Endpoints.GET_DEFECT)         // заменить на RestClient и вынести на уровень конструктора
                 .AddUrlSegment("code", defect.Code)
                 .AddUrlSegment("id", id)
                 .AddHeader("accept", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")  
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);
@@ -34,8 +34,8 @@ namespace Qase.Services
         {
             var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
                 .AddUrlSegment("code", defect.Code)
-                .AddHeader("accept", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddHeader("accept", "application/json")                                                // вынести в ApiClient
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86") // вынести в ApiClient
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);

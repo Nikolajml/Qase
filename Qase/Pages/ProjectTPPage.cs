@@ -13,24 +13,43 @@ namespace Qase.Pages
     {
         private static string END_POINT = "project/TP";
 
-        private static readonly By SuiteButtonBy = By.Id("create-suite-button");
-        private static readonly By SuiteNameInputBy = By.Id("title");
-        private static readonly By SuiteDescriptionInputBy = By.Id("description");
-        private static readonly By SuitePreconditionsInputBy = By.Id("preconditions");
-        private static readonly By CreateSuiteButtonBy = By.CssSelector(".CCVJRT .u0i1tV .ZwgkIF");
-        private static readonly By EllipsisEditBy = By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h");        
-        private static readonly By EditSuiteButtonBy = By.CssSelector(".yxKHfs .Cr3S77 .fa-pencil");
-        private static readonly By SaveEditedSuiteBy = By.CssSelector(".gyRSLD .u0i1tV");
-        private static readonly By SuiteNameInputForClearBy = By.CssSelector(".tsnqft .XRXnTf");
-        private static readonly By SuiteNameFieldClearBy = By.CssSelector(".tsnqft .XRXnTf");
-        private static readonly By SuiteNameEditBy = By.Id("title");
-        private static readonly By CreateCaseButtonBy = By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus");        
-        private static readonly By CaseNameInputBy = By.Id("title");
-        private static readonly By SaveCaseButtonBy = By.Id("save-case");        
-        private static readonly By CreatedCaseTitle = By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh");
-        private static readonly By CaseEditBy = By.CssSelector(".tgn4gT .J4xngT");
-        private static readonly By SuiteNameTitleBy = By.CssSelector(".hHBzWZ:last-child .fXc2Go");
-        
+        //private static readonly By SuiteButtonBy = By.XPath("//*[@id='create-suite-button']");        //By.Id("create-suite-button");
+        //private static readonly By SuiteNameInputBy = By.XPath("//*[@id='title']");            //By.Id("title");
+        //private static readonly By SuiteDescriptionInputBy = By.XPath("//*[@id='description']");        //By.Id("description");
+        //private static readonly By SuitePreconditionsInputBy = By.XPath("//*[@id='preconditions']");     //By.Id("preconditions");
+        //private static readonly By CreateSuiteButtonBy = By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']");           //By.XPath("(//*[@class='j4xaa7 u0i1tV J4xngT'])[4]");       //By.CssSelector(".CCVJRT .u0i1tV .ZwgkIF");
+        //private static readonly By EllipsisEditBy = By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h");
+        //private static readonly By EditSuiteButtonBy = By.XPath("//div[@class='Cr3S77']//i[@class='far fa-pencil']");         //By.CssSelector(".yxKHfs .Cr3S77 .fa-pencil");
+        //private static readonly By SaveEditedSuiteBy = By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']");         //By.CssSelector(".gyRSLD .u0i1tV");
+        //private static readonly By SuiteNameInputForClearBy = By.XPath("//*[@class='XRXnTf']");
+        //private static readonly By SuiteNameFieldClearBy = By.XPath("//*[@class='XRXnTf']");
+        //private static readonly By SuiteNameEditBy = By.XPath("//*[@id='title']");       //By.Id("title");
+        //private static readonly By CreateCaseButtonBy = By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus");
+        //private static readonly By CaseNameInputBy = By.XPath("//*[@id='title']");       //By.Id("title");
+        //private static readonly By SaveCaseButtonBy = By.XPath("//*[@id='save-case']");      //By.Id("save-case");        
+        //private static readonly By CreatedCaseTitle = By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh");
+        //private static readonly By CaseEditBy = By.CssSelector(".tgn4gT .J4xngT");
+        //private static readonly By SuiteNameTitleBy = By.CssSelector(".hHBzWZ:last-child .fXc2Go");
+
+        //private IWebElement CreateNewProjectButtonBy => Driver.FindElement(By.Id("createButton"));
+
+        private IWebElement SuiteButtonBy => Driver.FindElement(By.XPath("//*[@id='create-suite-button']"));
+        private IWebElement SuiteNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
+        private IWebElement SuiteDescriptionInputBy => Driver.FindElement(By.XPath("//*[@id='description']"));
+        private IWebElement SuitePreconditionsInputBy => Driver.FindElement(By.XPath("//*[@id='preconditions']"));
+        private IWebElement CreateSuiteButtonBy => Driver.FindElement(By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']"));
+        private IWebElement EllipsisEditBy => Driver.FindElement(By.XPath(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h"));
+        private IWebElement EditSuiteButtonBy => Driver.FindElement(By.XPath("//div[@class='Cr3S77']//i[@class='far fa-pencil']"));
+        private IWebElement SaveEditedSuiteBy => Driver.FindElement(By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']"));
+        private IWebElement SuiteNameInputForClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
+        private IWebElement SuiteNameFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
+        private IWebElement SuiteNameEditBy => Driver.FindElement(By.XPath("//*[@id='title']"));
+        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.XPath(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
+        private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
+        private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
+        private IWebElement CreatedCaseTitle => Driver.FindElement(By.XPath(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
+        private IWebElement CaseEditBy => Driver.FindElement(By.XPath(".tgn4gT .J4xngT"));
+        private IWebElement SuiteNameTitleBy => Driver.FindElement(By.XPath(".hHBzWZ:last-child .fXc2Go"));
 
         public ProjectTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -52,167 +71,152 @@ namespace Qase.Pages
         }
 
 
-        // METHODS TO ASSERTS
-        public string GetSuiteName()
-        {
-            return Driver.FindElement(SuiteNameTitleBy).GetAttribute("innerText");
-        }                
-
-        public string GetCreatedCaseTitle()
-        {
-            return Driver.FindElement(CreatedCaseTitle).GetAttribute("innerText");
-        }
-
-
         // CREATE SUITE
-        private void ClickToSuiteButton()
+        public void ClickToSuiteButton()
         {
-            Driver.FindElement(SuiteButtonBy).Click();
+            SuiteButtonBy.Click();
         }
 
-        private void SetSuiteName(string suiteName)
+        public void SetSuiteName(string suiteName)
         {
-            Driver.FindElement(SuiteNameInputBy).SendKeys(suiteName);
-        }        
-
-        private void SetSuiteDescriptione(string suiteDescription)
-        {
-            Driver.FindElement(SuiteDescriptionInputBy).SendKeys(suiteDescription);
-        }
-        private void SetSuitePreconditionse(string suitePreconditions)
-        {
-            Driver.FindElement(SuitePreconditionsInputBy).SendKeys(suitePreconditions);
+            SuiteNameInputBy.SendKeys(suiteName);
         }
 
-        private void ClickToCreateSuiteButton()
+        public void SetSuiteDescriptione(string suiteDescription)
         {
-            Driver.FindElement(CreateSuiteButtonBy).Click();
+            SuiteDescriptionInputBy.SendKeys(suiteDescription);
+        }
+        public void SetSuitePreconditionse(string suitePreconditions)
+        {
+            SuitePreconditionsInputBy.SendKeys(suitePreconditions);
         }
 
-        public ProjectTPPage CreateSuit(Suite suite)
+        public void ClickToCreateSuiteButton()
         {
-            ClickToSuiteButton();
-            SetSuiteName(suite.Name);
-            SetSuiteDescriptione(suite.Description);
-            SetSuitePreconditionse(suite.Preconditions);            
-            ClickToCreateSuiteButton();
-
-            return this;
+            CreateSuiteButtonBy.Click();
         }
 
 
         //EDIT SUITE
-        private void ClickToEllipsis()
+        public void ClickToEllipsis()
         {
-            Driver.FindElement(EllipsisEditBy).Click();
+            EllipsisEditBy.Click();
         }
 
-        private void ClickToEdit()
+        public void ClickToEdit()
         {
-            Driver.FindElement(EditSuiteButtonBy).Click();
+            EditSuiteButtonBy.Click();
         }
 
-        private void ClickToClearNameField()
+        public void ClickToClearNameField()
         {
-            Driver.FindElement(SuiteNameInputForClearBy).Click();
+            SuiteNameInputForClearBy.Click();
         }
 
-        private void ClearNameField()
+        public void ClearNameField()
         {
-            Driver.FindElement(SuiteNameFieldClearBy).Clear();
+            SuiteNameFieldClearBy.Clear();
         }
 
-        private void EditSuiteName(string suiteName)
+        public void EditSuiteName(string suiteName)
         {
-            Driver.FindElement(SuiteNameEditBy).SendKeys(suiteName);
-        }             
-        
-        private void ClickToSaveEditButton()
-        {
-            Driver.FindElement(SaveEditedSuiteBy).Click();
+            SuiteNameEditBy.SendKeys(suiteName);
         }
 
-        public ProjectTPPage EditSuit(Suite suite)
+        public void ClickToSaveEditButton()
         {
-            ClickToEllipsis();
-            ClickToEdit();
-            Thread.Sleep(2000);
-            ClickToClearNameField();
-            ClearNameField();
-            EditSuiteName(suite.Name);            
-            ClickToSaveEditButton();
+            SaveEditedSuiteBy.Click();
+        }
 
-            return this;
+
+        // WAIT FOR EDITE SUITE
+        public bool WaitInputNameFieldEditSuite()
+        {
+            return WaitService.GetVisibleElement(SuiteNameInputForClearBy) != null;
         }
 
 
         // CREATED CASE
-        private void ClickToCaseButton()
+        public void ClickToCaseButton()
         {
-            Driver.FindElement(CreateCaseButtonBy).Click();
-        }                
-
-        private void SetCaseName(string caseName)
-        {
-            Driver.FindElement(CaseNameInputBy).SendKeys(caseName);
-        }
-                
-
-        private void ClickToSaveCaseButton()
-        {
-            Driver.FindElement(SaveCaseButtonBy).Click();
+            CreateCaseButtonBy.Click();
         }
 
-        public ProjectTPPage CreateCase(Case Case)
+        public void SetCaseName(string caseName)
         {
-            ClickToEllipsis();
-            ClickToCaseButton();
-            Thread.Sleep(2000);            
-            SetCaseName(Case.Title);                        
-            ClickToSaveCaseButton();
+            CaseNameInputBy.SendKeys(caseName);
+        }
 
-            return this;
-        } 
+        public void ClickToSaveCaseButton()
+        {
+            SaveCaseButtonBy.Click();
+        }
+
+
+        // WAIT FOR CREATE CASE
+        public bool WaitInputNameFieldCreateCase()
+        {
+            return WaitService.GetVisibleElement(CaseNameInputBy) != null;
+        }
+
+        public bool WaitCaseTitle()
+        {
+            return WaitService.GetVisibleElement(CreatedCaseTitle) != null;
+        }
 
 
         // EDIT CASE
-        private void ClickToCaseTitle()
+        public void ClickToCaseTitle()
         {
-            Driver.FindElement(CreatedCaseTitle).Click();
+            CreatedCaseTitle.Click();
         }
 
-        private void ClickToCaseEdit()
+        public void ClickToCaseEdit()
         {
-            Driver.FindElement(CaseEditBy).Click();
+            CaseEditBy.Click();
         }
 
-        private void ClickToCaseTitleField()
+        public void ClickToCaseTitleField()
         {
-            Driver.FindElement(CaseNameInputBy).Click();
+            CaseNameInputBy.Click();
         }
 
-        private void ClearCaseTitleField()
+        public void ClearCaseTitleField()
         {
-            Driver.FindElement(CaseNameInputBy).Clear();
+            CaseNameInputBy.Clear();
         }
 
-        private void SetEditedCaseName(string caseName)
+        public void SetEditedCaseName(string caseName)
         {
-            Driver.FindElement(CaseNameInputBy).SendKeys(caseName);
+            CaseNameInputBy.SendKeys(caseName);
         }
 
-        public ProjectTPPage EditCase(Case Case)
-        {
-            ClickToCaseTitle();
-            Thread.Sleep(2000);
-            ClickToCaseEdit();
-            Thread.Sleep(2000);
-            ClickToCaseTitleField();
-            ClearCaseTitleField();
-            SetEditedCaseName(Case.Title);  
-            ClickToSaveCaseButton();
 
-            return this;
+        // WAIT FOR EDIT CASE
+        public bool WaitCaseEditButton()
+        {
+            return WaitService.GetVisibleElement(CaseEditBy) != null;
         }
-    }    
+        public bool WaitCaseNameInputField()
+        {
+            return WaitService.GetVisibleElement(CaseNameInputBy) != null;
+        }
+
+        public bool WaitSuiteName()
+        {
+            return WaitService.GetVisibleElement(SuiteNameTitleBy) != null;
+        }
+
+
+        // METHODS TO ASSERTS
+        public string GetSuiteName()
+        {
+            return SuiteNameTitleBy.GetAttribute("innerText");
+        }
+
+        public string GetCreatedCaseTitle()
+        {
+            return CreatedCaseTitle.GetAttribute("innerText");
+        }
+    }
 }

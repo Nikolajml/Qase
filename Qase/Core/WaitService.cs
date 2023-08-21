@@ -21,11 +21,11 @@ namespace Qase.Core
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
         }
 
-        public IWebElement GetVisibleElement(By by)
+        public IWebElement GetVisibleElement(IWebElement locator)
         {
             try
             {
-                return _wait.Until(ExpectedConditions.ElementIsVisible(by));
+                return _wait.Until(ExpectedConditions.ElementIsVisible(locator));
             }
             catch (Exception e)
             {

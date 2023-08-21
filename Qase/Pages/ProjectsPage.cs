@@ -12,7 +12,9 @@ namespace Qase.Pages
     {
         private static string END_POINT = "projects";
 
-        private static readonly By CreateNewProjectButtonBy = By.Id("createButton");
+        //private static readonly By CreateNewProjectButtonBy = By.Id("createButton");                
+
+        private IWebElement CreateNewProjectButtonBy => Driver.FindElement(By.XPath("//button[@class='j4xaa7 u0i1tV J4xngT']"));
 
         public ProjectsPage(IWebDriver? driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -33,8 +35,5 @@ namespace Qase.Pages
         {
             Driver.Navigate().GoToUrl(BaseTest.BaseUrl + END_POINT);
         }
-
-
-
     }
 }

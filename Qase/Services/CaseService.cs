@@ -18,6 +18,7 @@ namespace Qase.Services
 
         public CaseService(ApiClient apiClient) : base(apiClient)
         {
+
         }
 
         public CaseApiModel GetCase(Case Case, string id)

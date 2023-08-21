@@ -30,6 +30,8 @@ namespace Qase.Tests.UI
 
         public PlanStepsPage PlanStepsPage { get; set; }
         public DefectStepsPage DefectStepsPage { get; set; }
+        public SuiteStepsPage SuiteStepsPage { get; set; }
+        public CaseStepsPage CaseStepsPage { get; set; }
 
 
     [OneTimeSetUp] // Impliment OneTimeSetup
@@ -50,8 +52,9 @@ namespace Qase.Tests.UI
             DefectTPPage = new DefectsTPPage(Driver);
             DefectStepsPage = new DefectStepsPage(Driver);
 
-
             ProjectTPPage = new ProjectTPPage(Driver);
+            SuiteStepsPage = new SuiteStepsPage(Driver);
+            CaseStepsPage = new CaseStepsPage(Driver);
         }
 
         [OneTimeTearDown] // Impliment OneTearDown

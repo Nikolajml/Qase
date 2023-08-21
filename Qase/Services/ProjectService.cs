@@ -53,7 +53,5 @@ namespace Qase.Services
 
             return _apiClient.Execute<ProjectApiModel>(request);
         }
-
-
     }
 }

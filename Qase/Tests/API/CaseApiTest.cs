@@ -1,4 +1,5 @@
 ﻿using NLog;
+using NUnit.Allure.Attributes;
 using Qase.Models;
 using Qase.Services;
 using System;
@@ -16,6 +17,9 @@ namespace Qase.Tests.API
         public string Id { get; set; }
 
         [Test, Order(1)]
+        [Description("Successful API test to create a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreateCaseTest()
         {   
             var caseRequest = new Case();
@@ -37,6 +41,10 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(2)]
+        [Description("Successful API test to get a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
+
         public void GetCaseTest()
         {
             var caseRequest = new Case();
@@ -56,6 +64,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(3)]
+        [Description("Successful API test to update a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void UpdateCaseTest()
         {
             var caseRequest = new Case();
@@ -76,6 +87,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(4)]
+        [Description("Successful test to delete a Case")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void DeleteCaseTest()
         {
             var caseRequest = new Case();

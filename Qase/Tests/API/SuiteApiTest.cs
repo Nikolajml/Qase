@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using NLog;
+using NUnit.Allure.Attributes;
 using Qase.Models;
 using Qase.Services;
 using Qase.Utilities.Helpers;
@@ -18,6 +19,9 @@ namespace Qase.Tests.API
         public string Id { get; set; }
 
         [Test, Order(1)]
+        [Description("Successful API test to create a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreateSuiteTest()
         {
             var suiteRequest = new Suite();
@@ -39,6 +43,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(2)]
+        [Description("Successful API test to get a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void GetSuiteTest()
         {
             var suiteRequest = new Suite();
@@ -58,6 +65,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(3)]
+        [Description("Successful API test to update a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void UpdateSuiteTest()
         {
             var suiteRequest = new Suite();
@@ -78,6 +88,9 @@ namespace Qase.Tests.API
         }
 
         [Test, Order(4)]
+        [Description("Successful API test to delete a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void DeleteSuiteTest()
         {
             var suiteRequest = new Suite();

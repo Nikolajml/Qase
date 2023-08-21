@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Qase.Models;
 using Qase.Pages;
 using System;
@@ -13,6 +14,9 @@ namespace Qase.Tests.UI
     public class DefectTests : BaseTest
     {
         [Test, Order(1)]
+        [Description("Successful UI test to create a Defect")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreateDefectTest()
         {
             Defect defect = new DefectBuilder()
@@ -31,11 +35,13 @@ namespace Qase.Tests.UI
             DefectTPPage.WaitDefectDescription();
 
             Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult));
-
         }
 
 
         [Test, Order(2)]
+        [Description("Successful UI test to edit a Defect")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void EditDefectTest()
         {
             Defect defect = new DefectBuilder()

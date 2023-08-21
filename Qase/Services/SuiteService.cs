@@ -16,6 +16,7 @@ namespace Qase.Services
     {
         public SuiteService(ApiClient apiClient) : base(apiClient)
         {
+
         }
 
         public SuiteApiModel GetSuite(Suite suite, string id)

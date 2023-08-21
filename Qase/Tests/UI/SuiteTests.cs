@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Qase.Models;
 using Qase.Pages;
 using Qase.Utilities.Configuration;
@@ -12,45 +13,43 @@ namespace Qase.Tests.UI
 {
     public class SuiteTests : BaseTest
     {
-        [SetUp]
-        public void SetUp()
-        {
 
-        }
-
-        [Test]
+        [Test, Order(1)]
+        [Description("Successful UI test to create a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void CreateSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Test_Suite_Last")
+                .SetSuiteName("Suite")
                 .SetSuiteDescription("Created suite")
                 .SetSuitePreconditions("Precondition")
                 .Build();
                         
             ProjectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            ProjectTPPage.CreateSuit(suite);
-            Thread.Sleep(2000);
+            ProjectTPPage.IsPageOpened();
+            SuiteStepsPage.CreateSuit(suite);
+            Thread.Sleep(1000);
 
-            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Test_Suite_Last Suite"));
+            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo(suite.Name));
         }
 
-        [Test]
+        [Test, Order(2)]
+        [Description("Successful UI test to edit a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
         public void EditSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("Suite_Edit_Last2")
+                .SetSuiteName("EditSuite")
                 .Build();
-
-            var ProjectTPPage = new ProjectTPPage(Driver);
-
+            
             ProjectTPPage.OpenPage();
-            Thread.Sleep(2000);
-            ProjectTPPage.EditSuit(suite);
-            Thread.Sleep(2000);
+            ProjectTPPage.IsPageOpened();
+            SuiteStepsPage.EditSuit(suite);
+            Thread.Sleep(1000);
 
-            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo("Suite_Edit_Last2"));
-
+            Assert.That(ProjectTPPage.GetSuiteName(), Is.EqualTo(suite.Name));
         }
     }
 }
