@@ -1,5 +1,6 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NUnit.Allure.Attributes;
+using NUnit.Framework.Internal;
 
 namespace Tests.UI
 {
@@ -10,6 +11,7 @@ namespace Tests.UI
         [Description("Successful UI test to create a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("UI")]
         public void CreatePlanTest()
         {
             Plan plan = new PlanBuilder()
@@ -17,9 +19,10 @@ namespace Tests.UI
                 .SetPlanDescription("Description for New Plan")
                 .Build();                                                   // Что, если я буду делать клин-уп
 
-            PlanTPPage.OpenPage();
-            //I use IsPageOpened method
+            PlanTPPage.OpenPage();            
             PlanStepsPage.CreatePlan(plan);
+
+            entityHandler.PlansForDelete.Add(plan);
 
             Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
 
@@ -36,6 +39,7 @@ namespace Tests.UI
         [Description("Successful UI test to edit a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("UI")]
         public void EditPlanTest()
         {
             Plan plan = new PlanBuilder()

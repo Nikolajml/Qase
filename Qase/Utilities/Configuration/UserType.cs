@@ -1,4 +1,4 @@
-﻿namespace BusinessObject.Models.Enum
+﻿namespace Core.Utilities.Configuration 
 {
     public enum UserType
     {

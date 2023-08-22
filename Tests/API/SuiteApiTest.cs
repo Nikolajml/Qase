@@ -1,4 +1,4 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NLog;
 using NUnit.Allure.Attributes;
 
@@ -8,29 +8,38 @@ namespace Tests.API
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public string Id { get; set; }
+        public Suite suite { get; set; }
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            suite = new Suite()
+            {
+                Code = "OE",
+                Name = "Suite_api_New"
+            };
+        }
 
         [Test, Order(1)]
         [Description("Successful API test to create a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void CreateSuiteTest()
-        {
-            var suiteRequest = new Suite();
-            suiteRequest.Code = "OE";
-            suiteRequest.Name = "Case_api_New";
+        {            
+            var suiteResponse = _suiteService.CreateSuite(suite);
 
-            var suiteResponse = _suiteService.CreateSuite(suiteRequest);
+            suite.Id = suiteResponse.result.id.ToString();
 
             Console.WriteLine($"Case Status: {suiteResponse.status}");
             Console.WriteLine($"Case Id: {suiteResponse.result.id}");
 
-            Id = suiteResponse.result.id.ToString();
+            entityHandler.SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
             });
         }
 
@@ -38,13 +47,11 @@ namespace Tests.API
         [Description("Successful API test to get a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void GetSuiteTest()
-        {
-            var suiteRequest = new Suite();
-            suiteRequest.Code = "OE";
-
-            var suiteResponse = _suiteService.GetSuite(suiteRequest, Id);
-            _logger.Info("Case: " + suiteResponse.ToString);
+        {         
+            var suiteResponse = _suiteService.GetSuite(suite);
+            _logger.Info("Case: " + suiteResponse.ToString());
 
             Console.WriteLine($"Case Status: {suiteResponse.status}");
             Console.WriteLine($"Case Id: {suiteResponse.result.id}");
@@ -52,22 +59,21 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
             });
         }
-
+        
         [Test, Order(3)]
         [Description("Successful API test to update a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void UpdateSuiteTest()
-        {
-            var suiteRequest = new Suite();
-            suiteRequest.Code = "OE";
-            suiteRequest.Name = "Updated Suite Name API";
-            suiteRequest.Description = "Updated Description API";
+        {            
+            suite.Name = "Updated Suite Name API";
+            suite.Description = "Updated Description API";
 
-            var suiteResponse = _suiteService.UpdateSuite(suiteRequest, Id);
+            var suiteResponse = _suiteService.UpdateSuite(suite);
 
             Console.WriteLine($"Case Status: {suiteResponse.status}");
             Console.WriteLine($"Case Id: {suiteResponse.result.id}");
@@ -75,7 +81,7 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
             });
         }
 
@@ -83,12 +89,10 @@ namespace Tests.API
         [Description("Successful API test to delete a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void DeleteSuiteTest()
-        {
-            var suiteRequest = new Suite();
-            suiteRequest.Code = "OE";
-
-            var suiteResponse = _suiteService.DeleteSuite(suiteRequest, Id);
+        {   
+             var suiteResponse = _suiteService.DeleteSuite(suite);
             _logger.Info("Case: " + suiteResponse.ToString);
 
             Console.WriteLine($"Case Status: {suiteResponse.status}");
@@ -97,8 +101,14 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
-            });
+                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
+            });                        
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            entityHandler.DeletePlans();
         }
     }
 }

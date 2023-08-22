@@ -1,8 +1,8 @@
-﻿using BusinessObject.Models;
-using BusinessObject.Pages;
+﻿using UI.Models;
+using UI.Pages;
 using OpenQA.Selenium;
 
-namespace BusinessObject.Steps
+namespace Steps.UISteps
 {
     public class PlanStepsPage : BaseStep
     {
@@ -11,7 +11,7 @@ namespace BusinessObject.Steps
 
         }
 
-        public PlanTPPage CreatePlan(Plan plan)
+        public void CreatePlan(Plan plan)
         {
             PlanTPPage.ClickToCreatePlanButton();
             PlanTPPage.SetPlanTitle(plan.Title);
@@ -20,11 +20,9 @@ namespace BusinessObject.Steps
             PlanTPPage.ClickToControlIndicatorToChooseCase();
             PlanTPPage.ClickToDoneButton();
             PlanTPPage.ClickToSavePlanButton();
-
-            return PlanTPPage;
         }
 
-        public PlanTPPage EditPlan(Plan plan)
+        public void EditPlan(Plan plan)
         {
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
@@ -32,8 +30,6 @@ namespace BusinessObject.Steps
             PlanTPPage.ClearTitlePlanField();
             PlanTPPage.EditPlanTitle(plan.Title);
             PlanTPPage.ClickToSaveEditButton();
-
-            return PlanTPPage;
         }
     }
 }

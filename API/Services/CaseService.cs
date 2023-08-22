@@ -1,11 +1,11 @@
 ﻿using NLog;
 using RestSharp;
-using BusinessObject.ResponseAPIModels;
-using BusinessObject.Models;
+using API.ResponseAPIModels;
+using UI.Models;
 using Core.Utilities;
 using Core.Client;
 
-namespace BusinessObject.Services
+namespace API.Services
 {
     public class CaseService : BaseService
     {
@@ -29,16 +29,10 @@ namespace BusinessObject.Services
         public CaseApiModel CreateCase(Case Case)
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-                .AddUrlSegment("code", Case.Code)
-                .AddHeader("accept", "application/json")
-                .AddBody(Case);
+                .AddUrlSegment("code", Case.Code)                
+                .AddBody(Case);                        
 
-
-            var t = _apiClient.Execute<CaseApiModel>(request);
-            Console.WriteLine($"Case Status: {t.status}");
-            Console.WriteLine($"Case Id: {t.result.id}");
-
-            return t;
+            return _apiClient.Execute<CaseApiModel>(request); ;
         }
 
         public CaseApiModel UpdateCase(Case Case)
@@ -51,7 +45,7 @@ namespace BusinessObject.Services
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
-        public CaseApiModel DeleteSuite(Case Case)
+        public CaseApiModel DeleteCase(Case Case)
         {
             var request = new RestRequest(Endpoints.DELETE_CASE, Method.Delete)
                 .AddUrlSegment("code", Case.Code)

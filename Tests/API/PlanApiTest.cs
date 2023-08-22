@@ -1,6 +1,7 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NLog;
 using NUnit.Allure.Attributes;
+using API.Services;
 
 namespace Tests.API
 {
@@ -8,26 +9,32 @@ namespace Tests.API
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public string Id { get; set; }
+        public Plan plan { get; set; }
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            plan = new Plan()
+            {
+                Code = "OE",
+                Title = "New Defect API",
+                Cases = new List<int> { 50 }
+            };
+        }
 
         [Test, Order(1)]
         [Description("Successful API test to create a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void CreatePlanTest()
-        {
-            var planRequest = new Plan();
-            planRequest.Code = "OE";
-            planRequest.Title = "Plan_api";
-            planRequest.Cases = new List<int> { 50 };
+        {    
+            var planResponse = _planService.CreatePlan(plan);
 
-            var planResponse = _planService.CreatePlan(planRequest);
+            plan.Id = planResponse.result.id.ToString();
 
-            Id = planResponse.result.id.ToString();
-
-
-            Console.WriteLine($"Case Status: {planResponse.status}");
-            Console.WriteLine($"Case Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.status}");
+            Console.WriteLine($"Plan Id: {planResponse.result.id}");
 
             Assert.AreEqual(true, planResponse.status);
         }
@@ -36,21 +43,19 @@ namespace Tests.API
         [Description("Successful API test to get a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void GetPlanTest()
         {
-            var planRequest = new Plan();
-            planRequest.Code = "OE";
-
-            var planResponse = _planService.GetPlan(planRequest, Id);
+            var planResponse = _planService.GetPlan(plan);
             _logger.Info("Case: " + planResponse.ToString());
 
-            Console.WriteLine($"Case Status: {planResponse.status}");
-            Console.WriteLine($"Case Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.status}");
+            Console.WriteLine($"Plan Id: {planResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, planResponse.status);
-                Assert.AreEqual(Id, planResponse.result.id.ToString());
+                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
             });
         }
 
@@ -58,23 +63,22 @@ namespace Tests.API
         [Description("Successful API test to update a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void UpdatePlanTest()
-        {
-            var planRequest = new Plan();
-            planRequest.Code = "OE";
-            planRequest.Title = "Updated Plan Title API";
-            planRequest.Description = "Updated Plan Description API";
-            planRequest.Cases = new List<int> { 50 };
+        {            
+            plan.Title = "Updated Plan Title API";
+            plan.Description = "Updated Plan Description API";
+            plan.Cases = new List<int> { 50 };
 
-            var planResponse = _planService.UpdatePlan(planRequest, Id);
+            var planResponse = _planService.UpdatePlan(plan);
 
-            Console.WriteLine($"Case Status: {planResponse.status}");
-            Console.WriteLine($"Case Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.status}");
+            Console.WriteLine($"Plan Id: {planResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(planResponse.status);
-                Assert.AreEqual(Id, planResponse.result.id.ToString());
+                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
             });
         }
 
@@ -82,22 +86,26 @@ namespace Tests.API
         [Description("Successful API test to delete a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void DeletePlanTest()
         {
-            var planRequest = new Plan();
-            planRequest.Code = "OE";
-
-            var planResponse = _planService.DeletePlan(planRequest, Id);
+            var planResponse = _planService.DeletePlan(plan);
             _logger.Info("Case: " + planResponse.ToString());
 
-            Console.WriteLine($"Case Status: {planResponse.status}");
-            Console.WriteLine($"Case Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.status}");
+            Console.WriteLine($"Plan Id: {planResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, planResponse.status);
-                Assert.AreEqual(Id, planResponse.result.id.ToString());
+                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
             });
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            entityHandler.DeletePlans();
         }
     }
 }

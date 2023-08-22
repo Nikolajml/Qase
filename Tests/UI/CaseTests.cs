@@ -1,4 +1,4 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NUnit.Allure.Attributes;
 
 namespace Tests.UI
@@ -21,8 +21,7 @@ namespace Tests.UI
             CaseStepsPage.CreateCase(Case);
 
             //Case.Id = CaseStepsPage.GetCaseInfo();
-
-            //EntityHandler.CasesForDelete.Add(Case);
+            //entityHandler.CasesForDelete.Add(Case);
 
             Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
         }
@@ -31,6 +30,7 @@ namespace Tests.UI
         [Description("Successful UI test to edit a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("UI")]
         public void EditCaseTest()
         {
             Case Case = new CaseBuilder()
@@ -42,6 +42,12 @@ namespace Tests.UI
             CaseStepsPage.EditCase(Case);
 
             Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            entityHandler.DeleteCases();
         }
     }
 }

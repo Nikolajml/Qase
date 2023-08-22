@@ -2,10 +2,11 @@
 using NUnit.Allure.Core;
 using OpenQA.Selenium;
 using NUnit.Framework.Interfaces;
-using BusinessObject.Pages;
+using UI.Pages;
 using Core.Utilities.Configuration;
-using BusinessObject.Steps;
+using Steps.UISteps;
 using Core.Core;
+using Core.Utilities;
 
 namespace Tests.UI
 {
@@ -16,6 +17,8 @@ namespace Tests.UI
 
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
+        protected EntityHandler entityHandler = new EntityHandler();
+
         public LoginPage LoginPage { get; set; }
         public ProjectsPage ProjectsPage { get; set; }
         public PlanTPPage PlanTPPage { get; set; }

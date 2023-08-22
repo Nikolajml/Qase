@@ -1,4 +1,4 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NUnit.Allure.Attributes;
 
 namespace Tests.UI
@@ -9,6 +9,7 @@ namespace Tests.UI
         [Description("Successful UI test to create a Defect")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("UI")]
         public void CreateDefectTest()
         {
             Defect defect = new DefectBuilder()
@@ -19,6 +20,8 @@ namespace Tests.UI
             DefectTPPage.OpenPage();
             DefectTPPage.IsPageOpened();
             DefectStepsPage.CreateDefect(defect);
+
+            entityHandler.DefectsForDelete.Add(defect);
 
             Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
 
@@ -32,6 +35,7 @@ namespace Tests.UI
         [Description("Successful UI test to edit a Defect")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("UI")]
         public void EditDefectTest()
         {
             Defect defect = new DefectBuilder()

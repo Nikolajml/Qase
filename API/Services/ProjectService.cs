@@ -1,11 +1,11 @@
-﻿using BusinessObject.Models;
-using BusinessObject.ResponseAPIModels;
+﻿using UI.Models;
+using API.ResponseAPIModels;
 using Core.Client;
 using Core.Utilities;
 using NLog;
 using RestSharp;
 
-namespace BusinessObject.Services
+namespace API.Services
 {
     public class ProjectService : BaseService
     {

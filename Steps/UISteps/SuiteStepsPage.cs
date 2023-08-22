@@ -1,8 +1,8 @@
-﻿using BusinessObject.Models;
-using BusinessObject.Pages;
+﻿using UI.Models;
+using UI.Pages;
 using OpenQA.Selenium;
 
-namespace BusinessObject.Steps
+namespace Steps.UISteps
 {
     public class SuiteStepsPage : BaseStep
     {
@@ -11,19 +11,16 @@ namespace BusinessObject.Steps
 
         }
 
-        public ProjectTPPage CreateSuit(Suite suite)
+        public void CreateSuit(Suite suite)
         {
             ProjectTPPage.ClickToSuiteButton();
             ProjectTPPage.SetSuiteName(suite.Name);
             ProjectTPPage.SetSuiteDescriptione(suite.Description);
             ProjectTPPage.SetSuitePreconditionse(suite.Preconditions);
             ProjectTPPage.ClickToCreateSuiteButton();
-            //
-
-            return ProjectTPPage;
         }
 
-        public ProjectTPPage EditSuit(Suite suite)
+        public void EditSuit(Suite suite)
         {
             ProjectTPPage.ClickToEllipsis();
             ProjectTPPage.ClickToEdit();
@@ -31,8 +28,6 @@ namespace BusinessObject.Steps
             ProjectTPPage.ClearNameField();
             ProjectTPPage.EditSuiteName(suite.Name);
             ProjectTPPage.ClickToSaveEditButton();
-
-            return ProjectTPPage;
         }
     }
 }

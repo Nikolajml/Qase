@@ -1,6 +1,5 @@
-﻿
-using BusinessObject.Models;
-using BusinessObject.Services;
+﻿using UI.Models;
+using API.Services;
 using Core.Client;
 
 namespace Core.Utilities
@@ -8,26 +7,45 @@ namespace Core.Utilities
     public class EntityHandler
     {
         public List<Case> CasesForDelete = new();
-        public static List<Defect> DefectsForDelete = new();
+        public List<Defect> DefectsForDelete = new();
+        public List<Suite> SuitesForDelete = new();
+        public List<Plan> PlansForDelete = new();
 
         public CaseService _caseService = new CaseService(new ApiClient());
-        public static DefectService _defectService = new DefectService(new ApiClient());
+        public DefectService _defectService = new DefectService(new ApiClient());
+        public SuiteService _suiteService = new SuiteService(new ApiClient());
+        public PlanService _planService = new PlanService(new ApiClient());
 
         public void DeleteCases()
         {
             foreach (var caseForDelete in CasesForDelete)
             {
-                _caseService.DeleteSuite(caseForDelete);
+                _caseService.DeleteCase(caseForDelete);
             }
         }
 
-        public static void DeleteDefects()
+        public void DeleteDefects()
         {
             foreach (var defectForDelete in DefectsForDelete)
             {
-                _defectService.DeleteDefect(defectForDelete, "");
+                _defectService.DeleteDefect(defectForDelete);
             }
         }
 
+        public void DeleteSuites()
+        {
+            foreach (var suiteForDelete in SuitesForDelete)
+            {
+                _suiteService.DeleteSuite(suiteForDelete);
+            }
+        }
+
+        public void DeletePlans()
+        {
+            foreach (var planForDelete in PlansForDelete)
+            {
+                _planService.DeletePlan(planForDelete);
+            }
+        }
     }
 }

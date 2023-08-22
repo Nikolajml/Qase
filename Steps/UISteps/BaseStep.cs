@@ -1,7 +1,7 @@
-﻿using BusinessObject.Pages;
+﻿using UI.Pages;
 using OpenQA.Selenium;
 
-namespace BusinessObject.Steps
+namespace Steps.UISteps
 {
     public class BaseStep
     {

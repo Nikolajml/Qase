@@ -1,4 +1,4 @@
-﻿namespace BusinessObject.Models
+﻿namespace UI.Models
 {
     public class SuiteBuilder
     {

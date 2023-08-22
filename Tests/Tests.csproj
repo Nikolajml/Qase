@@ -19,13 +19,4 @@
     <ProjectReference Include="..\Steps\Steps.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="TestData\CreateSuite.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\GetSuite.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

@@ -1,10 +1,10 @@
-﻿using BusinessObject.Models;
-using BusinessObject.ResponseAPIModels;
+﻿using UI.Models;
+using API.ResponseAPIModels;
 using Core.Client;
 using Core.Utilities;
 using RestSharp;
 
-namespace BusinessObject.Services
+namespace API.Services
 {
     public class DefectService : BaseService
     {
@@ -13,13 +13,11 @@ namespace BusinessObject.Services
 
         }
 
-        public DefectApiModel GetDefect(Defect defect, string id)
+        public DefectApiModel GetDefect(Defect defect)
         {
             var request = new RestRequest(Endpoints.GET_DEFECT)         // заменить на RestClient и вынести на уровень конструктора
                 .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", id)
-                .AddHeader("accept", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddUrlSegment("id", defect.Id)                
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);
@@ -28,33 +26,27 @@ namespace BusinessObject.Services
         public DefectApiModel CreateDefect(Defect defect)
         {
             var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
-                .AddUrlSegment("code", defect.Code)
-                .AddHeader("accept", "application/json")                                                // вынести в ApiClient
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86") // вынести в ApiClient
+                .AddUrlSegment("code", defect.Code)                
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);
         }
 
-        public DefectApiModel UpdateDefect(Defect defect, string id)
+        public DefectApiModel UpdateDefect(Defect defect)
         {
             var request = new RestRequest(Endpoints.UPDATE_DEFECT, Method.Patch)
                 .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", id)
-                .AddHeader("accept", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddUrlSegment("id", defect.Id)                
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);
         }
 
-        public DefectApiModel DeleteDefect(Defect defect, string id)
+        public DefectApiModel DeleteDefect(Defect defect)
         {
             var request = new RestRequest(Endpoints.DELETE_DEFECT, Method.Delete)
                 .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", id)
-                .AddHeader("accept", "application/json")
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86")
+                .AddUrlSegment("id", defect.Id)                
                 .AddBody(defect);
 
             return _apiClient.Execute<DefectApiModel>(request);

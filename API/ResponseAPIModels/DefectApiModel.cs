@@ -1,4 +1,4 @@
-﻿namespace BusinessObject.ResponseAPIModels
+﻿namespace API.ResponseAPIModels
 {
     public class DefectResult
     {

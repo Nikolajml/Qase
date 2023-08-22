@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BusinessObject.Models
+namespace UI.Models
 {
     public class Defect
     {
@@ -8,6 +8,7 @@ namespace BusinessObject.Models
         [JsonPropertyName("title")] public string DefectTitle { get; set; }
         [JsonPropertyName("actual_result")] public string ActualResult { get; set; }
         [JsonPropertyName("severity")] public int Severity { get; set; }
+        [JsonPropertyName("id")] public string Id { get; set; }
 
 
     }

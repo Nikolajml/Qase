@@ -1,6 +1,6 @@
 ﻿using Core.Client;
 
-namespace BusinessObject.Services
+namespace API.Services
 {
     public class BaseService
     {

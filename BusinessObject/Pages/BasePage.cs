@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace BusinessObject.Pages
+namespace UI.Pages
 {
     public abstract class BasePage
     {

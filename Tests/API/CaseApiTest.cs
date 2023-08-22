@@ -1,4 +1,4 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using NLog;
 using NUnit.Allure.Attributes;
 
@@ -19,16 +19,20 @@ namespace Tests.API
                 Title = "Case_api_New"
             };
         }
-
+        
         [Test, Order(1)]
         [Description("Successful API test to create a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void CreateCaseTest()
         {
             var caseResponse = _caseService.CreateCase(Case);
 
             Case.Id = caseResponse.result.id.ToString();
+
+            Console.WriteLine($"Case Status: {caseResponse.status}");
+            Console.WriteLine($"Case Id: {caseResponse.result.id}");
 
             entityHandler.CasesForDelete.Add(Case);
 
@@ -43,11 +47,12 @@ namespace Tests.API
         [Description("Successful API test to get a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
 
         public void GetCaseTest()
         {
             var caseResponse = _caseService.GetCase(Case);
-            _logger.Info("Case: " + caseResponse.ToString);
+            _logger.Info("Case: " + caseResponse.ToString());
 
             Console.WriteLine($"Case Status: {caseResponse.status}");
             Console.WriteLine($"Case Id: {caseResponse.result.id}");
@@ -63,6 +68,7 @@ namespace Tests.API
         [Description("Successful API test to update a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void UpdateCaseTest()
         {
             Case.Title = "New Update API";
@@ -81,11 +87,12 @@ namespace Tests.API
         [Description("Successful test to delete a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void DeleteCaseTest()
         {
 
-            var caseResponse = _caseService.DeleteSuite(Case);
-            _logger.Info("Case: " + caseResponse.ToString);
+            var caseResponse = _caseService.DeleteCase(Case);
+            _logger.Info("Case: " + caseResponse.ToString());
 
             Console.WriteLine($"Case Status: {caseResponse.status}");
             Console.WriteLine($"Case Id: {caseResponse.result.id}");

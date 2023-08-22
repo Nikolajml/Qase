@@ -1,4 +1,4 @@
-﻿using BusinessObject.Models;
+﻿using UI.Models;
 using Core.Utilities;
 using NLog;
 using NUnit.Allure.Attributes;
@@ -9,33 +9,40 @@ namespace Tests.API
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public string Id { get; set; }
+        public Defect defect { get; set; }
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            defect = new Defect()
+            {
+                Code = "OE",
+                DefectTitle = "New Defect API",
+                ActualResult = "Some result",
+                Severity = 2
+            };
+        }
 
         [Test, Order(1)]
         [Description("Successful API test to create a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void CreateDefectTest()
-        {
-            var defectRequest = new Defect();
-            defectRequest.Code = "OE";
-            defectRequest.DefectTitle = "New Defect API";
-            defectRequest.ActualResult = "Some result";
-            defectRequest.Severity = 2;
-
-            var defectResponse = _defectService.CreateDefect(defectRequest);
+        {    
+            var defectResponse = _defectService.CreateDefect(defect);
 
             Console.WriteLine($"Case Status: {defectResponse.status}");
             Console.WriteLine($"Case Id: {defectResponse.result.id}");
 
-            Id = defectResponse.result.id.ToString();
+            defect.Id = defectResponse.result.id.ToString();
 
-            EntityHandler.DefectsForDelete.Add(defectRequest);
+            entityHandler.DefectsForDelete.Add(defect);
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(Id, defectResponse.result.id.ToString());
+                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
             });
         }
 
@@ -43,21 +50,19 @@ namespace Tests.API
         [Description("Successful API test to get a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void GetDefectTest()
-        {
-            var defectRequest = new Defect();
-            defectRequest.Code = "OE";
+        {         
+            var defectResponse = _defectService.GetDefect(defect);
+            _logger.Info("Defect: " + defectResponse.ToString);
 
-            var defectResponse = _defectService.GetDefect(defectRequest, Id);
-            _logger.Info("Case: " + defectResponse.ToString);
-
-            Console.WriteLine($"Case Status: {defectResponse.status}");
-            Console.WriteLine($"Case Id: {defectResponse.result.id}");
+            Console.WriteLine($"Defect Status: {defectResponse.status}");
+            Console.WriteLine($"Defect Id: {defectResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(Id, defectResponse.result.id.ToString());
+                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
             });
         }
 
@@ -65,23 +70,22 @@ namespace Tests.API
         [Description("Successful API test to update a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
-        public void UpdateSuiteTest()
+        [Category("API")]
+        public void UpdateDefectTest()
         {
-            var defectRequest = new Defect();
-            defectRequest.Code = "OE";
-            defectRequest.DefectTitle = "Updated Defect";
-            defectRequest.ActualResult = "Some updated result";
-            defectRequest.Severity = 1;
+            defect.DefectTitle = "Updated Defect";
+            defect.ActualResult = "Some updated result";
+            defect.Severity = 1;
 
-            var suiteResponse = _defectService.UpdateDefect(defectRequest, Id);
+            var suiteResponse = _defectService.UpdateDefect(defect);
 
-            Console.WriteLine($"Case Status: {suiteResponse.status}");
-            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+            Console.WriteLine($"Defect Status: {suiteResponse.status}");
+            Console.WriteLine($"Defect Id: {suiteResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(defect.Id, suiteResponse.result.id.ToString());
             });
         }
 
@@ -89,22 +93,26 @@ namespace Tests.API
         [Description("Successful API test to delete a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
+        [Category("API")]
         public void DeleteSuiteTest()
         {
-            var defectRequest = new Defect();
-            defectRequest.Code = "OE";
+            var defectResponse = _defectService.DeleteDefect(defect);
+            _logger.Info("Defect: " + defectResponse.ToString());
 
-            var defectResponse = _defectService.DeleteDefect(defectRequest, Id);
-            _logger.Info("Case: " + defectResponse.ToString());
-
-            Console.WriteLine($"Case Status: {defectResponse.status}");
-            Console.WriteLine($"Case Id: {defectResponse.result.id}");
+            Console.WriteLine($"Defect Status: {defectResponse.status}");
+            Console.WriteLine($"Defect Id: {defectResponse.result.id}");
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(Id, defectResponse.result.id.ToString());
+                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
             });
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            entityHandler.DeleteDefects();
         }
     }
 }

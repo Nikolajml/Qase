@@ -2,12 +2,12 @@
 
 namespace UI.Models
 {
-    public class Plan
+    public class Suite
     {
-        [JsonPropertyName("title")] public string Title { get; set; }
+        [JsonPropertyName("title")] public string Name { get; set; }
         [JsonPropertyName("description")] public string Description { get; set; }
+        [JsonPropertyName("preconditions")] public string Preconditions { get; set; }
         [JsonPropertyName("code")] public string Code { get; set; }
         [JsonPropertyName("id")] public string Id { get; set; }
-        [JsonPropertyName("cases")] public List<int> Cases { get; set; }
     }
 }

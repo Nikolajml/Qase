@@ -1,6 +1,4 @@
-﻿using BusinessObject.Models.Enum;
-
-namespace BusinessObject.Models
+﻿namespace Core.Utilities.Configuration
 {
     public record User
     {

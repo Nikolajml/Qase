@@ -1,7 +1,7 @@
 ﻿using Core.Utilities.Configuration;
 using OpenQA.Selenium;
 
-namespace BusinessObject.Pages
+namespace UI.Pages
 {
     public class PlanTPPage : BasePage
     {

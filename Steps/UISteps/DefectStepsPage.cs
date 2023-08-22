@@ -1,8 +1,8 @@
-﻿using BusinessObject.Models;
-using BusinessObject.Pages;
+﻿using UI.Models;
+using UI.Pages;
 using OpenQA.Selenium;
 
-namespace BusinessObject.Steps
+namespace Steps.UISteps
 {
     public class DefectStepsPage : BaseStep
     {
@@ -11,17 +11,15 @@ namespace BusinessObject.Steps
 
         }
 
-        public DefectsTPPage CreateDefect(Defect defect)
+        public void CreateDefect(Defect defect)
         {
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
             DefectsTPPage.SetActualresult(defect.ActualResult);
             DefectsTPPage.ClickToCreateDefectButton();
-
-            return DefectsTPPage;
         }
 
-        public DefectsTPPage EditDefect(Defect defect)
+        public void EditDefect(Defect defect)
         {
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
@@ -32,8 +30,6 @@ namespace BusinessObject.Steps
             DefectsTPPage.ClearActualResultField();
             DefectsTPPage.SetEditedActualResult(defect.ActualResult);
             DefectsTPPage.ClickToUpdateDefectButton();
-
-            return DefectsTPPage;
         }
     }
 }
