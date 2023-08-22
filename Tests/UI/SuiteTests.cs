@@ -47,5 +47,11 @@ namespace Tests.UI
 
             Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
         }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            entityHandler.DeleteSuites();
+        }
     }
 }

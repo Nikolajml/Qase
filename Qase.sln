@@ -5,13 +5,18 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Qase\Core.csproj", "{C2A8DAAA-E1B7-4291-B24A-96B9E1F4ABEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F6BA5885-C735-4E47-BF3E-A1BA4E70AA1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{F6BA5885-C735-4E47-BF3E-A1BA4E70AA1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "BusinessObject\UI.csproj", "{397BCE80-4AE7-4D8D-9B6E-3E26E3CA7101}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "BusinessObject\UI.csproj", "{397BCE80-4AE7-4D8D-9B6E-3E26E3CA7101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{9EC4C261-6790-4F6C-B74D-D5AF84DEBCFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{9EC4C261-6790-4F6C-B74D-D5AF84DEBCFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steps", "Steps\Steps.csproj", "{A697CAA7-0985-488B-BFF8-70957BB2414A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steps", "Steps\Steps.csproj", "{A697CAA7-0985-488B-BFF8-70957BB2414A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54B49947-5981-4C32-81E4-5E0E0251543D}"
+	ProjectSection(SolutionItems) = preProject
+		Jenkinsfile = Jenkinsfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
