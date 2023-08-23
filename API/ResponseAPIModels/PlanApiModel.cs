@@ -22,7 +22,7 @@
 
     public class PlanApiModel
     {
-        public bool status { get; set; }
-        public PlanResult result { get; set; }
+        public bool Status { get; set; }
+        public PlanResult Result { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Core.Client
 {
     public class ApiClient
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger(); // в параметры конструктора
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly RestClient _restClient;
 

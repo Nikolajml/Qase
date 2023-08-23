@@ -1,6 +1,7 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using System.Numerics;
+using Bogus;
 
 namespace Tests.UI
 {
@@ -13,19 +14,19 @@ namespace Tests.UI
         [Category("UI")]
         public void CreateSuiteTest()
         {
+
+          
             //var name = "asdfighcnsidfucg";
 
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("New Name")
-                .SetSuiteDescription("Created suite")
-                .SetSuitePreconditions("Precondition")
+                .SetSuiteName(Faker.Name.FullName()) // faker uniq name
+                .SetSuiteDescription(Faker.Vehicle.Model())
+                .SetSuitePreconditions(Faker.Vehicle.Vin())
                 .Build();
 
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
             SuiteStepsPage.CreateSuit(suite);
-
-            entityHandler.SuitesForDelete.Add(suite);
 
             Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
         }

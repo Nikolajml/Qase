@@ -9,7 +9,7 @@ namespace API.Services
 {
     public class CaseService : BaseService
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        protected Logger _logger = LogManager.GetCurrentClassLogger();
 
         public CaseService(ApiClient apiClient) : base(apiClient)
         {
@@ -23,6 +23,14 @@ namespace API.Services
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
 
+            _logger.Info("Case: " + request.ToString());
+            _logger.Info("Case: " + request.Resource);
+
+            var response = _apiClient.Execute(request);
+
+            _logger.Info("Case: " + response.Content);
+            _logger.Info("Case: " + response.StatusCode);
+
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
@@ -30,9 +38,9 @@ namespace API.Services
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
                 .AddUrlSegment("code", Case.Code)                
-                .AddBody(Case);                        
+                .AddBody(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request); ;
+            return _apiClient.Execute<CaseApiModel>(request);
         }
 
         public CaseApiModel UpdateCase(Case Case)
@@ -40,7 +48,7 @@ namespace API.Services
             var request = new RestRequest(Endpoints.UPDATE_CASE, Method.Patch)
                 .AddUrlSegment("code", Case.Code)
                 .AddUrlSegment("id", Case.Id)
-                .AddBody(new Case() { Title = Case.Title, Description = Case.Description});
+                .AddBody(new Case() { Title = Case.Title, Description = Case.Description });
 
             return _apiClient.Execute<CaseApiModel>(request);
         }

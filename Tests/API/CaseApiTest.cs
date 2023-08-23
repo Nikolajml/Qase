@@ -1,13 +1,12 @@
 ﻿using UI.Models;
 using NLog;
 using NUnit.Allure.Attributes;
+using NUnit.Framework.Internal;
 
 namespace Tests.API
 {
     public class CaseApiTest : BaseApiTest
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         public Case Case { get; set; }
 
         [OneTimeSetUp]
@@ -19,7 +18,7 @@ namespace Tests.API
                 Title = "Case_api_New"
             };
         }
-        
+
         [Test, Order(1)]
         [Description("Successful API test to create a Case")]
         [AllureOwner("User")]
@@ -27,19 +26,16 @@ namespace Tests.API
         [Category("API")]
         public void CreateCaseTest()
         {
-            var caseResponse = _caseService.CreateCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase(Case);
 
-            Case.Id = caseResponse.result.id.ToString();
+            Case.Id = createdTestCase.Result.id.ToString();
 
-            Console.WriteLine($"Case Status: {caseResponse.status}");
-            Console.WriteLine($"Case Id: {caseResponse.result.id}");
-
-            entityHandler.CasesForDelete.Add(Case);
+            cleanUpHandler.CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, caseResponse.status);
-                Assert.AreEqual(Case.Id, caseResponse.result.id.ToString());
+                Assert.IsTrue(createdTestCase.Status);
+                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString());
             });
         }
 
@@ -51,16 +47,12 @@ namespace Tests.API
 
         public void GetCaseTest()
         {
-            var caseResponse = _caseService.GetCase(Case);
-            _logger.Info("Case: " + caseResponse.ToString());
-
-            Console.WriteLine($"Case Status: {caseResponse.status}");
-            Console.WriteLine($"Case Id: {caseResponse.result.id}");
+            var testCase = _caseStep.GetTestCase(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, caseResponse.status);
-                Assert.AreEqual(Case.Id, caseResponse.result.id.ToString());
+                Assert.IsTrue(testCase.Status);
+                Assert.AreEqual(Case.Id, testCase.Result.id.ToString());
             });
         }
 
@@ -74,12 +66,12 @@ namespace Tests.API
             Case.Title = "New Update API";
             Case.Description = "New Description API";
 
-            var caseResponse = _caseService.UpdateCase(Case);
+            var caseResponse = _caseStep.UpdateTestCase(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, caseResponse.status);
-                Assert.AreEqual(Case.Id, caseResponse.result.id.ToString());
+                Assert.AreEqual(true, caseResponse.Status);
+                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString());                
             });
         }
 
@@ -90,24 +82,19 @@ namespace Tests.API
         [Category("API")]
         public void DeleteCaseTest()
         {
-
-            var caseResponse = _caseService.DeleteCase(Case);
-            _logger.Info("Case: " + caseResponse.ToString());
-
-            Console.WriteLine($"Case Status: {caseResponse.status}");
-            Console.WriteLine($"Case Id: {caseResponse.result.id}");
-
+            var caseResponse = _caseStep.DeleteTestCase(Case);
+            
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, caseResponse.status);
-                Assert.AreEqual(Case.Id, caseResponse.result.id.ToString());
+                Assert.IsTrue(caseResponse.Status);
+                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString());
             });
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeleteCases();
+            cleanUpHandler.DeleteCases();
         }
     }
 }

@@ -4,7 +4,7 @@ using Core.Client;
 
 namespace Core.Utilities
 {
-    public class EntityHandler
+    public class CleanUpHandler
     {
         public List<Case> CasesForDelete = new();
         public List<Defect> DefectsForDelete = new();
@@ -15,6 +15,8 @@ namespace Core.Utilities
         public DefectService _defectService = new DefectService(new ApiClient());
         public SuiteService _suiteService = new SuiteService(new ApiClient());
         public PlanService _planService = new PlanService(new ApiClient());
+
+
 
         public void DeleteCases()
         {

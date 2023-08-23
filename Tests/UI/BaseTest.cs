@@ -7,6 +7,7 @@ using Core.Utilities.Configuration;
 using Steps.UISteps;
 using Core.Core;
 using Core.Utilities;
+using Bogus;
 
 namespace Tests.UI
 {
@@ -17,7 +18,8 @@ namespace Tests.UI
 
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
-        protected EntityHandler entityHandler = new EntityHandler();
+        protected CleanUpHandler entityHandler = new CleanUpHandler();
+        public Faker Faker = new Faker(); 
 
         public LoginPage LoginPage { get; set; }
         public ProjectsPage ProjectsPage { get; set; }

@@ -27,6 +27,12 @@
             return this;
         }
 
+        public SuiteBuilder SetSuiteCode(string code)
+        {
+            suite.Code = code;
+            return this;
+        }
+
         public Suite Build()
         {
             return suite;

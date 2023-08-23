@@ -17,7 +17,7 @@
 
     public class SuiteApiModel
     {
-        public bool status { get; set; }
-        public SuiteResult result { get; set; }
+        public bool Status { get; set; }
+        public SuiteResult Result { get; set; }
     }
 }

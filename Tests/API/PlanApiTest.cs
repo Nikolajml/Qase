@@ -31,12 +31,12 @@ namespace Tests.API
         {    
             var planResponse = _planService.CreatePlan(plan);
 
-            plan.Id = planResponse.result.id.ToString();
+            plan.Id = planResponse.Result.id.ToString();
 
-            Console.WriteLine($"Plan Status: {planResponse.status}");
-            Console.WriteLine($"Plan Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.Status}");
+            Console.WriteLine($"Plan Id: {planResponse.Result.id}");
 
-            Assert.AreEqual(true, planResponse.status);
+            Assert.AreEqual(true, planResponse.Status);
         }
 
         [Test, Order(2)]
@@ -49,13 +49,13 @@ namespace Tests.API
             var planResponse = _planService.GetPlan(plan);
             _logger.Info("Case: " + planResponse.ToString());
 
-            Console.WriteLine($"Plan Status: {planResponse.status}");
-            Console.WriteLine($"Plan Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.Status}");
+            Console.WriteLine($"Plan Id: {planResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, planResponse.status);
-                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
+                Assert.AreEqual(true, planResponse.Status);
+                Assert.AreEqual(plan.Id, planResponse.Result.id.ToString());
             });
         }
 
@@ -72,13 +72,13 @@ namespace Tests.API
 
             var planResponse = _planService.UpdatePlan(plan);
 
-            Console.WriteLine($"Plan Status: {planResponse.status}");
-            Console.WriteLine($"Plan Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.Status}");
+            Console.WriteLine($"Plan Id: {planResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(planResponse.status);
-                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
+                Assert.IsTrue(planResponse.Status);
+                Assert.AreEqual(plan.Id, planResponse.Result.id.ToString());
             });
         }
 
@@ -92,20 +92,20 @@ namespace Tests.API
             var planResponse = _planService.DeletePlan(plan);
             _logger.Info("Case: " + planResponse.ToString());
 
-            Console.WriteLine($"Plan Status: {planResponse.status}");
-            Console.WriteLine($"Plan Id: {planResponse.result.id}");
+            Console.WriteLine($"Plan Status: {planResponse.Status}");
+            Console.WriteLine($"Plan Id: {planResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, planResponse.status);
-                Assert.AreEqual(plan.Id, planResponse.result.id.ToString());
+                Assert.AreEqual(true, planResponse.Status);
+                Assert.AreEqual(plan.Id, planResponse.Result.id.ToString());
             });
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeletePlans();
+            cleanUpHandler.DeletePlans();
         }
     }
 }

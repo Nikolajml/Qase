@@ -23,7 +23,7 @@
 
     public class DefectApiModel
     {
-        public bool status { get; set; }
-        public DefectResult result { get; set; }
+        public bool Status { get; set; }
+        public DefectResult Result { get; set; }
     }
 }

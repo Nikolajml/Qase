@@ -162,11 +162,7 @@ namespace UI.Pages
         {
             CaseNameInputBy.Clear();
         }
-
-        public void SetEditedCaseName(string caseName)
-        {
-            CaseNameInputBy.SendKeys(caseName);
-        }
+              
 
         // METHODS TO ASSERTS
         public string GetSuiteName()
@@ -178,6 +174,12 @@ namespace UI.Pages
         {
             var locator = string.Format(SuiteNameByTextTeplmate, text);
             return Driver.FindElement(By.XPath(locator)).GetAttribute("innerText");
+        }
+
+        public void SetEditedCaseName(string caseName)
+        {
+            CaseNameInputBy.Clear();
+            CaseNameInputBy.SendKeys(caseName);
         }
 
         public string GetCreatedCaseTitle()

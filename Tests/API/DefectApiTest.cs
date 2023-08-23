@@ -6,9 +6,7 @@ using NUnit.Allure.Attributes;
 namespace Tests.API
 {
     public class DefectApiTest : BaseApiTest
-    {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
+    {        
         public Defect defect { get; set; }
 
         [OneTimeSetUp]
@@ -23,6 +21,7 @@ namespace Tests.API
             };
         }
 
+
         [Test, Order(1)]
         [Description("Successful API test to create a Suite")]
         [AllureOwner("User")]
@@ -30,22 +29,20 @@ namespace Tests.API
         [Category("API")]
         public void CreateDefectTest()
         {    
-            var defectResponse = _defectService.CreateDefect(defect);
+            var createdDefectCase = _defectStep.CreateTestDefect(defect);
+                        
+            defect.Id = createdDefectCase.Result.id.ToString();
 
-            Console.WriteLine($"Case Status: {defectResponse.status}");
-            Console.WriteLine($"Case Id: {defectResponse.result.id}");
-
-            defect.Id = defectResponse.result.id.ToString();
-
-            entityHandler.DefectsForDelete.Add(defect);
+            cleanUpHandler.DefectsForDelete.Add(defect);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
+                Assert.IsTrue(createdDefectCase.Status);
+                Assert.AreEqual(defect.Id, createdDefectCase.Result.id.ToString());
             });
         }
 
+        
         [Test, Order(2)]
         [Description("Successful API test to get a Suite")]
         [AllureOwner("User")]
@@ -53,18 +50,18 @@ namespace Tests.API
         [Category("API")]
         public void GetDefectTest()
         {         
-            var defectResponse = _defectService.GetDefect(defect);
-            _logger.Info("Defect: " + defectResponse.ToString);
-
-            Console.WriteLine($"Defect Status: {defectResponse.status}");
-            Console.WriteLine($"Defect Id: {defectResponse.result.id}");
-
+            var getedDefectCase = _defectStep.GetTestDefect(defect);
+            _logger.Info("Defect: " + getedDefectCase.ToString);
+                        
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
+                Assert.IsTrue(getedDefectCase.Status);
+                Assert.AreEqual(defect.Id, getedDefectCase.Result.id.ToString());
+                Assert.AreEqual(defect.DefectTitle, getedDefectCase.Result.title.ToString());
+                Assert.AreEqual(defect.ActualResult, getedDefectCase.Result.actual_result.ToString());                
             });
-        }
+        }        
+
 
         [Test, Order(3)]
         [Description("Successful API test to update a Suite")]
@@ -77,17 +74,15 @@ namespace Tests.API
             defect.ActualResult = "Some updated result";
             defect.Severity = 1;
 
-            var suiteResponse = _defectService.UpdateDefect(defect);
-
-            Console.WriteLine($"Defect Status: {suiteResponse.status}");
-            Console.WriteLine($"Defect Id: {suiteResponse.result.id}");
-
+            var updatedDefectCase = _defectStep.UpdateTestDefect(defect);
+                        
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(defect.Id, suiteResponse.result.id.ToString());
+                Assert.IsTrue(updatedDefectCase.Status);
+                Assert.AreEqual(defect.Id, updatedDefectCase.Result.id.ToString());
             });
-        }
+        }                
+
 
         [Test, Order(4)]
         [Description("Successful API test to delete a Suite")]
@@ -96,23 +91,21 @@ namespace Tests.API
         [Category("API")]
         public void DeleteSuiteTest()
         {
-            var defectResponse = _defectService.DeleteDefect(defect);
-            _logger.Info("Defect: " + defectResponse.ToString());
-
-            Console.WriteLine($"Defect Status: {defectResponse.status}");
-            Console.WriteLine($"Defect Id: {defectResponse.result.id}");
+            var defectResponse = _defectStep.DeleteTestDefect(defect);
+            _logger.Info("Defect: " + defectResponse.ToString());                        
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, defectResponse.status);
-                Assert.AreEqual(defect.Id, defectResponse.result.id.ToString());
+                Assert.IsTrue(defectResponse.Status);
+                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString());
             });
-        }
+        }    
+
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeleteDefects();
+            cleanUpHandler.DeleteDefects();
         }
     }
 }

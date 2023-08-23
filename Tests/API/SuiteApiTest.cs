@@ -29,17 +29,17 @@ namespace Tests.API
         {            
             var suiteResponse = _suiteService.CreateSuite(suite);
 
-            suite.Id = suiteResponse.result.id.ToString();
+            suite.Id = suiteResponse.Result.id.ToString();
 
-            Console.WriteLine($"Case Status: {suiteResponse.status}");
-            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+            Console.WriteLine($"Case Status: {suiteResponse.Status}");
+            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
 
-            entityHandler.SuitesForDelete.Add(suite);
+            cleanUpHandler.SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(true, suiteResponse.Status);
+                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
             });
         }
 
@@ -53,13 +53,13 @@ namespace Tests.API
             var suiteResponse = _suiteService.GetSuite(suite);
             _logger.Info("Case: " + suiteResponse.ToString());
 
-            Console.WriteLine($"Case Status: {suiteResponse.status}");
-            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+            Console.WriteLine($"Case Status: {suiteResponse.Status}");
+            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(true, suiteResponse.Status);
+                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
             });
         }
         
@@ -75,13 +75,13 @@ namespace Tests.API
 
             var suiteResponse = _suiteService.UpdateSuite(suite);
 
-            Console.WriteLine($"Case Status: {suiteResponse.status}");
-            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+            Console.WriteLine($"Case Status: {suiteResponse.Status}");
+            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(true, suiteResponse.Status);
+                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
             });
         }
 
@@ -95,20 +95,20 @@ namespace Tests.API
              var suiteResponse = _suiteService.DeleteSuite(suite);
             _logger.Info("Case: " + suiteResponse.ToString);
 
-            Console.WriteLine($"Case Status: {suiteResponse.status}");
-            Console.WriteLine($"Case Id: {suiteResponse.result.id}");
+            Console.WriteLine($"Case Status: {suiteResponse.Status}");
+            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.status);
-                Assert.AreEqual(suite.Id, suiteResponse.result.id.ToString());
+                Assert.AreEqual(true, suiteResponse.Status);
+                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
             });                        
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeletePlans();
+            cleanUpHandler.DeletePlans();
         }
     }
 }
