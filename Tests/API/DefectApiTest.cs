@@ -29,8 +29,8 @@ namespace Tests.API
         [Category("API")]
         public void CreateDefectTest()
         {    
-            var createdDefectCase = _defectStep.CreateTestDefect(defect);
-                        
+            var createdDefectCase = _defectStep.CreateTestDefect(defect);            
+
             defect.Id = createdDefectCase.Result.id.ToString();
 
             cleanUpHandler.DefectsForDelete.Add(defect);

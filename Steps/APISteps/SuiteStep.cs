@@ -16,7 +16,7 @@ namespace Steps.APISteps
         {
         }
 
-        public SuiteApiModel CreateTestDefect(Suite suite)
+        public SuiteApiModel CreateTestSuite(Suite suite)
         {
             var response = CreateSuite(suite);
 
@@ -24,7 +24,7 @@ namespace Steps.APISteps
 
         }
 
-        public SuiteApiModel GetTestDefect(Suite suite)
+        public SuiteApiModel GetTestSuite(Suite suite)
         {
             var response = GetSuite(suite);
 
@@ -33,7 +33,7 @@ namespace Steps.APISteps
             return response;
         }
 
-        public SuiteApiModel UpdateTestDefect(Suite suite)
+        public SuiteApiModel UpdateTestSuite(Suite suite)
         {
             var response = UpdateSuite(suite);
 
@@ -43,7 +43,7 @@ namespace Steps.APISteps
 
         }
 
-        public SuiteApiModel DeleteTestDefect(Suite suite)
+        public SuiteApiModel DeleteTestSuite(Suite suite)
         {
             var response = DeleteSuite(suite);
 

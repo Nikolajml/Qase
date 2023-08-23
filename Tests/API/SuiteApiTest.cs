@@ -1,13 +1,12 @@
 ﻿using UI.Models;
 using NLog;
 using NUnit.Allure.Attributes;
+using System.Numerics;
 
 namespace Tests.API
 {
     public class SuiteApiTest : BaseApiTest
-    {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
+    {       
         public Suite suite { get; set; }
 
         [OneTimeSetUp]
@@ -20,6 +19,7 @@ namespace Tests.API
             };
         }
 
+
         [Test, Order(1)]
         [Description("Successful API test to create a Suite")]
         [AllureOwner("User")]
@@ -27,21 +27,19 @@ namespace Tests.API
         [Category("API")]
         public void CreateSuiteTest()
         {            
-            var suiteResponse = _suiteService.CreateSuite(suite);
+            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
 
-            suite.Id = suiteResponse.Result.id.ToString();
-
-            Console.WriteLine($"Case Status: {suiteResponse.Status}");
-            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
+            suite.Id = createdSuiteTest.Result.id.ToString();
 
             cleanUpHandler.SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.Status);
-                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
+                Assert.IsTrue(createdSuiteTest.Status);
+                Assert.AreEqual(suite.Id, createdSuiteTest.Result.id.ToString());
             });
         }
+                
 
         [Test, Order(2)]
         [Description("Successful API test to get a Suite")]
@@ -50,19 +48,17 @@ namespace Tests.API
         [Category("API")]
         public void GetSuiteTest()
         {         
-            var suiteResponse = _suiteService.GetSuite(suite);
-            _logger.Info("Case: " + suiteResponse.ToString());
-
-            Console.WriteLine($"Case Status: {suiteResponse.Status}");
-            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
+            var getedSuiteCase = _suiteStep.GetTestSuite(suite);
+            _logger.Info("Suite: " + getedSuiteCase.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.Status);
-                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
+                Assert.IsTrue(getedSuiteCase.Status);
+                Assert.AreEqual(suite.Id, getedSuiteCase.Result.id.ToString());
             });
         }
-        
+                
+
         [Test, Order(3)]
         [Description("Successful API test to update a Suite")]
         [AllureOwner("User")]
@@ -73,17 +69,15 @@ namespace Tests.API
             suite.Name = "Updated Suite Name API";
             suite.Description = "Updated Description API";
 
-            var suiteResponse = _suiteService.UpdateSuite(suite);
-
-            Console.WriteLine($"Case Status: {suiteResponse.Status}");
-            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
+            var updatedSuiteCase = _suiteStep.UpdateTestSuite(suite);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.Status);
-                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
+                Assert.IsTrue(updatedSuiteCase.Status);
+                Assert.AreEqual(suite.Id, updatedSuiteCase.Result.id.ToString());
             });
         }
+          
 
         [Test, Order(4)]
         [Description("Successful API test to delete a Suite")]
@@ -92,18 +86,16 @@ namespace Tests.API
         [Category("API")]
         public void DeleteSuiteTest()
         {   
-             var suiteResponse = _suiteService.DeleteSuite(suite);
-            _logger.Info("Case: " + suiteResponse.ToString);
-
-            Console.WriteLine($"Case Status: {suiteResponse.Status}");
-            Console.WriteLine($"Case Id: {suiteResponse.Result.id}");
+             var suiteResponse = _suiteStep.DeleteTestSuite(suite);
+            _logger.Info("Suite: " + suiteResponse.ToString);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, suiteResponse.Status);
+                Assert.IsTrue(suiteResponse.Status);
                 Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
             });                        
         }
+                
 
         [OneTimeTearDown]
         public void TearDown()
