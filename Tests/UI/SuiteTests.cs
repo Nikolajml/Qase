@@ -14,12 +14,8 @@ namespace Tests.UI
         [Category("UI")]
         public void CreateSuiteTest()
         {
-
-          
-            //var name = "asdfighcnsidfucg";
-
             Suite suite = new SuiteBuilder()
-                .SetSuiteName(Faker.Name.FullName()) // faker uniq name
+                .SetSuiteName(Faker.Name.FullName())
                 .SetSuiteDescription(Faker.Vehicle.Model())
                 .SetSuitePreconditions(Faker.Vehicle.Vin())
                 .Build();
@@ -52,7 +48,7 @@ namespace Tests.UI
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeleteSuites();
+            cleanUpHandler.DeleteSuites();
         }
     }
 }

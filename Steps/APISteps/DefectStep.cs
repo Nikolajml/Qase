@@ -29,7 +29,7 @@ namespace Steps.APISteps
         {
             var response = GetDefect(defect);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Defect: " + response.ToString());
 
             return response;
         }
@@ -38,7 +38,7 @@ namespace Steps.APISteps
         {
             var response = UpdateDefect(defect);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Defect: " + response.ToString());
 
             return response;
 
@@ -48,7 +48,7 @@ namespace Steps.APISteps
         {
             var response = DeleteDefect(defect);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Defect: " + response.ToString());
 
             return response;
         }

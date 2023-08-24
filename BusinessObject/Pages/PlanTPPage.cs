@@ -32,7 +32,7 @@ namespace UI.Pages
         private IWebElement EllipsisButtonForPlanEditBy => Driver.FindElement(By.XPath("//span[@class='ZwgkIF']"));
         private IWebElement PlanEditButtonBy => Driver.FindElement(By.XPath("(//a[@role='menuitem'])[2]"));
         private IWebElement PlanTitleInputForClearBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement PlanTitleFieldClearBy => Driver.FindElement(By.XPath("//*[@id='title']"));
+        private IWebElement PlanTitleFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement GetPlanTitleBy => Driver.FindElement(By.XPath("//*[@class='defect-title']"));
         private IWebElement GetPlanTitleForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='plan-view-header-title']"));
         private IWebElement GetPlanDescriptionForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']"));
@@ -100,6 +100,7 @@ namespace UI.Pages
         // Second assert for created Plan
         public void ClickToCreatedPlanTitleToAssert()
         {
+            Thread.Sleep(1000);
             GetPlanTitleBy.Click();
         }
 
@@ -125,17 +126,19 @@ namespace UI.Pages
         }
 
         public void ClickToClearTitlePlanField()
-        {
+        {            
             PlanTitleInputForClearBy.Click();
+            Thread.Sleep(1000);
         }
 
         public void ClearTitlePlanField()
         {
             PlanTitleFieldClearBy.Clear();
+            
         }
 
         public void EditPlanTitle(string planTitle)
-        {
+        {            
             PlanTitleInputBy.SendKeys(planTitle);
         }
 

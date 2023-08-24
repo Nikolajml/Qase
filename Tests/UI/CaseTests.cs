@@ -47,7 +47,7 @@ namespace Tests.UI
         [OneTimeTearDown]
         public void TearDown()
         {
-            entityHandler.DeleteCases();
+            cleanUpHandler.DeleteCases();
         }
     }
 }

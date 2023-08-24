@@ -17,18 +17,18 @@ namespace Tests.UI
             Plan plan = new PlanBuilder()
                 .SetPlanTitle("New Plan 333")
                 .SetPlanDescription("Description for New Plan")
-                .Build();                                                   // Что, если я буду делать клин-уп
+                .Build();                                                   
 
             PlanTPPage.OpenPage();            
             PlanStepsPage.CreatePlan(plan);
 
-            entityHandler.PlansForDelete.Add(plan);
+            cleanUpHandler.PlansForDelete.Add(plan);
 
             Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
 
             PlanTPPage.ClickToCreatedPlanTitleToAssert();
 
-            Assert.Multiple(() =>                                           // Ассерт через объект
+            Assert.Multiple(() =>                                           
             {
                 Assert.That(PlanTPPage.GetPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
                 Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(plan.Description));

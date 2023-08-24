@@ -28,7 +28,7 @@ namespace Steps.APISteps
         {
             var response = GetPlan(plan);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Plan: " + response.ToString());
 
             return response;
         }
@@ -37,7 +37,7 @@ namespace Steps.APISteps
         {
             var response = UpdatePlan(plan);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Plan: " + response.ToString());
 
             return response;
         }
@@ -46,7 +46,7 @@ namespace Steps.APISteps
         {
             var response = DeletePlan(plan);
 
-            _logger.Info("Case: " + response.ToString());
+            _logger.Info("Plan: " + response.ToString());
 
             return response;
         }

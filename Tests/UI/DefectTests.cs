@@ -21,7 +21,7 @@ namespace Tests.UI
             DefectTPPage.IsPageOpened();
             DefectStepsPage.CreateDefect(defect);
 
-            entityHandler.DefectsForDelete.Add(defect);
+            cleanUpHandler.DefectsForDelete.Add(defect);
 
             Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
 

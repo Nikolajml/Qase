@@ -18,7 +18,7 @@ namespace Tests.UI
 
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
-        protected CleanUpHandler entityHandler = new CleanUpHandler();
+        protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
         public Faker Faker = new Faker(); 
 
         public LoginPage LoginPage { get; set; }
