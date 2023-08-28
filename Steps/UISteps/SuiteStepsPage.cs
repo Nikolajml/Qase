@@ -4,30 +4,35 @@ using OpenQA.Selenium;
 
 namespace Steps.UISteps
 {
-    public class SuiteStepsPage : BaseStep
+    public class SuiteStepsPage
     {
-        public SuiteStepsPage(IWebDriver driver) : base(driver)
-        {
+        public SuitePopUpPage SuitePopUpPage => new SuitePopUpPage(Driver);
+        protected IWebDriver Driver;
 
+        public SuiteStepsPage(IWebDriver driver)
+        {
+            Driver = driver;
         }
+       
 
         public void CreateSuit(Suite suite)
         {
-            ProjectTPPage.ClickToSuiteButton();
-            ProjectTPPage.SetSuiteName(suite.Name);
-            ProjectTPPage.SetSuiteDescriptione(suite.Description);
-            ProjectTPPage.SetSuitePreconditionse(suite.Preconditions);
-            ProjectTPPage.ClickToCreateSuiteButton();
+            
+            //SuitePopUpPage.OpenPage();
+            SuitePopUpPage.IsPageOpened();
+            SuitePopUpPage.SetSuiteName(suite.Name);
+            SuitePopUpPage.SetSuiteDescriptione(suite.Description);
+            SuitePopUpPage.SetSuitePreconditionse(suite.Preconditions);
+            SuitePopUpPage.ClickToCreateSuiteButton();
         }
 
         public void EditSuit(Suite suite)
-        {
-            ProjectTPPage.ClickToEllipsis();
-            ProjectTPPage.ClickToEdit();
-            ProjectTPPage.ClickToClearNameField();
-            ProjectTPPage.ClearNameField();
-            ProjectTPPage.EditSuiteName(suite.Name);
-            ProjectTPPage.ClickToSaveEditButton();
+        {                        
+            SuitePopUpPage.IsPageOpened();
+            SuitePopUpPage.ClickToClearNameField();
+            SuitePopUpPage.ClearNameField();
+            SuitePopUpPage.EditSuiteName(suite.Name);
+            SuitePopUpPage.ClickToSaveEditButton();
         }
     }
 }

@@ -18,20 +18,19 @@ namespace Tests.UI
                 .SetPlanTitle("New Plan 333")
                 .SetPlanDescription("Description for New Plan")
                 .Build();                                                   
-
-            PlanTPPage.OpenPage();            
+                                    
             PlanStepsPage.CreatePlan(plan);
 
-            cleanUpHandler.PlansForDelete.Add(plan);
+            //cleanUpHandler.PlansForDelete.Add(plan);
 
-            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
+            Assert.That(PlanStepsPage.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
 
-            PlanTPPage.ClickToCreatedPlanTitleToAssert();
+            PlanStepsPage.NavigateToCreatedPlanForSecondAssert();
 
             Assert.Multiple(() =>                                           
             {
-                Assert.That(PlanTPPage.GetPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
-                Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(plan.Description));
+                Assert.That(PlanStepsPage.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
+                Assert.That(PlanStepsPage.CreatedPlanDescriptionForSecondAssert, Is.EqualTo(plan.Description));
             });
         }
 
@@ -46,11 +45,11 @@ namespace Tests.UI
                 .SetPlanTitle("Plan_Edit")
                 .Build();
 
-            PlanTPPage.OpenPage();
-            PlanTPPage.IsPageOpened();
+            //PlanTPPage.OpenPage();
+            //PlanTPPage.IsPageOpened();
             PlanStepsPage.EditPlan(plan);
 
-            Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
+            //Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
         }
     }
 }

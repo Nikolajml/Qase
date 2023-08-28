@@ -4,23 +4,52 @@ using OpenQA.Selenium;
 
 namespace Steps.UISteps
 {
-    public class DefectStepsPage : BaseStep
-    {
-        public DefectStepsPage(IWebDriver driver) : base(driver)
-        {
+    public class DefectStepsPage
+    {                       
+        public DefectsTPPage DefectsTPPage => new DefectsTPPage(Driver);
+        protected IWebDriver Driver;
 
+        public DefectStepsPage(IWebDriver driver)
+        {
+            Driver = driver;
         }
 
         public void CreateDefect(Defect defect)
         {
+            DefectsTPPage.OpenPage();
+            DefectsTPPage.IsPageOpened();
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
             DefectsTPPage.SetActualresult(defect.ActualResult);
             DefectsTPPage.ClickToCreateDefectButton();
         }
 
+        public string DefectTitleForFirstAssert()
+        {
+            return DefectsTPPage.GetDefectTitle();
+        }
+
+        public void NavigateToCreatedDefectForSecondAssert()
+        {
+            DefectsTPPage.ClickToDefectTitleToSecondAssert();
+        }
+
+        public string DefectTitleForSecondAssert()
+        {
+            return DefectsTPPage.GetDefectTitleForSecondAssert();
+        }
+
+        public string DefectDescriptionForSecondAssert()
+        {
+            return DefectsTPPage.GetDefectDescriptionForSecondAssert();
+        }
+
+
+
         public void EditDefect(Defect defect)
         {
+            DefectsTPPage.OpenPage();
+            DefectsTPPage.IsPageOpened();
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
             DefectsTPPage.ClickToClearTitleDefectField();

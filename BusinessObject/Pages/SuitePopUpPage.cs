@@ -1,9 +1,14 @@
 ﻿using Core.Utilities.Configuration;
 using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace UI.Pages
 {
-    public class ProjectTPPage : BasePage
+    public class SuitePopUpPage : BasePage
     {
         private static string END_POINT = "project/TP";
 
@@ -27,7 +32,7 @@ namespace UI.Pages
 
         //private IWebElement CreateNewProjectButtonBy => Driver.FindElement(By.Id("createButton"));
 
-        private IWebElement SuiteButtonBy => Driver.FindElement(By.XPath("//*[@id='create-suite-button']"));
+        //private IWebElement SuiteButtonBy => Driver.FindElement(By.XPath("//*[@id='create-suite-button']"));
         private IWebElement SuiteNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SuiteDescriptionInputBy => Driver.FindElement(By.XPath("//*[@id='description']"));
         private IWebElement SuitePreconditionsInputBy => Driver.FindElement(By.XPath("//*[@id='preconditions']"));
@@ -38,27 +43,27 @@ namespace UI.Pages
         private IWebElement SuiteNameInputForClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameEditBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
-        private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
-        private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
-        private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
+        //private IWebElement CreateCaseButtonBy => Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
+        //private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
+        //private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
+        //private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
+        //private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
         private IWebElement SuiteNameTitleBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .fXc2Go"));
 
         private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
 
-        public ProjectTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
+        public SuitePopUpPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
 
         }
-        public ProjectTPPage(IWebDriver driver) : base(driver, false)
+        public SuitePopUpPage(IWebDriver driver) : base(driver, false)
         {
 
         }
 
         public override bool IsPageOpened()
         {
-            return SuiteButtonBy.Displayed;
+            return CreateSuiteButtonBy.Displayed;
         }
 
         public override void OpenPage()
@@ -67,11 +72,11 @@ namespace UI.Pages
         }
 
 
-        // CREATE SUITE
-        public void ClickToSuiteButton()
-        {
-            SuiteButtonBy.Click();
-        }
+        //CREATE SUITE
+        //public void ClickToSuiteButton()
+        //{
+        //    SuiteButtonBy.Click();
+        //}
 
         public void SetSuiteName(string suiteName)
         {
@@ -94,15 +99,15 @@ namespace UI.Pages
 
 
         //EDIT SUITE
-        public void ClickToEllipsis()
-        {
-            EllipsisEditBy.Click();
-        }
+        //public void ClickToEllipsis()
+        //{
+        //    EllipsisEditBy.Click();
+        //}
 
-        public void ClickToEdit()
-        {
-            EditSuiteButtonBy.Click();
-        }
+        //public void ClickToEdit()
+        //{
+        //    EditSuiteButtonBy.Click();
+        //}
 
         public void ClickToClearNameField()
         {
@@ -126,44 +131,6 @@ namespace UI.Pages
 
 
 
-        //// CREATED CASE
-        public void ClickToCaseButton()
-        {
-            CreateCaseButtonBy.Click();
-        }
-
-        //public void SetCaseName(string caseName)
-        //{
-        //    CaseNameInputBy.SendKeys(caseName);
-        //}
-
-        //public void ClickToSaveCaseButton()
-        //{
-        //    SaveCaseButtonBy.Click();
-        //}
-
-        //// EDIT CASE
-        //public void ClickToCaseTitle()
-        //{
-        //    CreatedCaseTitle.Click();
-        //}
-
-        //public void ClickToCaseEdit()
-        //{
-        //    CaseEditBy.Click();
-        //}
-
-        //public void ClickToCaseTitleField()
-        //{
-        //    CaseNameInputBy.Click();
-        //}
-
-        //public void ClearCaseTitleField()
-        //{
-        //    CaseNameInputBy.Clear();
-        //}
-              
-
         // METHODS TO ASSERTS
         public string GetSuiteName()
         {
@@ -174,40 +141,6 @@ namespace UI.Pages
         {
             var locator = string.Format(SuiteNameByTextTeplmate, text);
             return Driver.FindElement(By.XPath(locator)).GetAttribute("innerText");
-        }
-
-        //public void SetEditedCaseName(string caseName)
-        //{
-        //    CaseNameInputBy.Clear();
-        //    CaseNameInputBy.SendKeys(caseName);
-        //}
-
-
-
-
-
-
-
-
-        public string GetCreatedCaseTitle()
-        {
-            return CreatedCaseTitle.GetAttribute("innerText");
-        }
-
-
-
-
-
-        // Navigate to edit Case
-        public void ClickToCaseTitle()
-        {
-            CreatedCaseTitle.Click();
-        }
-
-        public void ClickToCaseEdit()
-        {
-            CaseEditBy.Click();
-        }
-
+        }               
     }
 }

@@ -1,31 +1,38 @@
 ﻿using UI.Models;
 using OpenQA.Selenium;
+using UI.Pages;
 
 namespace Steps.UISteps
 {
-    public class CaseStepsPage : BaseStep
+    public class CaseStepsPage
     {
-        public CaseStepsPage(IWebDriver driver) : base(driver)
+        public CasePage CasePage => new CasePage(Driver);
+        protected IWebDriver Driver;
+
+        public CaseStepsPage(IWebDriver driver)
         {
-            // Case Page 
+            Driver = driver;
         }
 
         public void CreateCase(Case Case)
-        {
-            ProjectTPPage.ClickToEllipsis();
-            ProjectTPPage.ClickToCaseButton();
-            ProjectTPPage.SetCaseName(Case.Title);
-            ProjectTPPage.ClickToSaveCaseButton();
+        {            
+            CasePage.IsPageOpened();            
+            CasePage.SetCaseName(Case.Title);
+            CasePage.ClickToSaveCaseButton();
         }
 
+
         public void EditCase(Case Case)
-        {
-            ProjectTPPage.ClickToCaseTitle();
-            ProjectTPPage.ClickToCaseEdit();
-            ProjectTPPage.ClickToCaseTitleField();
-            ProjectTPPage.ClearCaseTitleField();
-            ProjectTPPage.SetEditedCaseName(Case.Title);
-            ProjectTPPage.ClickToSaveCaseButton();
+        {            
+            CasePage.ClickToCaseTitleField();
+            CasePage.ClearCaseTitleField();
+            CasePage.SetEditedCaseName(Case.Title);
+            CasePage.ClickToSaveCaseButton();
         }
+
+
+        
+
+
     }
 }

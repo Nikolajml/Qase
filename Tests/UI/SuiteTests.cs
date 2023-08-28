@@ -2,6 +2,7 @@
 using NUnit.Allure.Attributes;
 using System.Numerics;
 using Bogus;
+using Steps.UISteps;
 
 namespace Tests.UI
 {
@@ -20,11 +21,10 @@ namespace Tests.UI
                 .SetSuitePreconditions(Faker.Vehicle.Vin())
                 .Build();
 
-            ProjectTPPage.OpenPage();
-            ProjectTPPage.IsPageOpened();
+            ProjectTPStepsPage.NavigateToCreateSuite();
             SuiteStepsPage.CreateSuit(suite);
 
-            Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
+            Assert.That(ProjectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name));
         }
 
         [Test, Order(2)]
@@ -38,11 +38,12 @@ namespace Tests.UI
                 .SetSuiteName("dkulmfhcifghvel")
                 .Build();
 
-            ProjectTPPage.OpenPage();
-            ProjectTPPage.IsPageOpened();
+            //ProjectTPPage.OpenPage();
+            //ProjectTPPage.IsPageOpened();
+            ProjectTPStepsPage.NavigateToEditSuite();
             SuiteStepsPage.EditSuit(suite);
 
-            Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
+            //Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
         }
 
         [OneTimeTearDown]

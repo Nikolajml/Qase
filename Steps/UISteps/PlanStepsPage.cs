@@ -4,15 +4,19 @@ using OpenQA.Selenium;
 
 namespace Steps.UISteps
 {
-    public class PlanStepsPage : BaseStep
+    public class PlanStepsPage
     {
-        public PlanStepsPage(IWebDriver driver) : base(driver)
+        public PlanTPPage PlanTPPage => new PlanTPPage(Driver);
+        protected IWebDriver Driver;
+        public PlanStepsPage(IWebDriver driver)
         {
-
+            Driver = driver;
         }
 
         public void CreatePlan(Plan plan)
         {
+            PlanTPPage.OpenPage();
+            PlanTPPage.IsPageOpened();
             PlanTPPage.ClickToCreatePlanButton();
             PlanTPPage.SetPlanTitle(plan.Title);
             PlanTPPage.SetPlanDescription(plan.Description);
@@ -22,8 +26,32 @@ namespace Steps.UISteps
             PlanTPPage.ClickToSavePlanButton();
         }
 
+        public string CreatedPlanTitleForFirstAssert()
+        {
+            return PlanTPPage.GetPlanTitle();
+        }        
+
+        public void NavigateToCreatedPlanForSecondAssert()
+        {
+            PlanTPPage.ClickToCreatedPlanTitleToAssert();
+        }
+
+        public string CreatedPlanTitleForSecondAssert()
+        {
+            return PlanTPPage.GetPlanTitleForSecondAssert();
+        }
+
+        public string CreatedPlanDescriptionForSecondAssert()
+        {
+            return PlanTPPage.GetPlanDescriptionForSecondAssert();
+        }
+
+       
+
         public void EditPlan(Plan plan)
         {
+            PlanTPPage.OpenPage();
+            PlanTPPage.IsPageOpened();
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
             PlanTPPage.ClickToClearTitlePlanField();

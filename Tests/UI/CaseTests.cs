@@ -1,5 +1,6 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
+using Steps.UISteps;
 
 namespace Tests.UI
 {
@@ -16,14 +17,13 @@ namespace Tests.UI
                 .SetCaseTitle("New Case Test UI")
                 .Build();
 
-            ProjectTPPage.OpenPage();
-            ProjectTPPage.IsPageOpened();
+            ProjectTPStepsPage.NavigateToCreateCase();
             CaseStepsPage.CreateCase(Case);
 
             //Case.Id = CaseStepsPage.GetCaseInfo();
             //entityHandler.CasesForDelete.Add(Case);
 
-            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
+            Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title));
         }
 
         [Test, Order(2)]
@@ -37,11 +37,10 @@ namespace Tests.UI
                 .SetCaseTitle("Edited Case UI")
                 .Build();
 
-            ProjectTPPage.OpenPage();
-            ProjectTPPage.IsPageOpened();
+            ProjectTPStepsPage.NavigateToEditCase();
             CaseStepsPage.EditCase(Case);
 
-            Assert.That(ProjectTPPage.GetCreatedCaseTitle(), Is.EqualTo(Case.Title));
+            Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title));
         }
 
         [OneTimeTearDown]

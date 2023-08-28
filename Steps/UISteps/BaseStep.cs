@@ -10,7 +10,7 @@ namespace Steps.UISteps
         public LoginPage LoginPage => new LoginPage(Driver);
         public PlanTPPage PlanTPPage => new PlanTPPage(Driver);
         public DefectsTPPage DefectsTPPage => new DefectsTPPage(Driver);
-        public ProjectTPPage ProjectTPPage => new ProjectTPPage(Driver);
+        
 
         // сделать частью соответсвующего конструктора
 

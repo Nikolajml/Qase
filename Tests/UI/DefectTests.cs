@@ -5,7 +5,7 @@ namespace Tests.UI
 {
     public class DefectTests : BaseTest
     {
-        [Test, Order(1)]
+        [Test]
         [Description("Successful UI test to create a Defect")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -17,22 +17,18 @@ namespace Tests.UI
                 .SetActualResult("New actual result")
                 .Build();
 
-            DefectTPPage.OpenPage();
-            DefectTPPage.IsPageOpened();
-            DefectStepsPage.CreateDefect(defect);
-
-            cleanUpHandler.DefectsForDelete.Add(defect);
+            //cleanUpHandler.DefectsForDelete.Add(defect);
             // Get Id вставить в API Service и Step
 
-            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
+            DefectStepsPage.CreateDefect(defect);
+            Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 
-            DefectTPPage.ClickToDefectTitleToSecondAssert();
-
-            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult)); // Errore message
+            DefectStepsPage.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(DefectStepsPage.DefectDescriptionForSecondAssert, Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result"); // Errore message                       
         }
 
 
-        [Test, Order(2)]
+        [Test]
         [Description("Successful UI test to edit a Defect")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -44,15 +40,12 @@ namespace Tests.UI
                 .SetActualResult("Edit actual result")
                 .Build();
 
-            DefectTPPage.OpenPage();
-            DefectTPPage.IsPageOpened();
+            
             DefectStepsPage.EditDefect(defect);
+            Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 
-            Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
-
-            DefectTPPage.ClickToDefectTitleToSecondAssert();
-
-            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult));
+            DefectStepsPage.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(DefectStepsPage.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result");
         }
     }
 }

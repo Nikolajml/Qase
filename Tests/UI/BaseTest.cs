@@ -23,14 +23,15 @@ namespace Tests.UI
 
         public LoginPage LoginPage;
         public ProjectsPage ProjectsPage;
-        public PlanTPPage PlanTPPage;
-        public DefectsTPPage DefectTPPage;
-        public ProjectTPPage ProjectTPPage; // Сделать поля в API Service
+        //public PlanTPPage PlanTPPage;
+        //public DefectsTPPage DefectTPPage;
+        //public ProjectTPPage ProjectTPPage; // Сделать поля в API Service
 
         public PlanStepsPage PlanStepsPage; // Должны быть только Steps
         public DefectStepsPage DefectStepsPage;
         public SuiteStepsPage SuiteStepsPage;
         public CaseStepsPage CaseStepsPage;
+        public ProjectTPStepsPage ProjectTPStepsPage;
 
 
         [OneTimeSetUp] // Impliment OneTimeSetup
@@ -45,15 +46,16 @@ namespace Tests.UI
             LoginPage.TryToLogin(Configurator.Admin);
             ProjectsPage.IsPageOpened();
 
-            PlanTPPage = new PlanTPPage(Driver);
+           //PlanTPPage = new PlanTPPage(Driver);
             PlanStepsPage = new PlanStepsPage(Driver);
 
-            DefectTPPage = new DefectsTPPage(Driver);
+            //DefectTPPage = new DefectsTPPage(Driver);
             DefectStepsPage = new DefectStepsPage(Driver);
 
-            ProjectTPPage = new ProjectTPPage(Driver);
+            //ProjectTPPage = new ProjectTPPage(Driver);
             SuiteStepsPage = new SuiteStepsPage(Driver);
             CaseStepsPage = new CaseStepsPage(Driver);
+            ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
         }
 
         [OneTimeTearDown] // Impliment OneTearDown
