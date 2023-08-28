@@ -21,8 +21,8 @@ namespace Tests.UI
         protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
         public Faker Faker = new Faker();
 
-        public LoginPage LoginPage;
-        public ProjectsPage ProjectsPage;
+        //public LoginPage LoginPage;
+        //public ProjectsPage ProjectsPage;
         //public PlanTPPage PlanTPPage;
         //public DefectsTPPage DefectTPPage;
         //public ProjectTPPage ProjectTPPage; // Сделать поля в API Service
@@ -32,6 +32,7 @@ namespace Tests.UI
         public SuiteStepsPage SuiteStepsPage;
         public CaseStepsPage CaseStepsPage;
         public ProjectTPStepsPage ProjectTPStepsPage;
+        public NavigationSteps NavigationSteps;
 
 
         [OneTimeSetUp] // Impliment OneTimeSetup
@@ -39,14 +40,19 @@ namespace Tests.UI
         {
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
-            LoginPage = new LoginPage(Driver);
-            ProjectsPage = new ProjectsPage(Driver);
+            //LoginPage = new LoginPage(Driver);
+            //ProjectsPage = new ProjectsPage(Driver);
 
-            LoginPage.OpenPage();       // убрать страницы из тестов - отсавить steps
-            LoginPage.TryToLogin(Configurator.Admin);
-            ProjectsPage.IsPageOpened();
+            //LoginPage.OpenPage();       // убрать страницы из тестов - отсавить steps
+            //LoginPage.TryToLogin(Configurator.Admin);
+            //ProjectsPage.IsPageOpened();
 
-           //PlanTPPage = new PlanTPPage(Driver);
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(Configurator.Admin);
+
+            NavigationSteps = new NavigationSteps(Driver);
+
+            //PlanTPPage = new PlanTPPage(Driver);
             PlanStepsPage = new PlanStepsPage(Driver);
 
             //DefectTPPage = new DefectsTPPage(Driver);
