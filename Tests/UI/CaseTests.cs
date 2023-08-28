@@ -6,7 +6,7 @@ namespace Tests.UI
 {
     public class CaseTests : BaseTest
     {
-        [Test, Order(1)]
+        [Test]
         [Description("Successful UI test to create a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -26,7 +26,7 @@ namespace Tests.UI
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title));
         }
 
-        [Test, Order(2)]
+        [Test]
         [Description("Successful UI test to edit a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]

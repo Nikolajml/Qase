@@ -47,21 +47,16 @@ namespace Tests.UI
             //LoginPage.TryToLogin(Configurator.Admin);
             //ProjectsPage.IsPageOpened();
 
-            NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(Configurator.Admin);
-
-            NavigationSteps = new NavigationSteps(Driver);
-
-            //PlanTPPage = new PlanTPPage(Driver);
-            PlanStepsPage = new PlanStepsPage(Driver);
-
-            //DefectTPPage = new DefectsTPPage(Driver);
-            DefectStepsPage = new DefectStepsPage(Driver);
-
-            //ProjectTPPage = new ProjectTPPage(Driver);
+            NavigationSteps = new NavigationSteps(Driver);                                                           
+            PlanStepsPage = new PlanStepsPage(Driver);                        
+            DefectStepsPage = new DefectStepsPage(Driver);                        
             SuiteStepsPage = new SuiteStepsPage(Driver);
             CaseStepsPage = new CaseStepsPage(Driver);
             ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(Configurator.Admin);
+            NavigationSteps.CheckThatPageIsOpened();
         }
 
         [OneTimeTearDown] // Impliment OneTearDown

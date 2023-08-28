@@ -12,6 +12,7 @@ namespace Steps.UISteps
     public class NavigationSteps
     {       
         public LoginPage LoginPage => new LoginPage(Driver);
+        public ProjectsPage ProjectsPage => new ProjectsPage(Driver);
         protected IWebDriver Driver;
 
         public NavigationSteps(IWebDriver driver)
@@ -25,12 +26,16 @@ namespace Steps.UISteps
         }
 
 
-        public ProjectsPage SuccessfulLogin(User user)
+        public void SuccessfulLogin(User user)
         {
-            LoginPage.TryToLogin(user);
-            return new ProjectsPage(Driver);
+            LoginPage.TryToLogin(user);            
+                                    
         }
 
-        
+        public void CheckThatPageIsOpened()
+        {
+            ProjectsPage.IsPageOpened();
+        }
+                
     }
 }
