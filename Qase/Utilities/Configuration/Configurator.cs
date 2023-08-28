@@ -14,6 +14,8 @@ namespace Core.Utilities.Configuration
             s_configuration = new Lazy<IConfiguration>(BuildConfiguration);
         }
 
+        // Сделать конфигуратор нестатическим 
+
         private static IConfiguration BuildConfiguration()
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

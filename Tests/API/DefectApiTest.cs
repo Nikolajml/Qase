@@ -92,13 +92,16 @@ namespace Tests.API
         public void DeleteSuiteTest()
         {
             var defectResponse = _defectStep.DeleteTestDefect(defect);
+            //
+
             _logger.Info("Defect: " + defectResponse.ToString());                        
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(defectResponse.Status);
-                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString());
+                Assert.IsTrue(defectResponse.Status, "Status code Defect not be delete");
+                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "/////");
             });
+            // Error Message  
         }    
 
 
@@ -106,6 +109,10 @@ namespace Tests.API
         public void TearDown()
         {
             cleanUpHandler.DeleteDefects();
+
+
+            // вынести метод для удадления Defect
+            // _defectStep.DeleteTestDefect(defect) вызвать в TearDown
         }
     }
 }

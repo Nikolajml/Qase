@@ -20,8 +20,7 @@ namespace Core.Client
 
             _restClient = new RestClient(options);
             _restClient.AddDefaultHeader("accept", "application/json");
-            _restClient.AddDefaultHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86");
-
+            _restClient.AddDefaultHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86"); // забрать Token из appsettings.json
         }
 
         public RestResponse Execute(RestRequest request)

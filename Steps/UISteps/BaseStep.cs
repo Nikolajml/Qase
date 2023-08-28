@@ -12,6 +12,8 @@ namespace Steps.UISteps
         public DefectsTPPage DefectsTPPage => new DefectsTPPage(Driver);
         public ProjectTPPage ProjectTPPage => new ProjectTPPage(Driver);
 
+        // сделать частью соответсвующего конструктора
+
         public BaseStep(IWebDriver driver)
         {
             Driver = driver;

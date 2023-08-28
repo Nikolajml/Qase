@@ -15,7 +15,7 @@ namespace API.Services
 
         public DefectApiModel GetDefect(Defect defect)
         {
-            var request = new RestRequest(Endpoints.GET_DEFECT)         // заменить на RestClient и вынести на уровень конструктора
+            var request = new RestRequest(Endpoints.GET_DEFECT)
                 .AddUrlSegment("code", defect.Code)
                 .AddUrlSegment("id", defect.Id)                
                 .AddBody(defect);

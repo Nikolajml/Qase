@@ -19,18 +19,18 @@ namespace Tests.UI
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
         protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
-        public Faker Faker = new Faker(); 
+        public Faker Faker = new Faker();
 
-        public LoginPage LoginPage { get; set; }
-        public ProjectsPage ProjectsPage { get; set; }
-        public PlanTPPage PlanTPPage { get; set; }
-        public DefectsTPPage DefectTPPage { get; set; }
-        public ProjectTPPage ProjectTPPage { get; set; }
+        public LoginPage LoginPage;
+        public ProjectsPage ProjectsPage;
+        public PlanTPPage PlanTPPage;
+        public DefectsTPPage DefectTPPage;
+        public ProjectTPPage ProjectTPPage; // Сделать поля в API Service
 
-        public PlanStepsPage PlanStepsPage { get; set; }
-        public DefectStepsPage DefectStepsPage { get; set; }
-        public SuiteStepsPage SuiteStepsPage { get; set; }
-        public CaseStepsPage CaseStepsPage { get; set; }
+        public PlanStepsPage PlanStepsPage; // Должны быть только Steps
+        public DefectStepsPage DefectStepsPage;
+        public SuiteStepsPage SuiteStepsPage;
+        public CaseStepsPage CaseStepsPage;
 
 
         [OneTimeSetUp] // Impliment OneTimeSetup
@@ -41,7 +41,7 @@ namespace Tests.UI
             LoginPage = new LoginPage(Driver);
             ProjectsPage = new ProjectsPage(Driver);
 
-            LoginPage.OpenPage();
+            LoginPage.OpenPage();       // убрать страницы из тестов - отсавить steps
             LoginPage.TryToLogin(Configurator.Admin);
             ProjectsPage.IsPageOpened();
 

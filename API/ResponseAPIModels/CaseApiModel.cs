@@ -39,13 +39,7 @@
     {
         public bool Status { get; set; }
         public CaseResult Result { get; set; }
-    }
-
-    public class CaseApiModelGeneric <T>
-    {
-        public bool Status { get; set; }
-        public T Result { get; set; }
-    }
+    }        
 }
 
 

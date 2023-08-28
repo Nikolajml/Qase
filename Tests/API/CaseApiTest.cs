@@ -70,7 +70,7 @@ namespace Tests.API
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, caseResponse.Status);
+                Assert.IsTrue(caseResponse.Status);
                 Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString());                
             });
         }

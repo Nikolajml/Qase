@@ -22,12 +22,13 @@ namespace Tests.UI
             DefectStepsPage.CreateDefect(defect);
 
             cleanUpHandler.DefectsForDelete.Add(defect);
+            // Get Id вставить в API Service и Step
 
             Assert.That(DefectTPPage.GetDefectTitle, Is.EqualTo(defect.DefectTitle));
 
             DefectTPPage.ClickToDefectTitleToSecondAssert();
 
-            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult));
+            Assert.That(PlanTPPage.GetPlanDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult)); // Errore message
         }
 
 

@@ -7,7 +7,7 @@ namespace Steps.UISteps
     {
         public CaseStepsPage(IWebDriver driver) : base(driver)
         {
-
+            // Case Page 
         }
 
         public void CreateCase(Case Case)

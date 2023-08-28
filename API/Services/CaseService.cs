@@ -22,15 +22,7 @@ namespace API.Services
                 .AddUrlSegment("code", Case.Code)
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
-
-            _logger.Info("Case: " + request.ToString());
-            _logger.Info("Case: " + request.Resource);
-
-            var response = _apiClient.Execute(request);
-
-            _logger.Info("Case: " + response.Content);
-            _logger.Info("Case: " + response.StatusCode);
-
+                        
             return _apiClient.Execute<CaseApiModel>(request);
         }
 

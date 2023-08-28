@@ -10,11 +10,10 @@ namespace Tests.API
     [AllureNUnit]
     public class BaseApiTest
     {
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
+        protected Logger _logger = LogManager.GetCurrentClassLogger(); // Сделать логер частью конструктора
 
-        protected ApiClient _apiClient;
-        protected ProjectService _projectService;
-        protected SuiteService _suiteService;
+        protected ApiClient _apiClient;        
+        protected SuiteService _suiteService; // 16-19 удалить - связать со степами
         protected CaseService _caseService;
         protected PlanService _planService;
         protected DefectService _defectService;
@@ -29,8 +28,7 @@ namespace Tests.API
         [OneTimeSetUp]
         public void InitApiClient()
         {
-            _apiClient = new ApiClient();
-            _projectService = new ProjectService(_apiClient);
+            _apiClient = new ApiClient();            
             _suiteService = new SuiteService(_apiClient);
             _caseService = new CaseService(_apiClient);
             _planService = new PlanService(_apiClient);
