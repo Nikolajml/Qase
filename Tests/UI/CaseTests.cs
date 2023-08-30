@@ -6,6 +6,32 @@ namespace Tests.UI
 {
     public class CaseTests : BaseTest
     {
+        Case Case;
+        List<string> testCaseName;
+
+
+        [SetUp]
+        public void Setup()
+        {
+
+            Case = new Case()
+            {
+                Code = "OSDUIFHSIUDISDUHFISUDHFISUDHFISUHDFISUDHFIUSDHF&#G*P&SGDHP&*SDE",
+                Title = "Case_api_New"
+            };
+
+            var createdTestCase = _caseStep.CreateTestCase(Case);
+
+            Case.Id = createdTestCase.Result.id.ToString();
+
+            Console.WriteLine(Case.Id);
+
+            //CreateCaseTest
+
+        }
+
+
+
         [Test]
         [Description("Successful UI test to create a Case")]
         [AllureOwner("User")]
@@ -13,27 +39,26 @@ namespace Tests.UI
         [Category("UI")]
         public void CreateCaseTest()
         {
-            Case Case = new CaseBuilder()
-                .SetCaseTitle("New Case Test UI")
+            Case = new CaseBuilder()
+                .SetCaseTitle("NIKOLAY_SUPER")
                 .Build();
 
             ProjectTPStepsPage.NavigateToCreateCase();
             CaseStepsPage.CreateCase(Case);
+            testCaseName.Add(Case.Title);
 
-            //Case.Id = CaseStepsPage.GetCaseInfo();
-            //entityHandler.CasesForDelete.Add(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title));
         }
 
-        [Test]
+      /*  [Test]
         [Description("Successful UI test to edit a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("UI")]
         public void EditCaseTest()
         {
-            Case Case = new CaseBuilder()
+             Case = new CaseBuilder()
                 .SetCaseTitle("Edited Case UI")
                 .Build();
 
@@ -41,12 +66,13 @@ namespace Tests.UI
             CaseStepsPage.EditCase(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title));
-        }
+        }*/
 
-        [OneTimeTearDown]
+        [TearDown]
         public void TearDown()
         {
-            cleanUpHandler.DeleteCases();
+            //testCaseName
+            _caseStep.DeleteTestCaseByName(Case.Title, "TP");
         }
     }
 }

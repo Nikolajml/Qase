@@ -20,6 +20,11 @@
             defect.ActualResult = actualResult;
             return this;
         }
+        public DefectBuilder SetCode(string code)
+        {
+            defect.Code = code;
+            return this;
+        }
 
         public Defect Build()
         {

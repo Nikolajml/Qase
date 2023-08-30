@@ -1,5 +1,4 @@
-﻿using BusinessObject.Models;
-using Core.Utilities.Configuration;
+﻿using Core.Utilities.Configuration;
 using OpenQA.Selenium;
 
 namespace UI.Pages

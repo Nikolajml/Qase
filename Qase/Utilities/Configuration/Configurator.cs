@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Core.Utilities.Configuration
 {
-    public static class Configurator
+    public class Configurator
     {
         private static readonly Lazy<IConfiguration> s_configuration;
         public static IConfiguration Configuration => s_configuration.Value;
@@ -41,6 +41,7 @@ namespace Core.Utilities.Configuration
                 var child = Configuration.GetSection("AppSettings");
 
                 appSettings.URL = child["URL"];
+                appSettings.ApiURL = child["apiUrl"];
                 appSettings.ApiURL = child["apiUrl"];
 
                 return appSettings;

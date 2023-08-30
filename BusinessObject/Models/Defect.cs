@@ -9,7 +9,5 @@ namespace UI.Models
         [JsonPropertyName("actual_result")] public string ActualResult { get; set; }
         [JsonPropertyName("severity")] public int Severity { get; set; }
         [JsonPropertyName("id")] public string Id { get; set; }
-
-
     }
 }

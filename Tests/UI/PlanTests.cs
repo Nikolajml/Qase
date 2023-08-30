@@ -1,6 +1,7 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
+using Steps.UISteps;
 
 namespace Tests.UI
 {
@@ -17,8 +18,9 @@ namespace Tests.UI
             Plan plan = new PlanBuilder()
                 .SetPlanTitle("New Plan 333")
                 .SetPlanDescription("Description for New Plan")
-                .Build();                                                   
-                                    
+                .Build();
+
+            PlanStepsPage.NavigateToPlanPage();
             PlanStepsPage.CreatePlan(plan);
 
             //cleanUpHandler.PlansForDelete.Add(plan);
@@ -47,9 +49,20 @@ namespace Tests.UI
 
             //PlanTPPage.OpenPage();
             //PlanTPPage.IsPageOpened();
+            PlanStepsPage.NavigateToPlanPage();
             PlanStepsPage.EditPlan(plan);
 
-            //Assert.That(PlanTPPage.GetPlanTitle(), Is.EqualTo(plan.Title));
+            Assert.That(PlanStepsPage.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
+
+            PlanStepsPage.NavigateToCreatedPlanForSecondAssert();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(PlanStepsPage.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
+                Assert.That(PlanStepsPage.CreatedPlanDescriptionForSecondAssert, Is.EqualTo(plan.Description));
+            });
+
+
         }
     }
 }

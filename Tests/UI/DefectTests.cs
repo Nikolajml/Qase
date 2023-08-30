@@ -5,6 +5,8 @@ namespace Tests.UI
 {
     public class DefectTests : BaseTest
     {
+        public List<Defect> DefectsForDelete = new();
+
         [Test]
         [Description("Successful UI test to create a Defect")]
         [AllureOwner("User")]
@@ -15,11 +17,9 @@ namespace Tests.UI
             Defect defect = new DefectBuilder()
                 .SetDefectTitle("Defect")
                 .SetActualResult("New actual result")
-                .Build();
+                .Build();                      
 
-            //cleanUpHandler.DefectsForDelete.Add(defect);
-            // Get Id вставить в API Service и Step
-
+            DefectStepsPage.NavigateToDefectCase();
             DefectStepsPage.CreateDefect(defect);
             Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 
@@ -40,7 +40,7 @@ namespace Tests.UI
                 .SetActualResult("Edit actual result")
                 .Build();
 
-            
+            DefectStepsPage.NavigateToDefectCase();
             DefectStepsPage.EditDefect(defect);
             Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 

@@ -8,11 +8,12 @@ using Steps.UISteps;
 using Core.Core;
 using Core.Utilities;
 using Bogus;
+using Tests.API;
 
 namespace Tests.UI
 {
     [AllureNUnit]
-    public class BaseTest
+    public class BaseTest : BaseApiTest
     {
         public static readonly string? BaseUrl = Configurator.AppSettings.URL;
 
@@ -21,12 +22,7 @@ namespace Tests.UI
         protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
         public Faker Faker = new Faker();
 
-        //public LoginPage LoginPage;
-        //public ProjectsPage ProjectsPage;
-        //public PlanTPPage PlanTPPage;
-        //public DefectsTPPage DefectTPPage;
-        //public ProjectTPPage ProjectTPPage; // Сделать поля в API Service
-
+       
         public PlanStepsPage PlanStepsPage; // Должны быть только Steps
         public DefectStepsPage DefectStepsPage;
         public SuiteStepsPage SuiteStepsPage;
@@ -40,13 +36,7 @@ namespace Tests.UI
         {
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
-            //LoginPage = new LoginPage(Driver);
-            //ProjectsPage = new ProjectsPage(Driver);
-
-            //LoginPage.OpenPage();       // убрать страницы из тестов - отсавить steps
-            //LoginPage.TryToLogin(Configurator.Admin);
-            //ProjectsPage.IsPageOpened();
-
+           
             NavigationSteps = new NavigationSteps(Driver);                                                           
             PlanStepsPage = new PlanStepsPage(Driver);                        
             DefectStepsPage = new DefectStepsPage(Driver);                        

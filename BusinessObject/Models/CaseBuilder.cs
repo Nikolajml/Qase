@@ -21,6 +21,12 @@
             return this;
         }
 
+        public CaseBuilder SetCode(string code)
+        {
+            Case.Code = code;
+            return this;
+        }
+
         public Case Build()
         {
             return Case;

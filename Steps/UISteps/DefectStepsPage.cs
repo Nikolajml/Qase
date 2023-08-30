@@ -43,13 +43,15 @@ namespace Steps.UISteps
         {
             return DefectsTPPage.GetDefectDescriptionForSecondAssert();
         }
-
-
-
-        public void EditDefect(Defect defect)
+        
+        public void NavigateToDefectCase()
         {
             DefectsTPPage.OpenPage();
             DefectsTPPage.IsPageOpened();
+        }
+
+        public void EditDefect(Defect defect)
+        {            
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
             DefectsTPPage.ClickToClearTitleDefectField();

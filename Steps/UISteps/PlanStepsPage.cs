@@ -13,10 +13,16 @@ namespace Steps.UISteps
             Driver = driver;
         }
 
-        public void CreatePlan(Plan plan)
+
+        public void NavigateToPlanPage()
         {
             PlanTPPage.OpenPage();
             PlanTPPage.IsPageOpened();
+        }
+        public void CreatePlan(Plan plan)
+        {
+            //PlanTPPage.OpenPage();
+            //PlanTPPage.IsPageOpened();
             PlanTPPage.ClickToCreatePlanButton();
             PlanTPPage.SetPlanTitle(plan.Title);
             PlanTPPage.SetPlanDescription(plan.Description);
@@ -47,11 +53,11 @@ namespace Steps.UISteps
         }
 
        
-
+         
         public void EditPlan(Plan plan)
         {
-            PlanTPPage.OpenPage();
-            PlanTPPage.IsPageOpened();
+            //PlanTPPage.OpenPage();
+            //PlanTPPage.IsPageOpened();
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
             PlanTPPage.ClickToClearTitlePlanField();

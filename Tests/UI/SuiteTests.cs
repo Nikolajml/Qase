@@ -1,6 +1,5 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
-using System.Numerics;
 using Bogus;
 using Steps.UISteps;
 

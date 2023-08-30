@@ -4,6 +4,7 @@ using API.ResponseAPIModels;
 using UI.Models;
 using Core.Utilities;
 using Core.Client;
+using static API.ResponseAPIModels.GetAllTestCase;
 
 namespace API.Services
 {
@@ -22,14 +23,25 @@ namespace API.Services
                 .AddUrlSegment("code", Case.Code)
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
-                        
+
             return _apiClient.Execute<CaseApiModel>(request);
+        }
+
+        public GetAllTestCase GetAllCase(string code)
+        {
+            var request = new RestRequest(Endpoints.GET_ALL_CASE)
+                .AddUrlSegment("code", code)
+                .AddParameter("limit", 99);
+
+            var t = _apiClient.Execute(request);
+
+            return _apiClient.Execute<GetAllTestCase>(request);
         }
 
         public CaseApiModel CreateCase(Case Case)
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-                .AddUrlSegment("code", Case.Code)                
+                .AddUrlSegment("code", Case.Code)
                 .AddBody(Case);
 
             return _apiClient.Execute<CaseApiModel>(request);

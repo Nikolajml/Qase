@@ -1,17 +1,19 @@
 ﻿using UI.Models;
-using NLog;
 using NUnit.Allure.Attributes;
-using System.Numerics;
+using API.Services;
 
 namespace Tests.API
 {
     public class SuiteApiTest : BaseApiTest
-    {       
+    {
+        public List<Suite> SuitesForDelete;
         public Suite suite { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
         {
+            SuitesForDelete = new();
+
             suite = new Suite()
             {
                 Code = "OE",
@@ -20,7 +22,7 @@ namespace Tests.API
         }
 
 
-        [Test, Order(1)]
+        [Test]
         [Description("Successful API test to create a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -28,44 +30,49 @@ namespace Tests.API
         public void CreateSuiteTest()
         {            
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
-
             suite.Id = createdSuiteTest.Result.id.ToString();
-
-            cleanUpHandler.SuitesForDelete.Add(suite);
+            SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(createdSuiteTest.Status);
-                Assert.AreEqual(suite.Id, createdSuiteTest.Result.id.ToString());
+                Assert.IsTrue(createdSuiteTest.Status, "Status code: Suite didn't create");
+                Assert.AreEqual(suite.Id, createdSuiteTest.Result.id.ToString(), "Suite ID didn't match");
             });
         }
                 
 
-        [Test, Order(2)]
+        [Test]
         [Description("Successful API test to get a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
         public void GetSuiteTest()
-        {         
+        {
+            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            suite.Id = createdSuiteTest.Result.id.ToString();
+            SuitesForDelete.Add(suite);
+
             var getedSuiteCase = _suiteStep.GetTestSuite(suite);
-            _logger.Info("Suite: " + getedSuiteCase.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(getedSuiteCase.Status);
-                Assert.AreEqual(suite.Id, getedSuiteCase.Result.id.ToString());
+                Assert.IsTrue(getedSuiteCase.Status, "Status code: Suite didn't get");
+                Assert.AreEqual(suite.Id, getedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
             });
         }
                 
 
-        [Test, Order(3)]
+        [Test]
         [Description("Successful API test to update a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
         public void UpdateSuiteTest()
-        {            
+        {
+            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            suite.Id = createdSuiteTest.Result.id.ToString();
+            SuitesForDelete.Add(suite);
+
             suite.Name = "Updated Suite Name API";
             suite.Description = "Updated Description API";
 
@@ -73,26 +80,29 @@ namespace Tests.API
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(updatedSuiteCase.Status);
-                Assert.AreEqual(suite.Id, updatedSuiteCase.Result.id.ToString());
+                Assert.IsTrue(updatedSuiteCase.Status, "Status code: Suite didn't update");
+                Assert.AreEqual(suite.Id, updatedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
             });
         }
           
 
-        [Test, Order(4)]
+        [Test]
         [Description("Successful API test to delete a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
         public void DeleteSuiteTest()
-        {   
-             var suiteResponse = _suiteStep.DeleteTestSuite(suite);
-            _logger.Info("Suite: " + suiteResponse.ToString);
+        {
+            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            suite.Id = createdSuiteTest.Result.id.ToString();            
+
+            var suiteResponse = _suiteStep.DeleteTestSuite(suite);
+            _logger.Info("Suite Id: " + suiteResponse.Result.id.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(suiteResponse.Status);
-                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString());
+                Assert.IsTrue(suiteResponse.Status, "Status code: Suite didn't delete");
+                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString(), "Suite ID didn't match");
             });                        
         }
                 
@@ -100,7 +110,10 @@ namespace Tests.API
         [OneTimeTearDown]
         public void TearDown()
         {
-            cleanUpHandler.DeletePlans();
+            foreach (var suiteForDelete in SuitesForDelete)
+            {
+                _suiteStep.DeleteTestSuite(suiteForDelete);
+            }
         }
     }
 }

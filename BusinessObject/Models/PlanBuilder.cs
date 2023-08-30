@@ -1,4 +1,6 @@
-﻿namespace UI.Models
+﻿using NUnit.Framework.Internal;
+
+namespace UI.Models
 {
     public class PlanBuilder
     {
@@ -18,6 +20,18 @@
         public PlanBuilder SetPlanDescription(string description)
         {
             plan.Description = description;
+            return this;
+        }
+
+        public PlanBuilder SetCode(string code)
+        {
+            plan.Code = code;
+            return this;
+        }
+
+        public PlanBuilder SetCases(List<int> cases)
+        {
+            plan.Cases = cases;
             return this;
         }
 

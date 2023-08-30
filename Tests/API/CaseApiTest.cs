@@ -1,5 +1,4 @@
 ﻿using UI.Models;
-using NLog;
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
 
@@ -7,19 +6,22 @@ namespace Tests.API
 {
     public class CaseApiTest : BaseApiTest
     {
+        public List<Case> CasesForDelete = new();
         public Case Case { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
-        {
+        {            
+
             Case = new Case()
             {
                 Code = "OE",
-                Title = "Case_api_New"
+                Title = "API Case 123"
             };
         }
+               
 
-        [Test, Order(1)]
+        [Test]
         [Description("Successful API test to create a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -27,19 +29,18 @@ namespace Tests.API
         public void CreateCaseTest()
         {
             var createdTestCase = _caseStep.CreateTestCase(Case);
-
             Case.Id = createdTestCase.Result.id.ToString();
-
-            cleanUpHandler.CasesForDelete.Add(Case);
+            CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(createdTestCase.Status);
-                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString());
+                Assert.IsTrue(createdTestCase.Status, "Status code: Case didn't delete");
+                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString(), "Case ID don't match");
             });
         }
 
-        [Test, Order(2)]
+
+        [Test]
         [Description("Successful API test to get a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -47,54 +48,71 @@ namespace Tests.API
 
         public void GetCaseTest()
         {
-            var testCase = _caseStep.GetTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase(Case);
+            Case.Id = createdTestCase.Result.id.ToString();
+            CasesForDelete.Add(Case);
+
+            var addedTestCase = _caseStep.GetTestCase(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(testCase.Status);
-                Assert.AreEqual(Case.Id, testCase.Result.id.ToString());
+                Assert.IsTrue(addedTestCase.Status, "Status code: Case didn't get");
+                Assert.AreEqual(Case.Id, addedTestCase.Result.id.ToString(), "Case ID don't match");
             });
         }
 
-        [Test, Order(3)]
+
+        [Test]
         [Description("Successful API test to update a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
         public void UpdateCaseTest()
         {
-            Case.Title = "New Update API";
-            Case.Description = "New Description API";
+            var createdTestCase = _caseStep.CreateTestCase(Case);
+            Case.Id = createdTestCase.Result.id.ToString();
+            CasesForDelete.Add(Case);
 
-            var caseResponse = _caseStep.UpdateTestCase(Case);
+            Case.Title = "Update API";
+            Case.Description = "Description API";
+
+            var updatedCase = _caseStep.UpdateTestCase(Case);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(caseResponse.Status);
-                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString());                
+                Assert.IsTrue(updatedCase.Status, "Status code: Case didn't update");
+                Assert.AreEqual(Case.Id, updatedCase.Result.id.ToString(), "Case ID didn't match");
             });
         }
 
-        [Test, Order(4)]
+
+        [Test]
         [Description("Successful test to delete a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
         public void DeleteCaseTest()
         {
-            var caseResponse = _caseStep.DeleteTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase(Case);
+            Case.Id = createdTestCase.Result.id.ToString();
             
+            var caseResponse = _caseStep.DeleteTestCase(Case);
+
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(caseResponse.Status);
-                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString());
+                Assert.IsTrue(caseResponse.Status, "Status code: Case didn't delete");
+                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString(), "Case ID didn't match");
             });
         }
+
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            cleanUpHandler.DeleteCases();
+            foreach (var caseForDelete in CasesForDelete)
+            {
+                _caseStep.DeleteTestCase(caseForDelete);
+            }
         }
     }
 }
