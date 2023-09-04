@@ -12,7 +12,7 @@ namespace Core.Client
 
         public ApiClient()
         {
-            _logger = LogManager.GetCurrentClassLogger(); 
+            _logger = LogManager.GetCurrentClassLogger(); // все еще статический - для апи клиента нужен логер и конфигуратор
 
             var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
             {
@@ -21,8 +21,8 @@ namespace Core.Client
             };
 
             _restClient = new RestClient(options);
-            _restClient.AddDefaultHeader("accept", MediaTypeNames.Application.Json);
-            _restClient.AddDefaultHeader("Token", Configurator.Bearer); // забрать Token из appsettings.json +
+            _restClient.AddDefaultHeader("accept", "application/json");
+            _restClient.AddDefaultHeader("Token", Configurator.Bearer);
         }
 
         public RestResponse Execute(RestRequest request)

@@ -21,11 +21,11 @@ namespace UI.Pages
         private IWebElement CreateCaseButtonBy => Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
         private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
-        private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
-        private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
+        //private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
+        //private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
         //private IWebElement SuiteNameTitleBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .fXc2Go"));
 
-        //private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
+        private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
 
         public CasePage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -36,7 +36,7 @@ namespace UI.Pages
 
         }
 
-        public override bool IsPageOpened()
+        public override bool IsPageOpened() // доработать - включить в степы, чтобы была проверка
         {
             return SaveCaseButtonBy.Displayed;
         }
@@ -81,9 +81,5 @@ namespace UI.Pages
             CaseNameInputBy.Clear();
             CaseNameInputBy.SendKeys(caseName);
         }
-
-
-
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
-using API.Services;
 using API.ResponseAPIModels;
 
 namespace Tests.API
@@ -23,7 +22,7 @@ namespace Tests.API
                 Title = "Case for Plan Mix Test"
             };
 
-            var createdTestCase = _caseStep.CreateCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase(Case);
 
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);

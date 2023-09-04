@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using UI.Pages;
 
-namespace Steps.UISteps
+namespace Steps.Steps
 {
     public class ProjectTPStepsPage
     {
@@ -19,8 +19,8 @@ namespace Steps.UISteps
         {
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
-            ProjectTPPage.ClickToEllipsis();
-            ProjectTPPage.ClickToCaseButton();            
+            //ProjectTPPage.ClickToEllipsis();
+            ProjectTPPage.ClickToCaseButton();
         }
 
         public void NavigateToEditCase()
@@ -40,7 +40,7 @@ namespace Steps.UISteps
         // Steps for Suite
 
         public void NavigateToCreateSuite()
-        {            
+        {
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
             ProjectTPPage.ClickToSuiteButton();
@@ -51,15 +51,12 @@ namespace Steps.UISteps
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
             ProjectTPPage.ClickToEllipsis();
-            ProjectTPPage.ClickToEdit();            
+            ProjectTPPage.ClickToEdit();
         }
 
         public string CreatedSuiteNameForAssert(string text)
         {
             return ProjectTPPage.GetSuiteNameByText(text);
         }
-
-
-
     }
 }

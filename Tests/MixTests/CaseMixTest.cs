@@ -1,11 +1,10 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
-using Steps.UISteps;
+using Steps.Steps;
 using Tests.UI;
 
 namespace Tests.MixTests
 {
-
     public class CaseMixTest : BaseTest
     {
         Case Case { get; set; }
@@ -40,7 +39,7 @@ namespace Tests.MixTests
             Case.Title = "Edited Case UI";
 
             ProjectTPStepsPage.NavigateToEditCase();
-            CaseStepsPage.EditCase(Case);
+            CaseStep.EditCase(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Edited Case Title didn't match");
         }
@@ -52,7 +51,6 @@ namespace Tests.MixTests
             foreach (var testCace in CasesForDelete)
             {
                 _caseStep.DeleteTestCase(testCace);
-
             }
         }
     }

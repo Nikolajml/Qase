@@ -38,7 +38,7 @@ namespace UI.Pages
         private IWebElement SuiteNameInputForClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameEditBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
+        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.XPath("//*[@class='btn me-2 btn-primary'][2]")); //  //.tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus
         private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
         private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));

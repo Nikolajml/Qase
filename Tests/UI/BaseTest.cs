@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using NUnit.Framework.Interfaces;
 using UI.Pages;
 using Core.Utilities.Configuration;
-using Steps.UISteps;
+using Steps.Steps;
 using Core.Core;
 using Core.Utilities;
 using Bogus;
@@ -19,16 +19,23 @@ namespace Tests.UI
 
         protected IWebDriver Driver;
         private AllureLifecycle _allure;
-        protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
+        //protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
         public Faker Faker = new Faker();
 
        
-        public PlanStepsPage PlanStepsPage; // Должны быть только Steps
-        public DefectStepsPage DefectStepsPage;
-        public SuiteStepsPage SuiteStepsPage;
-        public CaseStepsPage CaseStepsPage;
+        //public PlanStepsPage PlanStepsPage; // РАЗНЕСТИ ПО СООТВЕТСУЮЩИМ КЛАССАМ
+        //public DefectStepsPage DefectStepsPage;
+        //public SuiteStepsPage SuiteStepsPage;
+        //public CaseStepsPage CaseStepsPage;
         public ProjectTPStepsPage ProjectTPStepsPage;
         public NavigationSteps NavigationSteps;
+
+
+        
+        public PlanStep PlanStep;
+        public DefectStep DefectStep;
+        public SuiteStep SuiteStep;
+        public CaseStep CaseStep;
 
 
         [OneTimeSetUp] // Impliment OneTimeSetup
@@ -37,11 +44,18 @@ namespace Tests.UI
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
            
-            NavigationSteps = new NavigationSteps(Driver);                                                           
-            PlanStepsPage = new PlanStepsPage(Driver);                        
-            DefectStepsPage = new DefectStepsPage(Driver);                        
-            SuiteStepsPage = new SuiteStepsPage(Driver);
-            CaseStepsPage = new CaseStepsPage(Driver);
+            NavigationSteps = new NavigationSteps(Driver);          // РАЗНЕСТИ ПО СООТВЕТСУЮЩИМ КЛАССАМ                                                     
+            //PlanStepsPage = new PlanStepsPage(Driver);                        
+            //DefectStepsPage = new DefectStepsPage(Driver);                        
+            //SuiteStepsPage = new SuiteStepsPage(Driver);
+            //CaseStepsPage = new CaseStepsPage(Driver);
+
+
+            PlanStep = new PlanStep(Driver);
+            DefectStep = new DefectStep(Driver);
+            SuiteStep = new SuiteStep(Driver);
+            CaseStep = new CaseStep(Driver);
+
             ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
 
             NavigationSteps.NavigateToLoginPage();

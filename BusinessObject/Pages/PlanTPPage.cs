@@ -35,7 +35,7 @@ namespace UI.Pages
         private IWebElement PlanTitleFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement GetPlanTitleBy => Driver.FindElement(By.XPath("//*[@class='defect-title']"));
         private IWebElement GetPlanTitleForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='plan-view-header-title']"));
-        private IWebElement GetPlanDescriptionForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='testcase-title']")); ////*[@class='toastui-editor-contents']
+        private IWebElement GetPlanDescriptionForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']")); ////*[@class='testcase-title']
 
 
         public PlanTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)

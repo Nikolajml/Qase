@@ -2,12 +2,13 @@
 using OpenQA.Selenium;
 using UI.Pages;
 
-namespace Steps.UISteps
+namespace Steps.Steps
 {
     public class NavigationSteps
-    {       
+    {
         public LoginPage LoginPage => new LoginPage(Driver);
         public ProjectsPage ProjectsPage => new ProjectsPage(Driver);
+
         protected IWebDriver Driver;
 
         public NavigationSteps(IWebDriver driver)
@@ -23,14 +24,14 @@ namespace Steps.UISteps
 
         public void SuccessfulLogin(User user)
         {
-            LoginPage.TryToLogin(user);            
-                                    
+            LoginPage.TryToLogin(user);
+
         }
 
         public void CheckThatPageIsOpened()
         {
             ProjectsPage.IsPageOpened();
         }
-                
+
     }
 }

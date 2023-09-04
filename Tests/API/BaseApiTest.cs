@@ -1,8 +1,7 @@
 ﻿using NUnit.Allure.Core;
-using API.Services;
 using Core.Client;
 using Core.Utilities;
-using Steps.APISteps;
+using Steps.Steps;
 using NLog;
 
 namespace Tests.API
@@ -12,15 +11,15 @@ namespace Tests.API
     {
         protected Logger _logger = LogManager.GetCurrentClassLogger(); // Сделать логер частью конструктора
 
-        protected CaseStep _caseStep;
+        protected CaseStep _caseStep;           // разбросать по соответсвующим классам
         protected DefectStep _defectStep;
         protected PlanStep _planStep;
         protected SuiteStep _suiteStep;
+        protected ProjectStep _projectStep;
 
         ApiClient _apiClient;
-        protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
 
-        [OneTimeSetUp]
+        [OneTimeSetUp]                              // разбросать по соответсвующим классам
         public void InitApiClient()
         {
             _apiClient = new ApiClient();            
@@ -29,6 +28,7 @@ namespace Tests.API
             _defectStep = new DefectStep(_apiClient);
             _planStep = new PlanStep(_apiClient);
             _suiteStep = new SuiteStep(_apiClient);
+            _projectStep = new ProjectStep(_apiClient);
         }
     }
 }

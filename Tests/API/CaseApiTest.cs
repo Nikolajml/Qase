@@ -1,25 +1,27 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
+using BusinessObject.Models;
+using Steps.Steps;
+using Core.Client;
 
 namespace Tests.API
 {
     public class CaseApiTest : BaseApiTest
-    {
+    {                
         public List<Case> CasesForDelete = new();
         public Case Case { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
-        {            
-
+        {    
             Case = new Case()
             {
                 Code = "OE",
                 Title = "API Case 123"
             };
         }
-               
+                
 
         [Test]
         [Description("Successful API test to create a Case")]
@@ -29,7 +31,7 @@ namespace Tests.API
         public void CreateCaseTest()
         {
             var createdTestCase = _caseStep.CreateTestCase(Case);
-            Case.Id = createdTestCase.Result.id.ToString();
+            Case.Id = createdTestCase.Result.id.ToString();             // как будет работать, если тест упадет
             CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>

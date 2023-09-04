@@ -1,6 +1,5 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
-using API.Services;
 
 namespace Tests.API
 {

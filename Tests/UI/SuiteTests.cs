@@ -1,13 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Bogus;
-using Steps.UISteps;
+using Steps.Steps;
 
 namespace Tests.UI
 {
     public class SuiteTests : BaseTest
     {
-        [Test, Order(1)]
+        [Test]
         [Description("Successful UI test to create a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -21,12 +21,12 @@ namespace Tests.UI
                 .Build();
 
             ProjectTPStepsPage.NavigateToCreateSuite();
-            SuiteStepsPage.CreateSuit(suite);
+            SuiteStep.CreateSuit(suite);
 
             Assert.That(ProjectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name));
         }
 
-        [Test, Order(2)]
+        [Test]
         [Description("Successful UI test to edit a Suite")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -34,13 +34,13 @@ namespace Tests.UI
         public void EditSuiteTest()
         {
             Suite suite = new SuiteBuilder()
-                .SetSuiteName("dkulmfhcifghvel")
+                .SetSuiteName("Edited Suite")
                 .Build();
 
             //ProjectTPPage.OpenPage();
             //ProjectTPPage.IsPageOpened();
             ProjectTPStepsPage.NavigateToEditSuite();
-            SuiteStepsPage.EditSuit(suite);
+            SuiteStep.EditSuit(suite);
 
             //Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
         }
@@ -48,7 +48,7 @@ namespace Tests.UI
         [OneTimeTearDown]
         public void TearDown()
         {
-            cleanUpHandler.DeleteSuites();
+            //cleanUpHandler.DeleteSuites();
         }
     }
 }

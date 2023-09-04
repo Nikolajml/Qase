@@ -1,5 +1,5 @@
 ﻿using NUnit.Allure.Attributes;
-using Steps.UISteps;
+using Steps.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,12 +43,12 @@ namespace Tests.MixTests
         {
             defect.DefectTitle = "Edited Mix Defect UI test";
 
-            DefectStepsPage.NavigateToDefectCase();
-            DefectStepsPage.EditDefect(defect);
-            Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
+            DefectStep.NavigateToDefectCase();
+            DefectStep.EditDefect(defect);
+            Assert.That(DefectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
 
-            DefectStepsPage.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(DefectStepsPage.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
+            DefectStep.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(DefectStep.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
         }
 
 

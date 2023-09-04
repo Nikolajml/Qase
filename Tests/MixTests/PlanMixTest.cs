@@ -16,7 +16,7 @@ namespace Tests.MixTests
         Case Case { get; set; }
 
         public List<Plan> PlansForDelete = new();
-        public List<Case> CasesForDelete = new ();
+        public List<Case> CasesForDelete = new();
 
         [SetUp]
         public void SetUp()
@@ -27,7 +27,7 @@ namespace Tests.MixTests
                 Title = "Case for Plan Mix Test"
             };
 
-            var createdTestCase = _caseStep.CreateCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase(Case);
 
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);
@@ -61,10 +61,10 @@ namespace Tests.MixTests
             plan.Title = "Edited Mix Plan Mix Test";
             plan.Description = "Edited Description";
 
-            PlanStepsPage.NavigateToPlanPage();
-            PlanStepsPage.EditPlan(plan);
+            PlanStep.NavigateToPlanPage();
+            PlanStep.EditPlan(plan);
 
-            Assert.That(PlanStepsPage.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title), "Edited plan Title didn't match");                        
+            Assert.That(PlanStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title), "Edited plan Title didn't match");                        
         }
 
 
@@ -81,6 +81,5 @@ namespace Tests.MixTests
                 _caseStep.DeleteTestCase(testCasen);
             }
         }
-
     }
 }

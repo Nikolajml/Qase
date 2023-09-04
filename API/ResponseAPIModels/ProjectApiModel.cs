@@ -3,6 +3,7 @@
     public class ProjectResult
     {
         public string code { get; set; }
+        public string title { get; set; }
     }
 
     public class ProjectApiModel

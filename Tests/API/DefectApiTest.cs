@@ -5,15 +5,27 @@ namespace Tests.API
 {
     public class DefectApiTest : BaseApiTest
     {
-        public List<Defect> DefectsForDelete;
-        public Defect defect { get; set; }                
-        
+        public List<Defect> DefectsForDelete = new();
+        public List<Project> ProjectsForDelete = new();
+        public Defect defect { get; set; }
+        public Project project { get; set; }
+
         [OneTimeSetUp]
         public void Setup()
         {
+            project = new Project()
+            {
+                Code = "MP",
+                Title = "MyProjectAPI",
+                Access = "all"
+            };
+
+            _projectStep.CreateTestProject(project);  
+            ProjectsForDelete.Add(project);
+
             defect = new Defect()
             {
-                Code = "OE",
+                Code = project.Code,
                 DefectTitle = "New Defect API",
                 ActualResult = "Some result",
                 Severity = 2
@@ -30,7 +42,7 @@ namespace Tests.API
         {    
             var createdTestDefect = _defectStep.CreateTestDefect(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
-            cleanUpHandler.DefectsForDelete.Add(defect);
+            DefectsForDelete.Add(defect);
 
             Assert.Multiple(() =>
             {
@@ -49,7 +61,7 @@ namespace Tests.API
         {
             var createdTestDefect = _defectStep.CreateTestDefect(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
-            cleanUpHandler.DefectsForDelete.Add(defect);
+            DefectsForDelete.Add(defect);
 
             var getedDefectCase = _defectStep.GetTestDefect(defect);            
                         
@@ -72,7 +84,7 @@ namespace Tests.API
         {
             var createdTestDefect = _defectStep.CreateTestDefect(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
-            cleanUpHandler.DefectsForDelete.Add(defect);
+            DefectsForDelete.Add(defect);
 
             defect.DefectTitle = "Updated Defect";
             defect.ActualResult = "Some updated result";
@@ -102,8 +114,8 @@ namespace Tests.API
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(defectResponse.Status, "Status code: Defect not be deleted");
-                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "Defect ID don't match");
+                Assert.IsTrue(defectResponse.Status, "Status code: Defect didn't deleted");
+                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "Defect ID didn't match");
             });              
         }    
 
@@ -114,6 +126,11 @@ namespace Tests.API
             foreach (var defectForDelete in DefectsForDelete)
             {
                 _defectStep.DeleteTestDefect(defectForDelete);
+            }
+
+            foreach (var projectForDelete in ProjectsForDelete)
+            {
+                _projectStep.DeleteTestProject(projectForDelete);
             }
         }        
     }

@@ -12,7 +12,6 @@
         public static readonly string DELETE_SUITE = "v1/suite/{code}/{id}";
 
         public static readonly string CREATE_CASE = "v1/case/{code}";
-
         public static readonly string GET_ALL_CASE = "v1/case/{code}";
         public static readonly string GET_CASE = "v1/case/{code}/{id}";
         public static readonly string UPDATE_CASE = "v1/case/{code}/{id}";

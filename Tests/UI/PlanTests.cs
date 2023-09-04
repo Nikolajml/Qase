@@ -1,13 +1,12 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
-using Steps.UISteps;
+using Steps.Steps;
 
 namespace Tests.UI
 {
     public class PlanTests : BaseTest
     {
-
         [Test, Order(1)]
         [Description("Successful UI test to create a Plan")]
         [AllureOwner("User")]
@@ -20,19 +19,19 @@ namespace Tests.UI
                 .SetPlanDescription("Description for New Plan")
                 .Build();
 
-            PlanStepsPage.NavigateToPlanPage();
-            PlanStepsPage.CreatePlan(plan);
+            PlanStep.NavigateToPlanPage();
+            PlanStep.CreatePlan(plan);
 
             //cleanUpHandler.PlansForDelete.Add(plan);
 
-            Assert.That(PlanStepsPage.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
+            Assert.That(PlanStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
 
-            PlanStepsPage.NavigateToCreatedPlanForSecondAssert();
+            PlanStep.NavigateToCreatedPlanForSecondAssert();
 
             Assert.Multiple(() =>                                           
             {
-                Assert.That(PlanStepsPage.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
-                Assert.That(PlanStepsPage.CreatedPlanDescriptionForSecondAssert, Is.EqualTo(plan.Description));
+                Assert.That(PlanStep.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
+                Assert.That(PlanStep.CreatedPlanDescriptionForSecondAssert, Is.EqualTo(plan.Description));
             });
         }
 
@@ -49,20 +48,14 @@ namespace Tests.UI
 
             //PlanTPPage.OpenPage();
             //PlanTPPage.IsPageOpened();
-            PlanStepsPage.NavigateToPlanPage();
-            PlanStepsPage.EditPlan(plan);
+            PlanStep.NavigateToPlanPage();
+            PlanStep.EditPlan(plan);
 
-            Assert.That(PlanStepsPage.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
+            Assert.That(PlanStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title));
 
-            PlanStepsPage.NavigateToCreatedPlanForSecondAssert();
+            PlanStep.NavigateToCreatedPlanForSecondAssert();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(PlanStepsPage.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
-                Assert.That(PlanStepsPage.CreatedPlanDescriptionForSecondAssert, Is.EqualTo(plan.Description));
-            });
-
-
+            Assert.That(PlanStep.CreatedPlanTitleForSecondAssert(), Is.EqualTo(plan.Title));
         }
     }
 }

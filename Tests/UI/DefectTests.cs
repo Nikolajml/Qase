@@ -19,12 +19,12 @@ namespace Tests.UI
                 .SetActualResult("New actual result")
                 .Build();                      
 
-            DefectStepsPage.NavigateToDefectCase();
-            DefectStepsPage.CreateDefect(defect);
-            Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
+            DefectStep.NavigateToDefectCase();
+            DefectStep.CreateDefect(defect);
+            Assert.That(DefectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 
-            DefectStepsPage.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(DefectStepsPage.DefectDescriptionForSecondAssert, Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result"); // Errore message                       
+            DefectStep.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(DefectStep.DefectDescriptionForSecondAssert, Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result"); // Errore message                       
         }
 
 
@@ -40,12 +40,12 @@ namespace Tests.UI
                 .SetActualResult("Edit actual result")
                 .Build();
 
-            DefectStepsPage.NavigateToDefectCase();
-            DefectStepsPage.EditDefect(defect);
-            Assert.That(DefectStepsPage.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
+            DefectStep.NavigateToDefectCase();
+            DefectStep.EditDefect(defect);
+            Assert.That(DefectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "DEFECT TITLE doesn't match expected result");
 
-            DefectStepsPage.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(DefectStepsPage.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result");
+            DefectStep.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(DefectStep.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "DEFECT DESCRIPTION doesn't match expected result");
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Tests.MixTests
             suite.Name = "Edited Mix Suite UI test";
 
             ProjectTPStepsPage.NavigateToEditSuite();
-            SuiteStepsPage.EditSuit(suite);
+            SuiteStep.EditSuit(suite);
 
             Assert.That(ProjectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name), "Edited Suite Name didn't match");
         }
