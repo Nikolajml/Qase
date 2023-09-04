@@ -10,14 +10,27 @@ namespace Tests.API
     public class CaseApiTest : BaseApiTest
     {                
         public List<Case> CasesForDelete = new();
+        public List<Project> ProjectsForDelete = new();
         public Case Case { get; set; }
+        public Project project { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
-        {    
+        {
+            project = new Project()
+            {
+                Code = "MPFC",
+                Title = "MyProjectForCases",
+                Access = "all"
+            };
+
+            _projectStep.CreateTestProject(project);
+            ProjectsForDelete.Add(project);
+
+
             Case = new Case()
             {
-                Code = "OE",
+                Code = project.Code,
                 Title = "API Case 123"
             };
         }
@@ -114,6 +127,11 @@ namespace Tests.API
             foreach (var caseForDelete in CasesForDelete)
             {
                 _caseStep.DeleteTestCase(caseForDelete);
+            }
+
+            foreach (var projectForDelete in ProjectsForDelete)
+            {
+                _projectStep.DeleteTestProject(projectForDelete);
             }
         }
     }

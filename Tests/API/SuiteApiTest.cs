@@ -5,17 +5,27 @@ namespace Tests.API
 {
     public class SuiteApiTest : BaseApiTest
     {
-        public List<Suite> SuitesForDelete;
+        public List<Suite> SuitesForDelete = new();
+        public List<Project> ProjectsForDelete = new();
         public Suite suite { get; set; }
+        public Project project { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            SuitesForDelete = new();
+            project = new Project()
+            {
+                Code = "MPFS",
+                Title = "MyProjectForSuites",
+                Access = "all"
+            };
+
+            _projectStep.CreateTestProject(project);
+            ProjectsForDelete.Add(project);
 
             suite = new Suite()
             {
-                Code = "OE",
+                Code = project.Code,
                 Name = "Suite_api_New"
             };
         }
@@ -112,6 +122,11 @@ namespace Tests.API
             foreach (var suiteForDelete in SuitesForDelete)
             {
                 _suiteStep.DeleteTestSuite(suiteForDelete);
+            }
+
+            foreach (var projectForDelete in ProjectsForDelete)
+            {
+                _projectStep.DeleteTestProject(projectForDelete);
             }
         }
     }

@@ -20,6 +20,7 @@ namespace Tests.UI
                 .Build();
 
             ProjectTPStepsPage.NavigateToCreateCase();
+            CaseStep.CheckThatPageIsOpen();
             CaseStep.CreateCase(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "sddsfdf");

@@ -21,8 +21,8 @@ namespace Tests.NegativeTests
         {
             Case = new Case()
             {
-                Code = "OE",
-                Title = ""
+                Code = "PP",
+                Title = "ss"
             };
         }
 
@@ -40,12 +40,10 @@ namespace Tests.NegativeTests
 
             Assert.Multiple(() =>
             {
-                Assert.IsFalse(createdTestCase., "Status code: True - Case was created");
+                Assert.IsFalse(createdTestCase.Status, "Status code: True - Case was created");
                 //Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString(), "Case ID don't match");
                 //Assert.AreEqual(createdTestCase.Result.status, "");
                 //Assert.AreEqual(HttpStatusCode, createdTestCase.Result.StatusCode);
-
-
             });
         }
     }

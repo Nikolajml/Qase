@@ -2,6 +2,7 @@
 using Core.Client;
 using Core.Utilities;
 using NLog;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using RestSharp;
 using UI.Models;
@@ -20,13 +21,16 @@ namespace Steps.Steps
             Driver = driver;
         }
 
+        public void CheckThatPageIsOpen()
+        {            
+            Assert.IsTrue(CasePage.IsPageOpened(), "The Case Page wasn't opened");
+        }            
+
         public void CreateCase(Case Case)
         {
-            CasePage.IsPageOpened();
             CasePage.SetCaseName(Case.Title);
             CasePage.ClickToSaveCaseButton();
         }
-
 
         public void EditCase(Case Case)
         {
@@ -35,7 +39,6 @@ namespace Steps.Steps
             CasePage.SetEditedCaseName(Case.Title);
             CasePage.ClickToSaveCaseButton();
         }
-
 
 
 
@@ -61,7 +64,7 @@ namespace Steps.Steps
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
                 .AddUrlSegment("code", Case.Code)
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e")
+                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e88")
                 .AddBody(Case);
 
             return _apiClient.Execute<CaseApiModel>(request);
@@ -96,7 +99,7 @@ namespace Steps.Steps
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request); // CaseApiModel DeleteCase(Case Case) что возвращает?
+            return _apiClient.Execute<CaseApiModel>(request);
         }
 
 
@@ -130,8 +133,6 @@ namespace Steps.Steps
 
         public List<CaseResult> GetAllTestCase(string code)
         {
-
-
             var response = GetAllCase(code);
 
             _logger.Info("Case: " + response.ToString());

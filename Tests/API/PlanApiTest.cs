@@ -9,16 +9,28 @@ namespace Tests.API
     {        
         public List<Case> CasesForDelete = new();
         public List<Plan> PlansForDelete = new();
+        public List<Project> ProjectsForDelete = new();
         public Plan plan { get; set; }
         public Case Case { get; set; }
+        public Project project { get; set; }
         int CaseId { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
         {
+            project = new Project()
+            {
+                Code = "MPFP",
+                Title = "MyProjectForPlans",
+                Access = "all"
+            };
+
+            _projectStep.CreateTestProject(project);
+            ProjectsForDelete.Add(project);
+
             Case = new Case()
             {
-                Code = "OE",
+                Code = project.Code,
                 Title = "Case for Plan Mix Test"
             };
 
@@ -33,8 +45,8 @@ namespace Tests.API
 
             plan = new Plan()
             {
-                Code = "OE",
-                Title = "Plan Mix",
+                Code = project.Code,
+                Title = "Plan Mix Test",
                 Cases = new List<int> {CaseIdForPlan}
             };
 
@@ -135,6 +147,11 @@ namespace Tests.API
             foreach (var planForDelete in PlansForDelete)
             {
                 _planStep.DeleteTestPlan(planForDelete);
+            }
+
+            foreach (var projectForDelete in ProjectsForDelete)
+            {
+                _projectStep.DeleteTestProject(projectForDelete);
             }
         }
     }

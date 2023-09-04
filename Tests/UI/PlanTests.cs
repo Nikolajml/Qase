@@ -7,7 +7,7 @@ namespace Tests.UI
 {
     public class PlanTests : BaseTest
     {
-        [Test, Order(1)]
+        [Test]
         [Description("Successful UI test to create a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
@@ -35,7 +35,7 @@ namespace Tests.UI
             });
         }
 
-        [Test, Order(2)]
+        [Test]
         [Description("Successful UI test to edit a Plan")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
