@@ -6,6 +6,8 @@ namespace UI.Pages
     {
         protected IWebDriver Driver;
 
+
+
         public BasePage(IWebDriver driver, bool openPageByUrl)
         {
             Driver = driver;

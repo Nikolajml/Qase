@@ -14,6 +14,14 @@ namespace Tests.MixTests
     {
         Defect defect { get; set; }
         public List<Defect> DefectsForDelete = new();
+        public DefectStep _defectStep;
+
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _defectStep = new DefectStep(Driver, _apiClient);
+        }
 
         [SetUp]
         public void SetUp()
@@ -33,7 +41,6 @@ namespace Tests.MixTests
             DefectsForDelete.Add(defect);
         }
 
-
         [Test]
         [Description("Creation and deletion Case via API. Editing Case via UI")]
         [AllureOwner("User")]
@@ -43,14 +50,13 @@ namespace Tests.MixTests
         {
             defect.DefectTitle = "Edited Mix Defect UI test";
 
-            DefectStep.NavigateToDefectCase();
-            DefectStep.EditDefect(defect);
-            Assert.That(DefectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
+            _defectStep.NavigateToDefectCase();
+            _defectStep.EditDefect(defect);
+            Assert.That(_defectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
 
-            DefectStep.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(DefectStep.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
+            _defectStep.NavigateToCreatedDefectForSecondAssert();
+            Assert.That(_defectStep.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
         }
-
 
         [OneTimeTearDown]
         public void TearDown()

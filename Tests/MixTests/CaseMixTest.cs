@@ -9,11 +9,19 @@ namespace Tests.MixTests
     {
         Case Case { get; set; }
         public List<Case> CasesForDelete = new();
+        public CaseStep _caseStep;
+        public ProjectTPStepsPage _projectTPStepsPage;
+
+        [OneTimeSetUp]
+        public void OniTimeTtestSetUp()
+        {
+            _caseStep = new CaseStep(Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        }
 
         [SetUp]
         public void SetUp()
         {
-
             Case = new CaseBuilder()
                .SetCaseTitle("MIX TEST CASE Test")
                .SetCode("TP")
@@ -38,10 +46,10 @@ namespace Tests.MixTests
         {
             Case.Title = "Edited Case UI";
 
-            ProjectTPStepsPage.NavigateToEditCase();
-            CaseStep.EditCase(Case);
+            _projectTPStepsPage.NavigateToEditCase();
+            _caseStep.EditCase(Case);
 
-            Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Edited Case Title didn't match");
+            Assert.That(_projectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Edited Case Title didn't match");
         }
            
 

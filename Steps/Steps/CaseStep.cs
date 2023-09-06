@@ -5,26 +5,37 @@ using NLog;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using RestSharp;
+using System.Net;
+using System.Text.Json;
 using UI.Models;
 using UI.Pages;
-using static API.ResponseAPIModels.GetAllTestCase;
 
 namespace Steps.Steps
 {
     public class CaseStep
     {
-        public CasePage CasePage => new CasePage(Driver); // сделать полем
-        protected IWebDriver Driver; // убрать строчку
-
-        public CaseStep(IWebDriver driver)
+        public CasePage CasePage;
+        protected ApiClient _apiClient;
+        protected Logger _logger;
+        public CaseStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
-            Driver = driver;
+            if (driver != null)
+            {
+                CasePage = new CasePage(driver);
+            }
+
+            if (apiClient != null)
+            {
+                _apiClient = apiClient;
+            }
+
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public void CheckThatPageIsOpen()
-        {            
+        {
             Assert.IsTrue(CasePage.IsPageOpened(), "The Case Page wasn't opened");
-        }            
+        }
 
         public void CreateCase(Case Case)
         {
@@ -41,33 +52,32 @@ namespace Steps.Steps
         }
 
 
-
-
-        protected ApiClient _apiClient;
-
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
-        public CaseStep(ApiClient apiClient)
-        {
-            _apiClient = apiClient;
-        }
-
+        // Methods for API tests
         public CaseApiModel CreateTestCase(Case Case)
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
                 .AddUrlSegment("code", Case.Code)
                 .AddBody(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            var response = _apiClient.Execute(request);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.IsNotEmpty(response.Content);
+
+            return JsonSerializer.Deserialize<CaseApiModel>(response.Content);
         }
 
-        public CaseApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
+        public CaseErrorApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
         {
             var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
                 .AddUrlSegment("code", Case.Code)
-                .AddHeader("Token", "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e88")
                 .AddBody(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            RestResponse response = _apiClient.Execute(request);
+
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+
+            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
         }
 
         public CaseApiModel GetTestCase(Case Case)
@@ -80,7 +90,6 @@ namespace Steps.Steps
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
-        
 
         public CaseApiModel UpdateTestCase(Case testCase)
         {
@@ -99,6 +108,7 @@ namespace Steps.Steps
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
 
+            //var t = _apiClient.Execute<CaseApiModel>(request);
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
@@ -109,7 +119,7 @@ namespace Steps.Steps
 
             var testCases = listOfCases.Where(testCase => testCase.title.Equals(name));
 
-            foreach(var testCase in testCases)
+            foreach (var testCase in testCases)
             {
                 var testCaseForDelte = new Case
                 {
@@ -118,22 +128,16 @@ namespace Steps.Steps
                 };
 
                 DeleteTestCase(testCaseForDelte);
-            }          
+            }
         }
 
-
-        public GetAllTestCase GetAllCase(string code)
+        public List<CaseResult> GetAllTestCase(string code, int limit = 90)
         {
             var request = new RestRequest(Endpoints.GET_ALL_CASE)
-                .AddUrlSegment("code", code)
-                .AddParameter("limit", 99);
+                 .AddUrlSegment("code", code)
+                 .AddParameter("limit", limit);
 
-            return _apiClient.Execute<GetAllTestCase>(request);
-        }
-
-        public List<CaseResult> GetAllTestCase(string code)
-        {
-            var response = GetAllCase(code);
+            var response = _apiClient.Execute<GetAllTestCase>(request);
 
             _logger.Info("Case: " + response.ToString());
 

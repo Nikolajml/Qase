@@ -1,4 +1,6 @@
-﻿using NUnit.Allure.Attributes;
+﻿using Core.Client;
+using NUnit.Allure.Attributes;
+using Steps.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,17 @@ namespace Tests.MixTests
     public class SuiteMixTest : BaseTest
     {
         Suite suite { get; set; }
-        public List<Suite> SuitesForDelete = new();
+        public List<Suite> SuitesForDelete = new List<Suite>();
+
+        public SuiteStep _suiteStep;
+        protected ProjectTPStepsPage _projectTPStepsPage;
+
+        [OneTimeSetUp]
+        public void OniTimeTtestSetUp()
+        {
+            _suiteStep = new SuiteStep(Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        }
 
         [SetUp]
         public void SetUp()
@@ -42,12 +54,11 @@ namespace Tests.MixTests
         {
             suite.Name = "Edited Mix Suite UI test";
 
-            ProjectTPStepsPage.NavigateToEditSuite();
-            SuiteStep.EditSuit(suite);
+            _projectTPStepsPage.NavigateToEditSuite();
+            _suiteStep.EditSuit(suite);
 
-            Assert.That(ProjectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name), "Edited Suite Name didn't match");
+            Assert.That(_projectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name), "Edited Suite Name didn't match");
         }
-
 
         [OneTimeTearDown]
         public void TearDown()

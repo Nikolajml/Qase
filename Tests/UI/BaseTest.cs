@@ -15,51 +15,48 @@ namespace Tests.UI
     [AllureNUnit]
     public class BaseTest : BaseApiTest
     {
-        public static readonly string? BaseUrl = Configurator.AppSettings.URL;
+        public static readonly string? BaseUrl = new Configurator().AppSettings.URL;
 
         protected IWebDriver Driver;
-        private AllureLifecycle _allure;
-        //protected CleanUpHandler cleanUpHandler = new CleanUpHandler();
+        private AllureLifecycle _allure;       
         public Faker Faker = new Faker();
 
-       
+        
         //public PlanStepsPage PlanStepsPage; // РАЗНЕСТИ ПО СООТВЕТСУЮЩИМ КЛАССАМ
         //public DefectStepsPage DefectStepsPage;
         //public SuiteStepsPage SuiteStepsPage;
         //public CaseStepsPage CaseStepsPage;
-        public ProjectTPStepsPage ProjectTPStepsPage;
+        //public ProjectTPStepsPage ProjectTPStepsPage;
         public NavigationSteps NavigationSteps;
-
-
         
         public PlanStep PlanStep;
-        public DefectStep DefectStep;
-        public SuiteStep SuiteStep;
-        public CaseStep CaseStep;
+        //public DefectStep DefectStep;
+        //public SuiteStep SuiteStep;
+        //public CaseStep CaseStep;
 
 
-        [OneTimeSetUp] // Impliment OneTimeSetup
-        public void Setup() // Все объекты пэджей должны инициализироваться вне теста
+        [OneTimeSetUp] 
+        public void Setup()
         {
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
            
-            NavigationSteps = new NavigationSteps(Driver);          // РАЗНЕСТИ ПО СООТВЕТСУЮЩИМ КЛАССАМ                                                     
+            NavigationSteps = new NavigationSteps(Driver);          // РАЗНЕСТИ ПО СООТВЕТСУЮЩИМ КЛАССАМ
+                                                                    
             //PlanStepsPage = new PlanStepsPage(Driver);                        
             //DefectStepsPage = new DefectStepsPage(Driver);                        
             //SuiteStepsPage = new SuiteStepsPage(Driver);
             //CaseStepsPage = new CaseStepsPage(Driver);
 
+            //PlanStep = new PlanStep(Driver);
+            //DefectStep = new DefectStep(Driver);
+            //SuiteStep = new SuiteStep(Driver);
+            //CaseStep = new CaseStep(Driver);
 
-            PlanStep = new PlanStep(Driver);
-            DefectStep = new DefectStep(Driver);
-            SuiteStep = new SuiteStep(Driver);
-            CaseStep = new CaseStep(Driver);
-
-            ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
+            //ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(Configurator.Admin);
+            NavigationSteps.SuccessfulLogin(new Configurator().Admin);
             NavigationSteps.CheckThatPageIsOpened();
         }
 

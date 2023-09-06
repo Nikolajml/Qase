@@ -1,4 +1,5 @@
 ﻿using NUnit.Allure.Attributes;
+using Steps.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,17 @@ namespace Tests.UI
 {
     public class CaseEditTest : BaseTest
     {
-        Case Case { get; set; }
-        Case CaseForEdit { get; set; }
+        Case Case;
+        Case CaseForEdit;
+        public CaseStep _caseStep;
+        public ProjectTPStepsPage _projectTPStepsPage;
 
-        //public List<Case> CasesForDelete = new();
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _caseStep = new CaseStep(Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        }
 
         [SetUp]
         public void Setup()
@@ -38,10 +46,10 @@ namespace Tests.UI
                .SetCaseTitle("Edited Case UI")
                .Build();
 
-            ProjectTPStepsPage.NavigateToEditCase();
-            CaseStep.EditCase(CaseForEdit);
+            _projectTPStepsPage.NavigateToEditCase();
+            _caseStep.EditCase(CaseForEdit);
 
-            Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(CaseForEdit.Title));
+            Assert.That(_projectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(CaseForEdit.Title));
         }
 
         [TearDown]

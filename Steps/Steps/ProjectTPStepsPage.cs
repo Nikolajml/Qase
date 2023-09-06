@@ -5,12 +5,11 @@ namespace Steps.Steps
 {
     public class ProjectTPStepsPage
     {
-        public ProjectTPPage ProjectTPPage => new ProjectTPPage(Driver);
-        protected IWebDriver Driver;
+        public ProjectTPPage ProjectTPPage;
 
         public ProjectTPStepsPage(IWebDriver driver)
         {
-            Driver = driver;
+            ProjectTPPage = new ProjectTPPage(driver);
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace API.ResponseAPIModels
+﻿using System.Text.Json.Serialization;
+
+namespace API.ResponseAPIModels
 {
     public class CaseResult
     {
@@ -37,7 +39,10 @@
 
     public class CaseApiModel
     {
+        [JsonPropertyName("status")]
         public bool Status { get; set; }
+
+        [JsonPropertyName("result")]
         public CaseResult Result { get; set; }
     }        
 }

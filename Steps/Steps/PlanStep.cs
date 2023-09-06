@@ -11,11 +11,23 @@ namespace Steps.Steps
 {
     public class PlanStep
     {
-        public PlanTPPage PlanTPPage => new PlanTPPage(Driver);
-        protected IWebDriver Driver;
-        public PlanStep(IWebDriver driver)
+        public PlanTPPage PlanTPPage;
+        protected ApiClient _apiClient;
+        protected Logger _logger;        
+
+        public PlanStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
-            Driver = driver;
+            if (driver != null)
+            {
+                PlanTPPage = new PlanTPPage(driver);
+            }
+
+            if (apiClient != null)
+            {
+                _apiClient = apiClient;
+            }
+
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
 
@@ -24,6 +36,7 @@ namespace Steps.Steps
             PlanTPPage.OpenPage();
             PlanTPPage.IsPageOpened();
         }
+
         public void CreatePlan(Plan plan)
         {            
             PlanTPPage.ClickToCreatePlanButton();
@@ -55,8 +68,6 @@ namespace Steps.Steps
             return PlanTPPage.GetPlanDescriptionForSecondAssert();
         }
 
-
-
         public void EditPlan(Plan plan)
         {            
             PlanTPPage.ClickToEllipsis();
@@ -68,13 +79,6 @@ namespace Steps.Steps
         }
 
 
-
-
-
-
-        protected ApiClient _apiClient;
-
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
 
         public PlanStep(ApiClient apiClient)
         {

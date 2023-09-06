@@ -1,18 +1,31 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
+using Steps.Steps;
 
 namespace Tests.API
 {
     public class SuiteApiTest : BaseApiTest
     {
-        public List<Suite> SuitesForDelete = new();
-        public List<Project> ProjectsForDelete = new();
+        public List<Suite> SuitesForDelete = new List<Suite>();
+        public List<Project> ProjectsForDelete = new List<Project>();
         public Suite suite { get; set; }
         public Project project { get; set; }
 
+        protected SuiteStep _suiteStep;
+        protected ProjectStep _projectStep;
+
         [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _suiteStep = new SuiteStep(apiClient: _apiClient);
+            _projectStep = new ProjectStep(_apiClient);
+        }
+
+        [SetUp]
         public void Setup()
         {
+            _suiteStep = new SuiteStep(apiClient: _apiClient);
+
             project = new Project()
             {
                 Code = "MPFS",
@@ -113,8 +126,7 @@ namespace Tests.API
                 Assert.IsTrue(suiteResponse.Status, "Status code: Suite didn't delete");
                 Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString(), "Suite ID didn't match");
             });                        
-        }
-                
+        }              
 
         [OneTimeTearDown]
         public void TearDown()

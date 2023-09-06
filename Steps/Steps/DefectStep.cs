@@ -9,15 +9,26 @@ using UI.Pages;
 
 namespace Steps.Steps
 {
-    public class DefectStep // не должно быть наследования в DefectSteps
+    public class DefectStep
     {
-        public DefectsTPPage DefectsTPPage => new DefectsTPPage(Driver);
-        protected IWebDriver Driver;
-
-        public DefectStep(IWebDriver driver)
+        public DefectsTPPage DefectsTPPage;
+        protected ApiClient _apiClient;
+        protected Logger _logger;
+        public DefectStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
-            Driver = driver;
+            if (driver != null)
+            {
+                DefectsTPPage = new DefectsTPPage(driver);
+            }
+
+            if (apiClient != null)
+            {
+                _apiClient = apiClient;
+            }
+
+            _logger = LogManager.GetCurrentClassLogger();
         }
+                
 
         public void CreateDefect(Defect defect)
         {
@@ -69,19 +80,12 @@ namespace Steps.Steps
         }
 
 
+        //protected ApiClient _apiClient;
 
-
-
-
-
-        protected ApiClient _apiClient;
-
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
-
-        public DefectStep(ApiClient apiClient)
-        {
-            _apiClient = apiClient;
-        }
+        //public DefectStep(ApiClient apiClient)
+        //{
+        //    _apiClient = apiClient;
+        //}
 
         public DefectApiModel CreateTestDefect(Defect defect)
         {

@@ -1,4 +1,5 @@
 ﻿using NUnit.Allure.Attributes;
+using Steps.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,16 @@ namespace Tests.MixTests
 
         public List<Plan> PlansForDelete = new();
         public List<Case> CasesForDelete = new();
+
+        protected CaseStep _caseStep;
+        protected PlanStep _planStep;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _caseStep = new CaseStep(Driver, _apiClient);
+            _planStep = new PlanStep(Driver, _apiClient);
+        }
 
         [SetUp]
         public void SetUp()
@@ -61,10 +72,10 @@ namespace Tests.MixTests
             plan.Title = "Edited Mix Plan Mix Test";
             plan.Description = "Edited Description";
 
-            PlanStep.NavigateToPlanPage();
-            PlanStep.EditPlan(plan);
+            _planStep.NavigateToPlanPage();
+            _planStep.EditPlan(plan);
 
-            Assert.That(PlanStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title), "Edited plan Title didn't match");                        
+            Assert.That(_planStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title), "Edited plan Title didn't match");                        
         }
 
 

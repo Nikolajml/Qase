@@ -1,16 +1,27 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
+using Steps.Steps;
 
 namespace Tests.API
 {
     public class DefectApiTest : BaseApiTest
     {
-        public List<Defect> DefectsForDelete = new();
-        public List<Project> ProjectsForDelete = new();
+        public List<Defect> DefectsForDelete = new List<Defect>();
+        public List<Project> ProjectsForDelete = new List<Project>();
         public Defect defect { get; set; }
         public Project project { get; set; }
+        protected DefectStep _defectStep;
+        protected ProjectStep _projectStep;
+
 
         [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _defectStep = new DefectStep(apiClient: _apiClient);
+            _projectStep = new ProjectStep(_apiClient);
+        }
+
+        [SetUp]
         public void Setup()
         {
             project = new Project()
@@ -72,8 +83,7 @@ namespace Tests.API
                 Assert.AreEqual(defect.DefectTitle, getedDefectCase.Result.title.ToString(), "Defect Title didn't match");
                 Assert.AreEqual(defect.ActualResult, getedDefectCase.Result.actual_result.ToString(), "Defect Actual Result didn'tmatch");                
             });
-        }        
-
+        }       
 
         [Test]
         [Description("Successful API test to update a Suite")]

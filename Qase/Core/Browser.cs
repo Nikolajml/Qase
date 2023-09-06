@@ -7,7 +7,7 @@ namespace Core.Core
     {
         public Browser()
         {
-            Driver = Configurator.BrowserType?.ToLower() switch
+            Driver = new Configurator().BrowserType?.ToLower() switch
             {
                 "chrome" => new DriverFactory().GetChromeDriver(),
                 "firefox" => new DriverFactory().GetFirefoxDriver(),

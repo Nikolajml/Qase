@@ -34,7 +34,7 @@ namespace UI.Pages
 
         public override void OpenPage()
         {
-            Driver.Navigate().GoToUrl(Configurator.AppSettings.URL + END_POINT);
+            Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 
         private void SetUserName(string username)

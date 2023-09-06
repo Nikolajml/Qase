@@ -10,11 +10,11 @@ namespace Core.Client
         protected readonly Logger _logger;
         private readonly RestClient _restClient;
 
-        public ApiClient()
+        public ApiClient(string token = null)
         {
             _logger = LogManager.GetCurrentClassLogger(); // все еще статический - для апи клиента нужен логер и конфигуратор
 
-            var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
+            var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
             {
                 ThrowOnAnyError = false,
                 MaxTimeout = 10000
@@ -22,7 +22,12 @@ namespace Core.Client
 
             _restClient = new RestClient(options);
             _restClient.AddDefaultHeader("accept", "application/json");
-            _restClient.AddDefaultHeader("Token", Configurator.Bearer);
+
+            if (token != null)
+            {
+                _restClient.AddDefaultHeader("Token", token);
+            }
+
         }
 
         public RestResponse Execute(RestRequest request)

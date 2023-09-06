@@ -7,6 +7,18 @@ namespace Tests.UI
 {
     public class SuiteTests : BaseTest
     {
+        public ProjectTPStepsPage _projectTPStepsPage;
+        public SuiteStep _suiteStep;
+
+        [OneTimeSetUp]
+        public void OniTimeTtestSetUp()
+        {
+            _suiteStep = new SuiteStep(Driver);
+            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        }
+
+
+
         [Test]
         [Description("Successful UI test to create a Suite")]
         [AllureOwner("User")]
@@ -20,10 +32,10 @@ namespace Tests.UI
                 .SetSuitePreconditions(Faker.Vehicle.Vin())
                 .Build();
 
-            ProjectTPStepsPage.NavigateToCreateSuite();
-            SuiteStep.CreateSuit(suite);
+            _projectTPStepsPage.NavigateToCreateSuite();
+            _suiteStep.CreateSuit(suite);
 
-            Assert.That(ProjectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name));
+            Assert.That(_projectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name));
         }
 
         [Test]
@@ -39,8 +51,8 @@ namespace Tests.UI
 
             //ProjectTPPage.OpenPage();
             //ProjectTPPage.IsPageOpened();
-            ProjectTPStepsPage.NavigateToEditSuite();
-            SuiteStep.EditSuit(suite);
+            _projectTPStepsPage.NavigateToEditSuite();
+            _suiteStep.EditSuit(suite);
 
             //Assert.That(ProjectTPPage.GetSuiteNameByText(suite.Name), Is.EqualTo(suite.Name));
         }

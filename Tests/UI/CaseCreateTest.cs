@@ -6,7 +6,16 @@ namespace Tests.UI
 {
     public class CaseCreateTest : BaseTest
     {
-        Case Case;     
+        Case Case;
+        public ProjectTPStepsPage ProjectTPStepsPage;
+        public CaseStep _caseStep;
+
+        [OneTimeSetUp]
+        public void OniTimeTtestSetUp()
+        {
+            _caseStep = new CaseStep(Driver, _apiClient);
+            ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
+        }
 
         [Test]
         [Description("Successful UI test to create a Case")]
@@ -20,11 +29,11 @@ namespace Tests.UI
                 .Build();
 
             ProjectTPStepsPage.NavigateToCreateCase();
-            CaseStep.CheckThatPageIsOpen();
-            CaseStep.CreateCase(Case);
+            _caseStep.CheckThatPageIsOpen();
+            _caseStep.CreateCase(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "sddsfdf");
-        }                
+        }
 
         [TearDown]
         public void EditTearDown()

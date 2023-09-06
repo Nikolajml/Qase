@@ -15,25 +15,23 @@ namespace Steps.Steps
     public class ProjectStep
     {
         protected ApiClient _apiClient;
-
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
+        protected Logger _logger;
 
         public ProjectStep(ApiClient apiClient)
         {
             _apiClient = apiClient;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public ProjectApiModel CreateTestProject(Project project)
         {
             var request = new RestRequest(Endpoints.CREATE_PROJECT, Method.Post)
-                .AddUrlSegment("code", project.Code)
-                .AddUrlSegment("title", project.Title)
-                .AddUrlSegment("access", project.Access)
                 .AddBody(project);
 
+            _logger.Info("Create test project " + project.ToString());
+
             return _apiClient.Execute<ProjectApiModel>(request);
-        }
-                
+        }                
 
         public ProjectApiModel DeleteTestProject(Project project)
         {

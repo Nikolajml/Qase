@@ -7,6 +7,7 @@ using Core.Client;
 
 namespace Tests.API
 {
+    
     public class CaseApiTest : BaseApiTest
     {                
         public List<Case> CasesForDelete = new();
@@ -14,7 +15,18 @@ namespace Tests.API
         public Case Case { get; set; }
         public Project project { get; set; }
 
+        protected CaseStep _caseStep;
+        protected ProjectStep _projectStep;
+
+
         [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _caseStep = new CaseStep(apiClient: _apiClient);
+            _projectStep = new ProjectStep(_apiClient);
+        }
+
+        [SetUp]
         public void Setup()
         {
             project = new Project()
@@ -31,10 +43,9 @@ namespace Tests.API
             Case = new Case()
             {
                 Code = project.Code,
-                Title = "API Case 123"
+                Title = "API Case 123" 
             };
         }
-                
 
         [Test]
         [Description("Successful API test to create a Case")]
@@ -67,12 +78,13 @@ namespace Tests.API
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
-            var addedTestCase = _caseStep.GetTestCase(Case);
+            var getedTestCase = _caseStep.GetTestCase(Case);
+            _logger.Info("Case: " + getedTestCase.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(addedTestCase.Status, "Status code: Case didn't get");
-                Assert.AreEqual(Case.Id, addedTestCase.Result.id.ToString(), "Case ID don't match");
+                Assert.IsTrue(getedTestCase.Status, "Status code: Case didn't get");
+                Assert.AreEqual(Case.Id, getedTestCase.Result.id.ToString(), "Case ID don't match");
             });
         }
 

@@ -5,15 +5,14 @@ using UI.Pages;
 namespace Steps.Steps
 {
     public class NavigationSteps
-    {
-        public LoginPage LoginPage => new LoginPage(Driver);
-        public ProjectsPage ProjectsPage => new ProjectsPage(Driver);
-
-        protected IWebDriver Driver;
+    {        
+        public LoginPage LoginPage;
+        public ProjectsPage ProjectsPage;
 
         public NavigationSteps(IWebDriver driver)
         {
-            Driver = driver;
+            LoginPage = new LoginPage(driver);
+            ProjectsPage = new ProjectsPage(driver);
         }
 
         public void NavigateToLoginPage()
@@ -21,17 +20,14 @@ namespace Steps.Steps
             LoginPage.OpenPage();
         }
 
-
         public void SuccessfulLogin(User user)
         {
             LoginPage.TryToLogin(user);
-
         }
 
         public void CheckThatPageIsOpened()
         {
             ProjectsPage.IsPageOpened();
         }
-
     }
 }

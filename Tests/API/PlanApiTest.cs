@@ -2,22 +2,35 @@
 using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
 using API.ResponseAPIModels;
+using Steps.Steps;
 
 namespace Tests.API
 {
     public class PlanApiTest : BaseApiTest
     {        
-        public List<Case> CasesForDelete = new();
-        public List<Plan> PlansForDelete = new();
-        public List<Project> ProjectsForDelete = new();
+        public List<Case> CasesForDelete = new List<Case>();
+        public List<Plan> PlansForDelete = new List<Plan>();
+        public List<Project> ProjectsForDelete = new List<Project>();
         public Plan plan { get; set; }
         public Case Case { get; set; }
         public Project project { get; set; }
         int CaseId { get; set; }
 
+        protected CaseStep _caseStep;
+        protected PlanStep _planStep;
+        protected ProjectStep _projectStep;
+
         [OneTimeSetUp]
-        public void Setup()
+        public void OneTimeSetUp()
         {
+            _caseStep = new CaseStep(apiClient: _apiClient);
+            _planStep = new PlanStep(apiClient: _apiClient);
+            _projectStep = new ProjectStep(apiClient: _apiClient);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {            
             project = new Project()
             {
                 Code = "MPFP",

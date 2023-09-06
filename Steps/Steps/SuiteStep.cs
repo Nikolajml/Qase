@@ -10,13 +10,24 @@ using UI.Pages;
 namespace Steps.Steps
 {
     public class SuiteStep
-    {
-        public SuitePopUpPage SuitePopUpPage => new SuitePopUpPage(Driver);
-        protected IWebDriver Driver;
+    {      
+        public SuitePopUpPage SuitePopUpPage; 
+        protected ApiClient _apiClient;
+        protected Logger _logger;
 
-        public SuiteStep(IWebDriver driver)
+        public SuiteStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
-            Driver = driver;
+            if (driver != null)
+            {
+                SuitePopUpPage = new SuitePopUpPage(driver);
+            }
+
+            if (apiClient != null)
+            {
+                _apiClient = apiClient;
+            }
+
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
 
@@ -40,19 +51,7 @@ namespace Steps.Steps
         }
 
 
-
-
-
-
-        protected ApiClient _apiClient;
-
-        protected Logger _logger = LogManager.GetCurrentClassLogger();
-
-
-        public SuiteStep(ApiClient apiClient)
-        {
-            _apiClient = apiClient;
-        }
+        //Methods for API tests        
 
         public SuiteApiModel CreateTestSuite(Suite suite)
         {            
