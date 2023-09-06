@@ -17,8 +17,6 @@ namespace Steps.Steps
         public void NavigateToCreateCase()
         {
             ProjectTPPage.OpenPage();
-            ProjectTPPage.IsPageOpened();
-            //ProjectTPPage.ClickToEllipsis();
             ProjectTPPage.ClickToCaseButton();
         }
 

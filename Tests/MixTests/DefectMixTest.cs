@@ -13,7 +13,9 @@ namespace Tests.MixTests
     public class DefectMixTest : BaseTest
     {
         Defect defect { get; set; }
-        public List<Defect> DefectsForDelete = new();
+
+        public List<Defect> DefectsForDelete = new List<Defect>();
+
         public DefectStep _defectStep;
 
 
@@ -50,7 +52,7 @@ namespace Tests.MixTests
         {
             defect.DefectTitle = "Edited Mix Defect UI test";
 
-            _defectStep.NavigateToDefectCase();
+            //_defectStep.NavigateToDefectCase();
             _defectStep.EditDefect(defect);
             Assert.That(_defectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
 

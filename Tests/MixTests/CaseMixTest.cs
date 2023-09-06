@@ -8,7 +8,9 @@ namespace Tests.MixTests
     public class CaseMixTest : BaseTest
     {
         Case Case { get; set; }
-        public List<Case> CasesForDelete = new();
+
+        public List<Case> CasesForDelete = new List<Case>();
+
         public CaseStep _caseStep;
         public ProjectTPStepsPage _projectTPStepsPage;
 

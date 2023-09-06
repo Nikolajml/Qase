@@ -9,11 +9,12 @@ namespace Tests.API
 {
     
     public class CaseApiTest : BaseApiTest
-    {                
-        public List<Case> CasesForDelete = new();
-        public List<Project> ProjectsForDelete = new();
+    {
         public Case Case { get; set; }
         public Project project { get; set; }
+
+        public List<Case> CasesForDelete = new List<Case>();
+        public List<Project> ProjectsForDelete = new List<Project>();                
 
         protected CaseStep _caseStep;
         protected ProjectStep _projectStep;

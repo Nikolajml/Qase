@@ -5,19 +5,7 @@ namespace UI.Pages
 {
     public class DefectsTPPage : BasePage
     {
-        private static string END_POINT = "defect/TP";
-
-        //private readonly By CreateNewDefectButtonBy = By.XPath("//*[@class='btn btn-primary']");
-        //private readonly By DefectTitleInputBy = By.XPath("//*[@id='title']");
-        //private readonly By ActualResultInputBy = By.CssSelector(".toastui-editor-ww-container .ProseMirror");
-        //private readonly By SaveDefectButtonBy = By.XPath("//button[@class='btn btn-primary me-3 save-button']");
-        //private readonly By DefectTitleBy = By.XPath("//*[@class='defect-title']"); 
-        //private readonly By EditDefectButtonBy = By.XPath("//*[@class='fa fa-pen']");
-        //private readonly By UpdateDefectButtonBy = By.XPath("//*[@class='btn btn-primary me-3 save-button']");
-        //private readonly By DefectTitleForSecondAssertBy = By.XPath("//*[@class='col-lg-12']");   
-        //private readonly By DefectDescriptionForSecondAssertBy = By.XPath("//*[@class='toastui-editor-contents']");
-
-        // Сделать через проперти
+        private static string END_POINT = "defect/TP";                
 
         private IWebElement CreateNewDefectButtonBy => Driver.FindElement(By.XPath("//*[@class='btn btn-primary']"));
         private IWebElement DefectTitleInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
@@ -28,6 +16,10 @@ namespace UI.Pages
         private IWebElement UpdateDefectButtonBy => Driver.FindElement(By.XPath("//*[@class='btn btn-primary me-3 save-button']"));
         private IWebElement DefectTitleForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='col-lg-12']"));
         private IWebElement DefectDescriptionForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']"));
+        private IWebElement DeleteDefectDropDown => Driver.FindElement(By.XPath("//button[@class='j4xaa7 bB3U2Y TuZZEp']"));
+        private IWebElement DeleteDefectButton => Driver.FindElement(By.XPath("//button[@class='KXyzbV IhDC1_ rHqCyR']"));
+        private IWebElement ConfirmDeleteDefectButton => Driver.FindElement(By.XPath("//button[@class='j4xaa7 b_jd28 J4xngT']"));
+
 
         public DefectsTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
         {
@@ -135,6 +127,23 @@ namespace UI.Pages
         public string GetDefectTitle()
         {
             return DefectTitleBy.GetAttribute("innerText");
+        }
+
+        //Method for delete Defect
+
+        public void ClickToDropDownToDeleteDefect()
+        {
+            DeleteDefectDropDown.Click();
+        }
+
+        public void ClickToDeleteDefectButtonToDeleteDefect()
+        {
+            DeleteDefectButton.Click();
+        }
+
+        public void ClickToConfirmDeleteDefectButtonToDeleteDefect()
+        {
+            ConfirmDeleteDefectButton.Click();
         }
     }
 }

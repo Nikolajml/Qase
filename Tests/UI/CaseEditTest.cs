@@ -49,7 +49,7 @@ namespace Tests.UI
             _projectTPStepsPage.NavigateToEditCase();
             _caseStep.EditCase(CaseForEdit);
 
-            Assert.That(_projectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(CaseForEdit.Title));
+            Assert.That(_projectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(CaseForEdit.Title), "Edited Case Title doesn't mutch to expected Case Title");
         }
 
         [TearDown]

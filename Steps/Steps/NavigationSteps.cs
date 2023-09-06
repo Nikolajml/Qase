@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Configuration;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using UI.Pages;
 
@@ -25,9 +26,9 @@ namespace Steps.Steps
             LoginPage.TryToLogin(user);
         }
 
-        public void CheckThatPageIsOpened()
+        public void CheckThatPageIsOpen()
         {
-            ProjectsPage.IsPageOpened();
+            Assert.IsTrue(ProjectsPage.IsPageOpened(), "The Projects Page wasn't opened");
         }
     }
 }

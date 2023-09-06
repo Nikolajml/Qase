@@ -5,11 +5,13 @@ using Steps.Steps;
 namespace Tests.API
 {
     public class DefectApiTest : BaseApiTest
-    {
-        public List<Defect> DefectsForDelete = new List<Defect>();
-        public List<Project> ProjectsForDelete = new List<Project>();
+    {        
         public Defect defect { get; set; }
         public Project project { get; set; }
+
+        public List<Defect> DefectsForDelete = new List<Defect>();
+        public List<Project> ProjectsForDelete = new List<Project>();
+
         protected DefectStep _defectStep;
         protected ProjectStep _projectStep;
 
@@ -142,6 +144,24 @@ namespace Tests.API
             {
                 _projectStep.DeleteTestProject(projectForDelete);
             }
-        }        
+        }
+
+
+        [Test]
+        [Description("Successful API test to delete a Suite")]
+        [AllureOwner("User")]
+        [AllureTag("Smoke")]
+        [Category("API")]
+        public void GetAllDefectsTest()
+        {
+            var createdTestDefect = _defectStep.GetAllTestDefect("TP");
+
+            
+            Assert.IsNotEmpty(createdTestDefect, "Status code: Defect didn't deleted");
+
+
+            //_defectStep.DeleteTestDefectByName("TP");
+            //    Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "Defect ID didn't match");
+        }
     }
 }

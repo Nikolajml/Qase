@@ -8,10 +8,10 @@ using UI.Models;
 
 namespace Tests.NegativeTests
 {
-    internal class IncorrectAuthenticatedCaseTest : BaseApiTest
+    public class IncorrectAuthenticatedCaseTest : BaseApiTest
     {
-        public List<Case> CasesForDelete = new();
-        public Case Case { get; set; }
+        public Case Case { get; set; }                
+        
         protected CaseStep _caseStep;
 
         [OneTimeSetUp]
@@ -28,7 +28,7 @@ namespace Tests.NegativeTests
         }
 
         [Test]
-        [Description("Successful API test to create a Case")]
+        [Description("API test with Incorrect Authenticated to create a Case")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
@@ -37,10 +37,8 @@ namespace Tests.NegativeTests
         {
             var createdTestCase = _caseStep.CreateTestCaseWithIncorrectAuthenticated(Case);
 
-            CasesForDelete.Add(Case);
-
-            Assert.IsNotEmpty(createdTestCase.Error, "Error is empty");
-            Assert.AreEqual(createdTestCase.Error, "Unauthenticated.", "Eror is empty");
+            Assert.IsFalse(createdTestCase.Status, "Status is not False");
+            Assert.AreEqual("Unauthenticated.", createdTestCase.Error, "Error doesn't match to expected error");
         }
     }
 }

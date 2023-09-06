@@ -52,6 +52,7 @@ namespace Steps.Steps
         }
 
 
+
         // Methods for API tests
         public CaseApiModel CreateTestCase(Case Case)
         {
@@ -65,20 +66,7 @@ namespace Steps.Steps
             Assert.IsNotEmpty(response.Content);
 
             return JsonSerializer.Deserialize<CaseApiModel>(response.Content);
-        }
-
-        public CaseErrorApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
-        {
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-                .AddUrlSegment("code", Case.Code)
-                .AddBody(Case);
-
-            RestResponse response = _apiClient.Execute(request);
-
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-
-            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
-        }
+        }               
 
         public CaseApiModel GetTestCase(Case Case)
         {
@@ -89,7 +77,6 @@ namespace Steps.Steps
 
             return _apiClient.Execute<CaseApiModel>(request);
         }
-
 
         public CaseApiModel UpdateTestCase(Case testCase)
         {
@@ -107,9 +94,36 @@ namespace Steps.Steps
                 .AddUrlSegment("code", Case.Code)
                 .AddUrlSegment("id", Case.Id)
                 .AddBody(Case);
-
-            //var t = _apiClient.Execute<CaseApiModel>(request);
+                        
             return _apiClient.Execute<CaseApiModel>(request);
+        }
+
+        public CaseErrorApiModel CreateTestCaseWithIncorrectRequiredData(Case Case)
+        {
+            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
+                .AddUrlSegment("code", Case.Code)
+                .AddBody(Case);
+
+            RestResponse response = _apiClient.Execute(request);
+
+            Assert.AreEqual(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+            Assert.IsNotEmpty(response.Content);
+
+            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
+        }
+
+        public CaseErrorApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
+        {
+            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
+                .AddUrlSegment("code", Case.Code)
+                .AddBody(Case);
+
+            RestResponse response = _apiClient.Execute(request);
+
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.IsNotEmpty(response.Content);
+
+            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
         }
 
 
@@ -143,5 +157,7 @@ namespace Steps.Steps
 
             return response.Result.entities;
         }
+
+
     }
 }

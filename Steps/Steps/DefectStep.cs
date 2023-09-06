@@ -2,6 +2,7 @@
 using Core.Client;
 using Core.Utilities;
 using NLog;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using RestSharp;
 using UI.Models;
@@ -28,12 +29,18 @@ namespace Steps.Steps
 
             _logger = LogManager.GetCurrentClassLogger();
         }
-                
+
+
+        public void CheckThatPageIsOpen()
+        {
+            Assert.IsTrue(DefectsTPPage.IsPageOpened(), "The Case Page wasn't opened");
+        }
+
 
         public void CreateDefect(Defect defect)
         {
             DefectsTPPage.OpenPage();
-            DefectsTPPage.IsPageOpened();
+            
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
             DefectsTPPage.SetActualresult(defect.ActualResult);
@@ -60,7 +67,7 @@ namespace Steps.Steps
             return DefectsTPPage.GetDefectDescriptionForSecondAssert();
         }
 
-        public void NavigateToDefectCase()
+        public void NavigateToDefectPage()
         {
             DefectsTPPage.OpenPage();
             DefectsTPPage.IsPageOpened();
@@ -80,12 +87,13 @@ namespace Steps.Steps
         }
 
 
-        //protected ApiClient _apiClient;
+        public void DeleteDefect()
+        {
+            DefectsTPPage.ClickToDropDownToDeleteDefect();
+            DefectsTPPage.ClickToDeleteDefectButtonToDeleteDefect();
+            DefectsTPPage.ClickToConfirmDeleteDefectButtonToDeleteDefect();
+        }
 
-        //public DefectStep(ApiClient apiClient)
-        //{
-        //    _apiClient = apiClient;
-        //}
 
         public DefectApiModel CreateTestDefect(Defect defect)
         {
@@ -125,7 +133,39 @@ namespace Steps.Steps
 
             return _apiClient.Execute<DefectApiModel>(request);
         }
-    }
 
-    
+
+
+        public void DeleteTestDefectByName(string name, string code)
+        {
+            var listOfDefects = GetAllTestDefect(code);
+
+            var testDefects = listOfDefects.Where(testDefect => testDefect.title.Equals(name));
+
+            foreach (var testDefect in testDefects)
+            {
+                var testDefectForDelete = new Defect
+                {
+                    Id = testDefect.id.ToString(),
+                    Code = code,
+                };
+
+                DeleteTestDefect(testDefectForDelete);
+            }
+        }
+                
+
+        public List<DefectResult> GetAllTestDefect(string code, int limit = 90)
+        {
+            var request = new RestRequest(Endpoints.GET_ALL_DEFECT)
+                 .AddUrlSegment("code", code)
+                 .AddParameter("limit", limit);
+
+            var response = _apiClient.Execute<GetAllTestDefect>(request);
+
+            _logger.Info("Defect: " + response.ToString());
+
+            return response.Result.entities;
+        }
+    }
 }

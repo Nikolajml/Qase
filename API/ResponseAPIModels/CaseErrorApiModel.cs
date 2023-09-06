@@ -6,5 +6,13 @@ namespace Steps.Steps
     {
         [JsonPropertyName("error")]
         public string Error { get; set; }
+
+        [JsonPropertyName("status")]
+        public bool Status { get; set; }
+
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
+
+        
     }
 }

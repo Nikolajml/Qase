@@ -6,11 +6,12 @@ namespace Tests.API
 {
     public class SuiteApiTest : BaseApiTest
     {
-        public List<Suite> SuitesForDelete = new List<Suite>();
-        public List<Project> ProjectsForDelete = new List<Project>();
         public Suite suite { get; set; }
         public Project project { get; set; }
 
+        public List<Suite> SuitesForDelete = new List<Suite>();
+        public List<Project> ProjectsForDelete = new List<Project>();
+        
         protected SuiteStep _suiteStep;
         protected ProjectStep _projectStep;
 

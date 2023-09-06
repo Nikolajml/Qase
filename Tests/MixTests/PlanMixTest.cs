@@ -16,8 +16,8 @@ namespace Tests.MixTests
         Plan plan { get; set; }
         Case Case { get; set; }
 
-        public List<Plan> PlansForDelete = new();
-        public List<Case> CasesForDelete = new();
+        public List<Plan> PlansForDelete = new List<Plan>();
+        public List<Case> CasesForDelete = new List<Case>();
 
         protected CaseStep _caseStep;
         protected PlanStep _planStep;

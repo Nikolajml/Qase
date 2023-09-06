@@ -7,18 +7,20 @@ using Steps.Steps;
 namespace Tests.API
 {
     public class PlanApiTest : BaseApiTest
-    {        
-        public List<Case> CasesForDelete = new List<Case>();
-        public List<Plan> PlansForDelete = new List<Plan>();
-        public List<Project> ProjectsForDelete = new List<Project>();
+    {
         public Plan plan { get; set; }
         public Case Case { get; set; }
         public Project project { get; set; }
-        int CaseId { get; set; }
+
+        public List<Case> CasesForDelete = new List<Case>();
+        public List<Plan> PlansForDelete = new List<Plan>();
+        public List<Project> ProjectsForDelete = new List<Project>(); 
 
         protected CaseStep _caseStep;
         protected PlanStep _planStep;
         protected ProjectStep _projectStep;
+
+        int CaseId { get; set; }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()

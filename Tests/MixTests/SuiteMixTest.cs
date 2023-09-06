@@ -14,6 +14,7 @@ namespace Tests.MixTests
     public class SuiteMixTest : BaseTest
     {
         Suite suite { get; set; }
+
         public List<Suite> SuitesForDelete = new List<Suite>();
 
         public SuiteStep _suiteStep;
