@@ -14,7 +14,7 @@ namespace Steps.Steps
     {
         public DefectsTPPage DefectsTPPage;
         protected ApiClient _apiClient;
-        protected Logger _logger;
+        protected Logger _logger; // protected ILogger _logger;
         public DefectStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
@@ -28,52 +28,52 @@ namespace Steps.Steps
             }
 
             _logger = LogManager.GetCurrentClassLogger();
+            //_logger = logger;
         }
 
 
-        public void CheckThatPageIsOpen()
+        public void CheckThatDefectPageIsOpen()
         {
-            Assert.IsTrue(DefectsTPPage.IsPageOpened(), "The Case Page wasn't opened");
+            Assert.IsTrue(DefectsTPPage.IsPageOpened(), "The Defect Page wasn't opened");
         }
 
-
-        public void CreateDefect(Defect defect)
-        {
-            DefectsTPPage.OpenPage();
-            
+        public void CreateDefect_UI(Defect defect)
+        {                        
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
             DefectsTPPage.SetActualresult(defect.ActualResult);
             DefectsTPPage.ClickToCreateDefectButton();
         }
 
-        public string DefectTitleForFirstAssert()
+        public string DefectTitleForFirstAssert_UI()
         {
             return DefectsTPPage.GetDefectTitle();
         }
 
-        public void NavigateToCreatedDefectForSecondAssert()
+        public void NavigateToCreatedDefectForSecondAssert_UI()
         {
             DefectsTPPage.ClickToDefectTitleToSecondAssert();
         }
 
-        public string DefectTitleForSecondAssert()
+        public string DefectTitleForSecondAssert_UI()
         {
             return DefectsTPPage.GetDefectTitleForSecondAssert();
         }
 
-        public string DefectDescriptionForSecondAssert()
+        public string DefectDescriptionForSecondAssert_UI()
         {
             return DefectsTPPage.GetDefectDescriptionForSecondAssert();
         }
 
-        public void NavigateToDefectPage()
+
+
+
+        public void NavigateToDefectPage_UI()
         {
             DefectsTPPage.OpenPage();
-            DefectsTPPage.IsPageOpened();
         }
 
-        public void EditDefect(Defect defect)
+        public void EditDefect_UI(Defect defect)
         {
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
@@ -87,7 +87,7 @@ namespace Steps.Steps
         }
 
 
-        public void DeleteDefect()
+        public void DeleteDefect_UI()
         {
             DefectsTPPage.ClickToDropDownToDeleteDefect();
             DefectsTPPage.ClickToDeleteDefectButtonToDeleteDefect();
@@ -95,7 +95,7 @@ namespace Steps.Steps
         }
 
 
-        public DefectApiModel CreateTestDefect(Defect defect)
+        public DefectApiModel CreateTestDefect_API(Defect defect)
         {
             var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
                 .AddUrlSegment("code", defect.Code)
@@ -104,7 +104,7 @@ namespace Steps.Steps
             return _apiClient.Execute<DefectApiModel>(request);   
         }
 
-        public DefectApiModel GetTestDefect(Defect defect)
+        public DefectApiModel GetTestDefect_API(Defect defect)
         {
             var request = new RestRequest(Endpoints.GET_DEFECT)
                 .AddUrlSegment("code", defect.Code)
@@ -114,7 +114,7 @@ namespace Steps.Steps
             return _apiClient.Execute<DefectApiModel>(request);                        
         }
 
-        public DefectApiModel UpdateTestDefect(Defect defect)
+        public DefectApiModel UpdateTestDefect_API(Defect defect)
         {
             var request = new RestRequest(Endpoints.UPDATE_DEFECT, Method.Patch)
                 .AddUrlSegment("code", defect.Code)
@@ -124,7 +124,7 @@ namespace Steps.Steps
             return _apiClient.Execute<DefectApiModel>(request);
         }
 
-        public DefectApiModel DeleteTestDefect(Defect defect)
+        public DefectApiModel DeleteTestDefect_API(Defect defect)
         {
             var request = new RestRequest(Endpoints.DELETE_DEFECT, Method.Delete)
                 .AddUrlSegment("code", defect.Code)
@@ -138,7 +138,7 @@ namespace Steps.Steps
 
         public void DeleteTestDefectByName(string name, string code)
         {
-            var listOfDefects = GetAllTestDefect(code);
+            var listOfDefects = GetAllTestDefect_API(code);
 
             var testDefects = listOfDefects.Where(testDefect => testDefect.title.Equals(name));
 
@@ -150,12 +150,12 @@ namespace Steps.Steps
                     Code = code,
                 };
 
-                DeleteTestDefect(testDefectForDelete);
+                DeleteTestDefect_API(testDefectForDelete);
             }
         }
                 
 
-        public List<DefectResult> GetAllTestDefect(string code, int limit = 90)
+        public List<DefectResult> GetAllTestDefect_API(string code, int limit = 90)
         {
             var request = new RestRequest(Endpoints.GET_ALL_DEFECT)
                  .AddUrlSegment("code", code)

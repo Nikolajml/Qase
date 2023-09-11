@@ -7,7 +7,7 @@ namespace Tests.UI
 {
     public class PlanTests : BaseTest
     {
-        //Plan plan;
+        Plan plan;
 
         public PlanStep _planStep;
 

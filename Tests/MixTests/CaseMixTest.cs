@@ -17,11 +17,11 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
-            _caseStep = new CaseStep(Driver, _apiClient);
+            _caseStep = new CaseStep(_logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(Driver);
         }
 
-        [SetUp]
+        [SetUp]             // Создание проекта
         public void SetUp()
         {
             Case = new CaseBuilder()
@@ -29,7 +29,7 @@ namespace Tests.MixTests
                .SetCode("TP")
                .Build();
 
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
 
             Case.Id = createdTestCase.Result.id.ToString();
 

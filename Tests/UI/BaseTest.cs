@@ -13,11 +13,12 @@ using Tests.API;
 namespace Tests.UI
 {
     [AllureNUnit]
-    public class BaseTest : BaseApiTest
+    public class BaseTest : BaseApiTest     // неправильно - CommonBaseTest
     {
-        public static readonly string? BaseUrl = new Configurator().AppSettings.URL;
+        public readonly string? BaseUrl = new Configurator().AppSettings.URL;
 
         protected IWebDriver Driver;
+
         private AllureLifecycle _allure;       
         public Faker Faker = new Faker();
           
@@ -33,11 +34,11 @@ namespace Tests.UI
             NavigationSteps = new NavigationSteps(Driver);  
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(new Configurator().Admin);
-            NavigationSteps.CheckThatPageIsOpen();
+            NavigationSteps.SuccessfulLogin(new Configurator().Admin);          // не создавать каждый раз new Configurator
+            NavigationSteps.CheckThatPageIsOpen();          // use assert inconclusive
         }
 
-        [OneTimeTearDown] // Impliment OneTearDown
+        [OneTimeTearDown]
         public void TearDown()
         {
             // Проверка, что тест упал

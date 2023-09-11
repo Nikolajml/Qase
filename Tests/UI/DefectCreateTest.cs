@@ -31,26 +31,25 @@ namespace Tests.UI
         [Category("UI")]
         public void CreateDefectTest()
         {     
-            Defect defect = new DefectBuilder()
+            defect = new DefectBuilder()
                 .SetDefectTitle(Faker.Name.FullName())
                 .SetActualResult(Faker.Vehicle.Model())
                 .Build();
 
-            _defectStep.NavigateToDefectPage();
-            _defectStep.CheckThatPageIsOpen();
-            _defectStep.CreateDefect(defect);
-            Assert.That(_defectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Defect title doesn't match expected result");
+            _defectStep.NavigateToDefectPage_UI();
+            _defectStep.CheckThatDefectPageIsOpen();
+            _defectStep.CreateDefect_UI(defect);
+            Assert.That(_defectStep.DefectTitleForFirstAssert_UI, Is.EqualTo(defect.DefectTitle), "Defect title doesn't match expected result");
 
-            _defectStep.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(_defectStep.DefectDescriptionForSecondAssert, Is.EqualTo(defect.ActualResult), "Defect description doesn't match expected result");
+            _defectStep.NavigateToCreatedDefectForSecondAssert_UI();
+            Assert.That(_defectStep.DefectDescriptionForSecondAssert_UI, Is.EqualTo(defect.ActualResult), "Defect description doesn't match expected result");
         }
 
         [TearDown]
         public void EditTearDown()
         {
-            _defectStep.NavigateToDefectPage();
-            _defectStep.DeleteDefect();
+            _defectStep.NavigateToDefectPage_UI();
+            _defectStep.DeleteDefect_UI();
         }
-
     }
 }

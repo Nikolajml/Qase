@@ -20,7 +20,7 @@ namespace Tests.NegativeTests
         [OneTimeSetUp]
         public void Setup()
         {
-            _caseStep = new CaseStep(apiClient: _apiClient);
+            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
 
             Case = new Case()
             {
@@ -37,7 +37,7 @@ namespace Tests.NegativeTests
         [Category("Negative")]
         public void IncorrectRequiredDataCreateCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCaseWithIncorrectRequiredData(Case);                       
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);                       
                         
             Assert.IsFalse(createdTestCase.Status, "Status is not False");
             Assert.AreEqual("The title field is required.", createdTestCase.Message, "Error message doesn't match to expected error message");

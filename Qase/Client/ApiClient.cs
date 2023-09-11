@@ -12,7 +12,7 @@ namespace Core.Client
 
         public ApiClient(string token = null)
         {
-            _logger = LogManager.GetCurrentClassLogger(); // все еще статический - для апи клиента нужен логер и конфигуратор
+            _logger = LogManager.GetCurrentClassLogger();
 
             var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
             {

@@ -34,7 +34,7 @@ namespace Tests.MixTests
                .SetCode("TP")
                .Build();
 
-            var createdTestDefect = _defectStep.CreateTestDefect(defect);
+            var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
 
             defect.Id = createdTestDefect.Result.id.ToString();
 
@@ -53,11 +53,11 @@ namespace Tests.MixTests
             defect.DefectTitle = "Edited Mix Defect UI test";
 
             //_defectStep.NavigateToDefectCase();
-            _defectStep.EditDefect(defect);
-            Assert.That(_defectStep.DefectTitleForFirstAssert, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
+            _defectStep.EditDefect_UI(defect);
+            Assert.That(_defectStep.DefectTitleForFirstAssert_UI, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
 
-            _defectStep.NavigateToCreatedDefectForSecondAssert();
-            Assert.That(_defectStep.DefectDescriptionForSecondAssert(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
+            _defectStep.NavigateToCreatedDefectForSecondAssert_UI();
+            Assert.That(_defectStep.DefectDescriptionForSecondAssert_UI(), Is.EqualTo(defect.ActualResult), "Edited Defect Description didn't match");
         }
 
         [OneTimeTearDown]
@@ -65,7 +65,7 @@ namespace Tests.MixTests
         {
             foreach (var testSuite in DefectsForDelete)
             {
-                _defectStep.DeleteTestDefect(testSuite);
+                _defectStep.DeleteTestDefect_API(testSuite);
             }
         }
     }

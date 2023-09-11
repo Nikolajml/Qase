@@ -14,13 +14,13 @@ namespace Steps.Steps
 {
     public class ProjectStep
     {
-        protected ApiClient _apiClient;
-        protected Logger _logger;
+        protected ApiClient _apiClient;        ;
+        protected ILogger _logger;  //protected Logger _logger;   // protected ILogger _logger
 
-        public ProjectStep(ApiClient apiClient)
+        public ProjectStep(ILogger logger, ApiClient apiClient)
         {
-            _apiClient = apiClient;
-            _logger = LogManager.GetCurrentClassLogger();
+            _apiClient = apiClient;            
+            _logger = logger;       //_logger = LogManager.GetCurrentClassLogger();
         }
 
         public ProjectApiModel CreateTestProject(Project project)

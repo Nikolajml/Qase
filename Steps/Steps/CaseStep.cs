@@ -16,8 +16,9 @@ namespace Steps.Steps
     {
         public CasePage CasePage;
         protected ApiClient _apiClient;
-        protected Logger _logger;
-        public CaseStep(IWebDriver driver = null, ApiClient apiClient = null)
+        protected ILogger _logger;
+
+        public CaseStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
             {
@@ -29,12 +30,12 @@ namespace Steps.Steps
                 _apiClient = apiClient;
             }
 
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;
         }
 
-        public void CheckThatPageIsOpen()
+        public bool IsPageOpened() //Название Check нехорошо - уже переделал ++++++
         {
-            Assert.IsTrue(CasePage.IsPageOpened(), "The Case Page wasn't opened");
+            return CasePage.IsPageOpened(); // ассерт должен быть только на уровне тестов - вынес на уровень тестов ++++++
         }
 
         public void CreateCase(Case Case)
@@ -54,18 +55,23 @@ namespace Steps.Steps
 
 
         // Methods for API tests
-        public CaseApiModel CreateTestCase(Case Case)
-        {
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
+        public CaseApiModel CreateTestCase_API(Case Case)   // TUPLE - почитать, что это такое? Нужно вернуть респонс (статус код) - это одна часть TUPLE, вторая часть TUPLE - модель.
+        {                                                   // Подход с TUPLES перенестся на страницу с сервисами. Тройной TUPLE - код контент error
+                                                            // Понятно прописать методы - API - UI
+                                                        
+            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post) // Использовать как для позитивных, так и для негативных тестов - сделал ++++++
                 .AddUrlSegment("code", Case.Code)
-                .AddBody(Case);
+                .AddBody(Case);                         // сделать логер частью Page and Service
 
-            var response = _apiClient.Execute(request);
+            return _apiClient.Execute<CaseApiModel>(request);
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsNotEmpty(response.Content);
 
-            return JsonSerializer.Deserialize<CaseApiModel>(response.Content);
+            //var response = _apiClient.Execute(request); // здесь будет метод из сервисов сервис
+
+            //Assert.AreEqual(HttpStatusCode.OK, response.StatusCode); // Ассерты должны быть только в тестах
+            //Assert.IsNotEmpty(response.Content);
+
+            //return JsonSerializer.Deserialize<CaseApiModel>(response.Content);
         }               
 
         public CaseApiModel GetTestCase(Case Case)
@@ -97,39 +103,11 @@ namespace Steps.Steps
                         
             return _apiClient.Execute<CaseApiModel>(request);
         }
-
-        public CaseErrorApiModel CreateTestCaseWithIncorrectRequiredData(Case Case)
-        {
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-                .AddUrlSegment("code", Case.Code)
-                .AddBody(Case);
-
-            RestResponse response = _apiClient.Execute(request);
-
-            Assert.AreEqual(HttpStatusCode.UnprocessableEntity, response.StatusCode);
-            Assert.IsNotEmpty(response.Content);
-
-            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
-        }
-
-        public CaseErrorApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
-        {
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-                .AddUrlSegment("code", Case.Code)
-                .AddBody(Case);
-
-            RestResponse response = _apiClient.Execute(request);
-
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-            Assert.IsNotEmpty(response.Content);
-
-            return JsonSerializer.Deserialize<CaseErrorApiModel>(response.Content);
-        }
-
+                
 
         public void DeleteTestCaseByName(string name, string code)
         {
-            var listOfCases = GetAllTestCase(code);
+            var listOfCases = GetAllTestCase_API(code);
 
             var testCases = listOfCases.Where(testCase => testCase.title.Equals(name));
 
@@ -145,7 +123,7 @@ namespace Steps.Steps
             }
         }
 
-        public List<CaseResult> GetAllTestCase(string code, int limit = 90)
+        public List<CaseResult> GetAllTestCase_API(string code, int limit = 90)
         {
             var request = new RestRequest(Endpoints.GET_ALL_CASE)
                  .AddUrlSegment("code", code)
@@ -159,5 +137,28 @@ namespace Steps.Steps
         }
 
 
+
+
+
+
+
+
+        //public CaseApiModel CreateTestCaseWithIncorrectRequiredData(Case Case)
+        //{
+        //    var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
+        //        .AddUrlSegment("code", Case.Code)
+        //        .AddBody(Case);
+
+        //    return _apiClient.Execute<CaseApiModel>(request);            
+        //}
+
+        //public CaseApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
+        //{
+        //    var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
+        //        .AddUrlSegment("code", Case.Code)
+        //        .AddBody(Case);
+
+        //    return _apiClient.Execute<CaseApiModel>(request);            
+        //}
     }
 }

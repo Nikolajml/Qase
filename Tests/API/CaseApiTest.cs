@@ -23,13 +23,9 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(apiClient: _apiClient);
-            _projectStep = new ProjectStep(_apiClient);
-        }
+            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(_logger, _apiClient);
 
-        [SetUp]
-        public void Setup()
-        {
             project = new Project()
             {
                 Code = "MPFC",
@@ -37,9 +33,13 @@ namespace Tests.API
                 Access = "all"
             };
 
-            _projectStep.CreateTestProject(project);
-            ProjectsForDelete.Add(project);
+            _projectStep.CreateTestProject(project);        // Assert inconclusive - что это такое, как использовать?
+            ProjectsForDelete.Add(project);                 // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
+        }
 
+        [SetUp]
+        public void Setup()
+        {            
 
             Case = new Case()
             {
@@ -55,14 +55,14 @@ namespace Tests.API
         [Category("API")]
         public void CreateCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase(Case);
-            Case.Id = createdTestCase.Result.id.ToString();             // как будет работать, если тест упадет
-            CasesForDelete.Add(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
+            Case.Id = createdTestCase.Result.id.ToString();             // как будет работать, если тест упадет - решить с помощью TUPLE
+            CasesForDelete.Add(Case);                                   // Ассерт на ОК, а потом действие на ID
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(createdTestCase.Status, "Status code: Case didn't delete");
-                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString(), "Case ID don't match");
+                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString(), "Case ID don't match"); // проверить, что Id существует
             });
         }
 
@@ -75,7 +75,7 @@ namespace Tests.API
 
         public void GetCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
@@ -97,7 +97,7 @@ namespace Tests.API
         [Category("API")]
         public void UpdateCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
@@ -121,7 +121,7 @@ namespace Tests.API
         [Category("API")]
         public void DeleteCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
             Case.Id = createdTestCase.Result.id.ToString();
             
             var caseResponse = _caseStep.DeleteTestCase(Case);

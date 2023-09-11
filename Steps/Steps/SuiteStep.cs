@@ -13,7 +13,7 @@ namespace Steps.Steps
     {      
         public SuitePopUpPage SuitePopUpPage; 
         protected ApiClient _apiClient;
-        protected Logger _logger;
+        protected Logger _logger;   // protected ILogger _logger;
 
         public SuiteStep(IWebDriver driver = null, ApiClient apiClient = null)
         {

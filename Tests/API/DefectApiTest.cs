@@ -53,7 +53,7 @@ namespace Tests.API
         [Category("API")]
         public void CreateDefectTest()
         {    
-            var createdTestDefect = _defectStep.CreateTestDefect(defect);
+            var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
@@ -72,11 +72,11 @@ namespace Tests.API
         [Category("API")]
         public void GetDefectTest()
         {
-            var createdTestDefect = _defectStep.CreateTestDefect(defect);
+            var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
-            var getedDefectCase = _defectStep.GetTestDefect(defect);            
+            var getedDefectCase = _defectStep.GetTestDefect_API(defect);            
                         
             Assert.Multiple(() =>
             {
@@ -94,7 +94,7 @@ namespace Tests.API
         [Category("API")]
         public void UpdateDefectTest()
         {
-            var createdTestDefect = _defectStep.CreateTestDefect(defect);
+            var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
@@ -102,7 +102,7 @@ namespace Tests.API
             defect.ActualResult = "Some updated result";
             defect.Severity = 1;
 
-            var updatedDefectCase = _defectStep.UpdateTestDefect(defect);            
+            var updatedDefectCase = _defectStep.UpdateTestDefect_API(defect);            
 
             Assert.Multiple(() =>
             {
@@ -119,10 +119,10 @@ namespace Tests.API
         [Category("API")]
         public void DeleteSuiteTest()
         {
-            var createdTestDefect = _defectStep.CreateTestDefect(defect);
+            var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             defect.Id = createdTestDefect.Result.id.ToString();            
 
-            var defectResponse = _defectStep.DeleteTestDefect(defect);                
+            var defectResponse = _defectStep.DeleteTestDefect_API(defect);                
 
             Assert.Multiple(() =>
             {
@@ -137,7 +137,7 @@ namespace Tests.API
         {
             foreach (var defectForDelete in DefectsForDelete)
             {
-                _defectStep.DeleteTestDefect(defectForDelete);
+                _defectStep.DeleteTestDefect_API(defectForDelete);
             }
 
             foreach (var projectForDelete in ProjectsForDelete)
@@ -154,7 +154,7 @@ namespace Tests.API
         [Category("API")]
         public void GetAllDefectsTest()
         {
-            var createdTestDefect = _defectStep.GetAllTestDefect("TP");
+            var createdTestDefect = _defectStep.GetAllTestDefect_API("TP");
 
             
             Assert.IsNotEmpty(createdTestDefect, "Status code: Defect didn't deleted");

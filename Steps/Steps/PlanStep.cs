@@ -13,7 +13,7 @@ namespace Steps.Steps
     {
         public PlanTPPage PlanTPPage;
         protected ApiClient _apiClient;
-        protected Logger _logger;        
+        protected Logger _logger;   // protected ILogger _logger;        
 
         public PlanStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
@@ -28,6 +28,7 @@ namespace Steps.Steps
             }
 
             _logger = LogManager.GetCurrentClassLogger();
+            //_logger = logger;
         }
 
 
@@ -80,10 +81,10 @@ namespace Steps.Steps
 
 
 
-        public PlanStep(ApiClient apiClient)
-        {
-            _apiClient = apiClient;
-        }
+        //public PlanStep(ApiClient apiClient)
+        //{
+        //    _apiClient = apiClient;
+        //}
 
         public PlanApiModel CreateTestPlan(Plan plan)
         {

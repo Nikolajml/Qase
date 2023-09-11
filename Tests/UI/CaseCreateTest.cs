@@ -1,6 +1,7 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
+using UI.Pages;
 
 namespace Tests.UI
 {
@@ -13,7 +14,7 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
-            _caseStep = new CaseStep(Driver, _apiClient);
+            _caseStep = new CaseStep(_logger, Driver, _apiClient);
             ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
         }
 
@@ -28,10 +29,10 @@ namespace Tests.UI
                 .SetCaseTitle(Faker.Name.FullName())
                 .Build();
 
+            ProjectTPStepsPage.NavigateToCreateCase(); 
+            
+            Assert.IsTrue(_caseStep.IsPageOpened(), "The CasePage wasn't opened");
 
-
-            ProjectTPStepsPage.NavigateToCreateCase();
-            _caseStep.CheckThatPageIsOpen();
             _caseStep.CreateCase(Case);
 
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Title created Case desn't much to expected Case Title");

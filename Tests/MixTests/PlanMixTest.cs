@@ -25,7 +25,7 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(Driver, _apiClient);
+            _caseStep = new CaseStep(_logger, Driver, _apiClient);
             _planStep = new PlanStep(Driver, _apiClient);
         }
 
@@ -38,7 +38,7 @@ namespace Tests.MixTests
                 Title = "Case for Plan Mix Test"
             };
 
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
 
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);

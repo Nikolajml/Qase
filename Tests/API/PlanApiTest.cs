@@ -25,7 +25,7 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(apiClient: _apiClient);
+            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
             _planStep = new PlanStep(apiClient: _apiClient);
             _projectStep = new ProjectStep(apiClient: _apiClient);
         }
@@ -49,7 +49,7 @@ namespace Tests.API
                 Title = "Case for Plan Mix Test"
             };
 
-            var createdTestCase = _caseStep.CreateTestCase(Case);
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
 
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);

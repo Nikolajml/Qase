@@ -19,7 +19,7 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(Driver, _apiClient);
+            _caseStep = new CaseStep(_logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(Driver);
         }
 
@@ -29,10 +29,10 @@ namespace Tests.UI
             Case = new Case()
             {
                 Code = "TP",
-                Title = "Case For EditCaseTest UI"
+                Title = Faker.Name.FullName()
             };
 
-            _caseStep.CreateTestCase(Case);
+            _caseStep.CreateTestCase_API(Case);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Tests.UI
         public void EditCaseTest()
         {
             CaseForEdit = new CaseBuilder()
-               .SetCaseTitle("Edited Case UI")
+               .SetCaseTitle(Faker.Name.FullName())
                .Build();
 
             _projectTPStepsPage.NavigateToEditCase();
