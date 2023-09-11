@@ -29,12 +29,10 @@ namespace Tests.UI
                 .SetCaseTitle(Faker.Name.FullName())
                 .Build();
 
-            ProjectTPStepsPage.NavigateToCreateCase(); 
-            
+            ProjectTPStepsPage.NavigateToCreateCase();            
             Assert.IsTrue(_caseStep.IsPageOpened(), "The CasePage wasn't opened");
 
             _caseStep.CreateCase(Case);
-
             Assert.That(ProjectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Title created Case desn't much to expected Case Title");
         }
 

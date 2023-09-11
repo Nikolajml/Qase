@@ -33,9 +33,9 @@ namespace Steps.Steps
             _logger = logger;
         }
 
-        public bool IsPageOpened() //Название Check нехорошо - уже переделал ++++++
+        public void IsPageOpened() // ++++++ Название Check нехорошо - уже переделал 
         {
-            return CasePage.IsPageOpened(); // ассерт должен быть только на уровне тестов - вынес на уровень тестов ++++++
+            CasePage.IsPageOpened(); // ++++++ ассерт должен быть только на уровне тестов - вынес на уровень тестов 
         }
 
         public void CreateCase(Case Case)
@@ -102,8 +102,7 @@ namespace Steps.Steps
                 .AddBody(Case);
                         
             return _apiClient.Execute<CaseApiModel>(request);
-        }
-                
+        }                
 
         public void DeleteTestCaseByName(string name, string code)
         {
@@ -135,10 +134,6 @@ namespace Steps.Steps
 
             return response.Result.entities;
         }
-
-
-
-
 
 
 

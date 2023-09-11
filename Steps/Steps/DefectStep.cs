@@ -14,7 +14,8 @@ namespace Steps.Steps
     {
         public DefectsTPPage DefectsTPPage;
         protected ApiClient _apiClient;
-        protected Logger _logger; // protected ILogger _logger;
+        protected Logger _logger; 
+        // protected ILogger _logger;
         public DefectStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)

@@ -13,7 +13,8 @@ namespace Steps.Steps
     {
         public PlanTPPage PlanTPPage;
         protected ApiClient _apiClient;
-        protected Logger _logger;   // protected ILogger _logger;        
+        protected Logger _logger;   
+        // protected ILogger _logger;        
 
         public PlanStep(IWebDriver driver = null, ApiClient apiClient = null)
         {
