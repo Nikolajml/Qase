@@ -2,6 +2,7 @@
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using Tests.UI;
+using Core.Core;
 
 namespace Tests.MixTests
 {
@@ -16,9 +17,9 @@ namespace Tests.MixTests
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
-        {
-            _caseStep = new CaseStep(_logger, Driver, _apiClient);
-            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        {            
+            _caseStep = new CaseStep(logger, Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
         }
 
         [SetUp]             // Создание проекта
@@ -53,7 +54,7 @@ namespace Tests.MixTests
 
             Assert.That(_projectTPStepsPage.CreatedCaseTitleForAssert(), Is.EqualTo(Case.Title), "Edited Case Title didn't match");
         }
-           
+
 
         [OneTimeTearDown]
         public void TearDown()

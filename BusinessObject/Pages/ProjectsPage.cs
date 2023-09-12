@@ -1,22 +1,21 @@
 ﻿using Core.Utilities.Configuration;
+using NLog;
 using OpenQA.Selenium;
 
 namespace UI.Pages
 {
     public class ProjectsPage : BasePage
     {
-        private static string END_POINT = "projects";
-
-        //private static readonly By CreateNewProjectButtonBy = By.Id("createButton");                
+        private static string END_POINT = "projects";            
 
         private IWebElement CreateNewProjectButtonBy => Driver.FindElement(By.XPath("//button[@class='j4xaa7 u0i1tV J4xngT']"));
 
-        public ProjectsPage(IWebDriver? driver, bool openPageByUrl) : base(driver, openPageByUrl)
+        public ProjectsPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
 
         }
 
-        public ProjectsPage(IWebDriver? driver) : base(driver, false)
+        public ProjectsPage(ILogger logger, IWebDriver driver) : base(logger, driver, false)
         {
 
         }

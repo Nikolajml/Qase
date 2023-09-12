@@ -1,4 +1,6 @@
-﻿using NUnit.Allure.Attributes;
+﻿using Core.Core;
+using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Steps.Steps;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using UI.Models;
 
 namespace Tests.UI
 {
-    public class CaseEditTest : BaseTest
+    public class CaseEditTest : CommonBaseTest
     {
         Case Case;
         Case CaseForEdit;
@@ -18,9 +20,13 @@ namespace Tests.UI
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
-        {
-            _caseStep = new CaseStep(_logger, Driver, _apiClient);
-            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+        {            
+            _caseStep = new CaseStep(logger, Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            NavigationSteps.CheckThatPageIsOpen();
         }
 
         [SetUp]

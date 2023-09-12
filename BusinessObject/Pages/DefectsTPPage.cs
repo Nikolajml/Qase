@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Configuration;
+using NLog;
 using OpenQA.Selenium;
 
 namespace UI.Pages
@@ -21,11 +22,11 @@ namespace UI.Pages
         private IWebElement ConfirmDeleteDefectButton => Driver.FindElement(By.XPath("//button[@class='j4xaa7 b_jd28 J4xngT']"));
 
 
-        public DefectsTPPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
+        public DefectsTPPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
 
         }
-        public DefectsTPPage(IWebDriver driver) : base(driver, false)
+        public DefectsTPPage(ILogger logger, IWebDriver driver) : base(logger, driver, false)
         {
 
         }

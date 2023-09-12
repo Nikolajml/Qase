@@ -18,7 +18,7 @@ namespace Tests.NegativeTests
         public void Setup()
         {
             _apiClient = new ApiClient();
-            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
 
             Case = new Case()
             {

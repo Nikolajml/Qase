@@ -2,20 +2,27 @@
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using UI.Pages;
+using Core.Utilities.Configuration;
+using Core.Core;
+using OpenQA.Selenium;
 
 namespace Tests.UI
 {
-    public class CaseCreateTest : BaseTest
+    public class CaseCreateTest : CommonBaseTest
     {
         Case Case;
         public ProjectTPStepsPage ProjectTPStepsPage;
-        public CaseStep _caseStep;
+        public CaseStep _caseStep;               
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
-            _caseStep = new CaseStep(_logger, Driver, _apiClient);
-            ProjectTPStepsPage = new ProjectTPStepsPage(Driver);
+            _caseStep = new CaseStep(logger, Driver, _apiClient);
+            ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            NavigationSteps.CheckThatPageIsOpen();
         }
 
         [Test]

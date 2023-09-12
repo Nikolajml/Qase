@@ -46,11 +46,16 @@ namespace API.ResponseAPIModels
         public CaseResult Result { get; set; }
 
         [JsonPropertyName("error")]
-        public string Error { get; set; }        
+        public string Error { get; set; }
 
         [JsonPropertyName("message")]
         public string Message { get; set; }
-    }        
+
+        public new string ToString()
+        {
+            return $"status:{Status}";
+        }
+    }
 }
 
 

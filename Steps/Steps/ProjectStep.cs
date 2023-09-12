@@ -16,13 +16,11 @@ namespace Steps.Steps
     {
         protected ApiClient _apiClient;
         protected ILogger _logger;  
-        //protected Logger _logger;
 
         public ProjectStep(ILogger logger, ApiClient apiClient)
         {
             _apiClient = apiClient;            
-            _logger = logger;       
-            //_logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;                   
         }
 
         public ProjectApiModel CreateTestProject(Project project)

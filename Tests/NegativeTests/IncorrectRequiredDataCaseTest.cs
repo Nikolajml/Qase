@@ -20,7 +20,7 @@ namespace Tests.NegativeTests
         [OneTimeSetUp]
         public void Setup()
         {
-            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
 
             Case = new Case()
             {

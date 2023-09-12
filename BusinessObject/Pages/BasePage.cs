@@ -1,16 +1,18 @@
-﻿using OpenQA.Selenium;
+﻿using NLog;
+using OpenQA.Selenium;
 
 namespace UI.Pages
 {
     public abstract class BasePage
     {
         protected IWebDriver Driver;
+        protected ILogger _logger;
 
 
-
-        public BasePage(IWebDriver driver, bool openPageByUrl)
+        public BasePage(ILogger logger, IWebDriver driver, bool openPageByUrl)
         {
             Driver = driver;
+            _logger = logger;   
 
             if (openPageByUrl)
             {

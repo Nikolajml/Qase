@@ -14,13 +14,12 @@ namespace Steps.Steps
     {
         public DefectsTPPage DefectsTPPage;
         protected ApiClient _apiClient;
-        protected Logger _logger; 
-        // protected ILogger _logger;
-        public DefectStep(IWebDriver driver = null, ApiClient apiClient = null)
+        protected ILogger _logger;
+        public DefectStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
             {
-                DefectsTPPage = new DefectsTPPage(driver);
+                DefectsTPPage = new DefectsTPPage(logger, driver);
             }
 
             if (apiClient != null)
@@ -28,8 +27,7 @@ namespace Steps.Steps
                 _apiClient = apiClient;
             }
 
-            _logger = LogManager.GetCurrentClassLogger();
-            //_logger = logger;
+            _logger = logger;
         }
 
 

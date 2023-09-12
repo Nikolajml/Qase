@@ -22,7 +22,7 @@ namespace Steps.Steps
         {
             if (driver != null)
             {
-                CasePage = new CasePage(driver);
+                CasePage = new CasePage(logger, driver);
             }
 
             if (apiClient != null)
@@ -33,9 +33,9 @@ namespace Steps.Steps
             _logger = logger;
         }
 
-        public void IsPageOpened() // ++++++ Название Check нехорошо - уже переделал 
+        public bool IsPageOpened() // ++++++ Название Check нехорошо - уже переделал 
         {
-            CasePage.IsPageOpened(); // ++++++ ассерт должен быть только на уровне тестов - вынес на уровень тестов 
+            return CasePage.IsPageOpened(); // ++++++ ассерт должен быть только на уровне тестов - вынес на уровень тестов 
         }
 
         public void CreateCase(Case Case)
@@ -51,9 +51,7 @@ namespace Steps.Steps
             CasePage.SetEditedCaseName(Case.Title);
             CasePage.ClickToSaveCaseButton();
         }
-
-
-
+                       
         // Methods for API tests
         public CaseApiModel CreateTestCase_API(Case Case)   // TUPLE - почитать, что это такое? Нужно вернуть респонс (статус код) - это одна часть TUPLE, вторая часть TUPLE - модель.
         {                                                   // Подход с TUPLES перенестся на страницу с сервисами. Тройной TUPLE - код контент error

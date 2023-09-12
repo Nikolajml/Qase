@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NLog;
+using OpenQA.Selenium;
 using UI.Pages;
 
 namespace Steps.Steps
@@ -6,10 +7,12 @@ namespace Steps.Steps
     public class ProjectTPStepsPage
     {
         public ProjectTPPage ProjectTPPage;
+        public ILogger _logger;
 
-        public ProjectTPStepsPage(IWebDriver driver)
+        public ProjectTPStepsPage(ILogger logger, IWebDriver driver)
         {
-            ProjectTPPage = new ProjectTPPage(driver);
+            ProjectTPPage = new ProjectTPPage(logger, driver);
+            _logger = logger;
         }
 
 
@@ -43,12 +46,11 @@ namespace Steps.Steps
             ProjectTPPage.ClickToSuiteButton();
         }
 
+        
         public void NavigateToEditSuite()
         {
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
-            ProjectTPPage.ClickToEllipsis();
-            ProjectTPPage.ClickToEdit();
         }
 
         public string CreatedSuiteNameForAssert(string text)

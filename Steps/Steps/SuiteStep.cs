@@ -13,13 +13,13 @@ namespace Steps.Steps
     {      
         public SuitePopUpPage SuitePopUpPage; 
         protected ApiClient _apiClient;
-        protected Logger _logger;   // protected ILogger _logger;
+        protected ILogger _logger;
 
-        public SuiteStep(IWebDriver driver = null, ApiClient apiClient = null)
+        public SuiteStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
             {
-                SuitePopUpPage = new SuitePopUpPage(driver);
+                SuitePopUpPage = new SuitePopUpPage(logger, driver);
             }
 
             if (apiClient != null)
@@ -27,27 +27,32 @@ namespace Steps.Steps
                 _apiClient = apiClient;
             }
 
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;
         }
 
 
         public void CreateSuit(Suite suite)
         {
             //SuitePopUpPage.OpenPage();
-            SuitePopUpPage.IsPageOpened();
+            //SuitePopUpPage.IsPageOpened();
             SuitePopUpPage.SetSuiteName(suite.Name);
             SuitePopUpPage.SetSuiteDescriptione(suite.Description);
             SuitePopUpPage.SetSuitePreconditionse(suite.Preconditions);
             SuitePopUpPage.ClickToCreateSuiteButton();
         }
 
-        public void EditSuit(Suite suite)
+        public void EditSuit_UI(Suite suite)
         {
-            SuitePopUpPage.IsPageOpened();
+            SuitePopUpPage.ClickToEditSuiteIcon();
             SuitePopUpPage.ClickToClearNameField();
             SuitePopUpPage.ClearNameField();
             SuitePopUpPage.EditSuiteName(suite.Name);
             SuitePopUpPage.ClickToSaveEditButton();
+        }
+
+        public void DeleteSuite_UI()
+        {
+            SuitePopUpPage.DeleteSuite();
         }
 
 

@@ -1,4 +1,5 @@
-﻿using NUnit.Allure.Attributes;
+﻿using Core.Core;
+using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using UI.Models;
 
 namespace Tests.MixTests
 {
-    public class PlanMixTest : BaseTest
+    public class PlanMixTest : CommonBaseTest
     {
         Plan plan { get; set; }
         Case Case { get; set; }
@@ -22,11 +23,13 @@ namespace Tests.MixTests
         protected CaseStep _caseStep;
         protected PlanStep _planStep;
 
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(_logger, Driver, _apiClient);
-            _planStep = new PlanStep(Driver, _apiClient);
+
+            _caseStep = new CaseStep(logger, Driver, _apiClient);
+            _planStep = new PlanStep(logger, Driver, _apiClient);
         }
 
         [SetUp]

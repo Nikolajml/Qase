@@ -1,4 +1,6 @@
-﻿using NUnit.Allure.Attributes;
+﻿using Core.Core;
+using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Steps.Steps;
 using System;
 using System.Collections.Generic;
@@ -11,17 +13,21 @@ using UI.Pages;
 
 namespace Tests.UI
 {
-    public class DefectCreateTest : BaseTest
+    public class DefectCreateTest : CommonBaseTest
     {
         Defect defect;
         public DefectsTPPage DefectsTPPage;
-        public DefectStep _defectStep;
+        public DefectStep _defectStep;                
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
-        {
-            _defectStep = new DefectStep(Driver, _apiClient);
-            DefectsTPPage = new DefectsTPPage(Driver);
+        {           
+            _defectStep = new DefectStep(logger, Driver, _apiClient);
+            DefectsTPPage = new DefectsTPPage(logger, Driver);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            NavigationSteps.CheckThatPageIsOpen();
         }
 
         [Test]

@@ -14,7 +14,7 @@ namespace Tests.API
 
         public List<Case> CasesForDelete = new List<Case>();
         public List<Plan> PlansForDelete = new List<Plan>();
-        public List<Project> ProjectsForDelete = new List<Project>(); 
+        public List<Project> ProjectsForDelete = new List<Project>();
 
         protected CaseStep _caseStep;
         protected PlanStep _planStep;
@@ -25,14 +25,14 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
-            _planStep = new PlanStep(apiClient: _apiClient);
-            _projectStep = new ProjectStep(apiClient: _apiClient);
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
+            _planStep = new PlanStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, apiClient: _apiClient);
         }
 
         [SetUp]
         public void SetUp()
-        {            
+        {
             project = new Project()
             {
                 Code = "MPFP",
@@ -62,7 +62,7 @@ namespace Tests.API
             {
                 Code = project.Code,
                 Title = "Plan Mix Test",
-                Cases = new List<int> {CaseIdForPlan}
+                Cases = new List<int> { CaseIdForPlan }
             };
 
             PlansForDelete.Add(plan);
@@ -75,7 +75,7 @@ namespace Tests.API
         [AllureTag("Smoke")]
         [Category("API")]
         public void CreatePlanTest()
-        {    
+        {
             var createdTestPlan = _planStep.CreateTestPlan(plan);
             plan.Id = createdTestPlan.Result.id.ToString();
             PlansForDelete.Add(plan);
@@ -85,7 +85,7 @@ namespace Tests.API
                 Assert.IsTrue(createdTestPlan.Status, "Status code: Plan didn't create");
                 Assert.AreEqual(plan.Id, createdTestPlan.Result.id.ToString(), "Plan ID didn't match");
             });
-        }               
+        }
 
 
         [Test]
@@ -100,16 +100,16 @@ namespace Tests.API
             PlansForDelete.Add(plan);
 
             var getedPlanCase = _planStep.GetTestPlan(plan);
-            _logger.Info("Plan: " + getedPlanCase.ToString());                        
+            logger.Info("Plan: " + getedPlanCase.ToString());
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(getedPlanCase.Status, "Status code: Plan didn't get");
                 Assert.AreEqual(plan.Id, getedPlanCase.Result.id.ToString());
-                Assert.AreEqual(plan.Title, getedPlanCase.Result.title.ToString(), "Plan ID didn't match");                
+                Assert.AreEqual(plan.Title, getedPlanCase.Result.title.ToString(), "Plan ID didn't match");
             });
         }
-                
+
 
         [Test]
         [Description("Successful API test to update a Plan")]
@@ -126,14 +126,14 @@ namespace Tests.API
             plan.Description = "Updated Plan Description API";
             plan.Cases = new List<int> { CaseId };
 
-            var updatedPlanCase = _planStep.UpdateTestPlan(plan);                        
+            var updatedPlanCase = _planStep.UpdateTestPlan(plan);
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(updatedPlanCase.Status, "Status code: Plan didn't update");
                 Assert.AreEqual(plan.Id, updatedPlanCase.Result.id.ToString(), "Plan ID didn't match");
             });
-        }              
+        }
 
 
         [Test]
@@ -154,7 +154,7 @@ namespace Tests.API
                 Assert.AreEqual(plan.Id, planResponse.Result.id.ToString(), "Plan ID didn't match");
             });
         }
-                
+
 
         [OneTimeTearDown]
         public void TearDown()

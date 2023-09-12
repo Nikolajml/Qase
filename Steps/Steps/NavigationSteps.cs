@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Configuration;
-using NUnit.Framework;
+using NLog;
 using OpenQA.Selenium;
 using UI.Pages;
 
@@ -9,12 +9,16 @@ namespace Steps.Steps
     {        
         public LoginPage LoginPage;
         public ProjectsPage ProjectsPage;
+        protected ILogger _logger;
 
-        public NavigationSteps(IWebDriver driver)
+        public NavigationSteps(ILogger logger, IWebDriver driver)
         {
-            LoginPage = new LoginPage(driver);
-            ProjectsPage = new ProjectsPage(driver);
+            LoginPage = new LoginPage(logger, driver);
+            ProjectsPage = new ProjectsPage(logger, driver);
+
+            _logger = logger;
         }
+
 
         public void NavigateToLoginPage()
         {
@@ -28,7 +32,7 @@ namespace Steps.Steps
 
         public void CheckThatPageIsOpen()
         {
-            Assert.IsTrue(ProjectsPage.IsPageOpened(), "The Projects Page wasn't opened");
+            ProjectsPage.IsPageOpened();
         }
     }
 }

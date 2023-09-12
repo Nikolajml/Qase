@@ -11,21 +11,21 @@ namespace Tests.API
 
         public List<Suite> SuitesForDelete = new List<Suite>();
         public List<Project> ProjectsForDelete = new List<Project>();
-        
+
         protected SuiteStep _suiteStep;
         protected ProjectStep _projectStep;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _suiteStep = new SuiteStep(apiClient: _apiClient);
-            _projectStep = new ProjectStep(_apiClient);
+            _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
         }
 
         [SetUp]
         public void Setup()
         {
-            _suiteStep = new SuiteStep(apiClient: _apiClient);
+            _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
 
             project = new Project()
             {
@@ -51,7 +51,7 @@ namespace Tests.API
         [AllureTag("Smoke")]
         [Category("API")]
         public void CreateSuiteTest()
-        {            
+        {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
             suite.Id = createdSuiteTest.Result.id.ToString();
             SuitesForDelete.Add(suite);
@@ -62,7 +62,7 @@ namespace Tests.API
                 Assert.AreEqual(suite.Id, createdSuiteTest.Result.id.ToString(), "Suite ID didn't match");
             });
         }
-                
+
 
         [Test]
         [Description("Successful API test to get a Suite")]
@@ -83,7 +83,7 @@ namespace Tests.API
                 Assert.AreEqual(suite.Id, getedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
             });
         }
-                
+
 
         [Test]
         [Description("Successful API test to update a Suite")]
@@ -107,7 +107,7 @@ namespace Tests.API
                 Assert.AreEqual(suite.Id, updatedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
             });
         }
-          
+
 
         [Test]
         [Description("Successful API test to delete a Suite")]
@@ -117,17 +117,17 @@ namespace Tests.API
         public void DeleteSuiteTest()
         {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
-            suite.Id = createdSuiteTest.Result.id.ToString();            
+            suite.Id = createdSuiteTest.Result.id.ToString();
 
             var suiteResponse = _suiteStep.DeleteTestSuite(suite);
-            _logger.Info("Suite Id: " + suiteResponse.Result.id.ToString());
+            logger.Info("Suite Id: " + suiteResponse.Result.id.ToString());
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(suiteResponse.Status, "Status code: Suite didn't delete");
                 Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString(), "Suite ID didn't match");
-            });                        
-        }              
+            });
+        }
 
         [OneTimeTearDown]
         public void TearDown()

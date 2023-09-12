@@ -1,41 +1,42 @@
 ﻿using Allure.Commons;
-using NUnit.Allure.Core;
-using OpenQA.Selenium;
-using NUnit.Framework.Interfaces;
-using UI.Pages;
-using Core.Utilities.Configuration;
-using Steps.Steps;
-using Core.Core;
-using Core.Utilities;
 using Bogus;
-using Tests.API;
-
-namespace Tests.UI
+using Core.Client;
+using Core.Core;
+using Core.Utilities.Configuration;
+using NLog;
+using NUnit.Allure.Core;
+using NUnit.Framework.Interfaces;
+using OpenQA.Selenium;
+using Steps.Steps;
+namespace Tests
 {
     [AllureNUnit]
-    public class BaseTest : BaseApiTest     // неправильно - CommonBaseTest
+    public class CommonBaseTest
     {
-        public readonly string? BaseUrl = new Configurator().AppSettings.URL;
-
+        public string? BaseUrl;
         protected IWebDriver Driver;
+        protected ILogger logger;
+        protected ApiClient _apiClient;
+        protected Configurator config;
 
-        private AllureLifecycle _allure;       
+        private AllureLifecycle _allure;
         public Faker Faker = new Faker();
-          
-        //public NavigationSteps NavigationSteps;
-        
 
-        [OneTimeSetUp] 
+        public NavigationSteps NavigationSteps;
+
+
+        [OneTimeSetUp]
         public void Setup()
         {
+            config = new Configurator();
+            BaseUrl = config.AppSettings.URL;
+            _apiClient = new ApiClient(new Configurator().Bearer);
+            logger = LogManager.GetCurrentClassLogger();
+
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
-           
-            //NavigationSteps = new NavigationSteps(logger, Driver);  
 
-            //NavigationSteps.NavigateToLoginPage();
-            //NavigationSteps.SuccessfulLogin(new Configurator().Admin);          // не создавать каждый раз new Configurator
-            //NavigationSteps.CheckThatPageIsOpen();          // use assert inconclusive
+            NavigationSteps = new NavigationSteps(logger, Driver);          
         }
 
         [OneTimeTearDown]

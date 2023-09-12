@@ -1,4 +1,5 @@
-﻿using NUnit.Allure.Attributes;
+﻿using Core.Core;
+using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,19 @@ using UI.Models;
 
 namespace Tests.MixTests
 {
-    public class DefectMixTest : BaseTest
+    public class DefectMixTest : CommonBaseTest
     {
         Defect defect { get; set; }
 
         public List<Defect> DefectsForDelete = new List<Defect>();
-
         public DefectStep _defectStep;
 
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _defectStep = new DefectStep(Driver, _apiClient);
+
+            _defectStep = new DefectStep(logger, Driver, _apiClient);
         }
 
         [SetUp]

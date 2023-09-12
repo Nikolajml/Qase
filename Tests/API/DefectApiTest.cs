@@ -19,7 +19,7 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _defectStep = new DefectStep(apiClient: _apiClient);
+            _defectStep = new DefectStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, apiClient: _apiClient);
         }
 

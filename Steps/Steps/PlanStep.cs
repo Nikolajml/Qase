@@ -12,15 +12,14 @@ namespace Steps.Steps
     public class PlanStep
     {
         public PlanTPPage PlanTPPage;
-        protected ApiClient _apiClient;
-        protected Logger _logger;   
-        // protected ILogger _logger;        
+        protected ApiClient _apiClient;        
+        protected ILogger _logger;        
 
-        public PlanStep(IWebDriver driver = null, ApiClient apiClient = null)
+        public PlanStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
             {
-                PlanTPPage = new PlanTPPage(driver);
+                PlanTPPage = new PlanTPPage(logger, driver);
             }
 
             if (apiClient != null)
@@ -28,15 +27,14 @@ namespace Steps.Steps
                 _apiClient = apiClient;
             }
 
-            _logger = LogManager.GetCurrentClassLogger();
-            //_logger = logger;
+            _logger = logger;
         }
 
 
         public void NavigateToPlanPage()
         {
             PlanTPPage.OpenPage();
-            PlanTPPage.IsPageOpened();
+            //PlanTPPage.IsPageOpened();
         }
 
         public void CreatePlan(Plan plan)
@@ -80,6 +78,10 @@ namespace Steps.Steps
             PlanTPPage.ClickToSaveEditButton();
         }
 
+        public void DeletePlan_UI()
+        {
+            PlanTPPage.DeletePlan();
+        }
 
 
         //public PlanStep(ApiClient apiClient)

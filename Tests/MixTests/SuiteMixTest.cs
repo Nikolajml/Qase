@@ -1,4 +1,5 @@
 ﻿using Core.Client;
+using Core.Core;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
@@ -11,7 +12,7 @@ using UI.Models;
 
 namespace Tests.MixTests
 {
-    public class SuiteMixTest : BaseTest
+    public class SuiteMixTest : CommonBaseTest
     {
         Suite suite { get; set; }
 
@@ -23,14 +24,13 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
-            _suiteStep = new SuiteStep(Driver, _apiClient);
-            _projectTPStepsPage = new ProjectTPStepsPage(Driver);
+            _suiteStep = new SuiteStep(logger, Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
         }
 
         [SetUp]
         public void SetUp()
         {
-
             suite = new SuiteBuilder()
                .SetSuiteName("New Mix Case UI test")
                .SetSuiteCode("TP")
@@ -56,7 +56,7 @@ namespace Tests.MixTests
             suite.Name = "Edited Mix Suite UI test";
 
             _projectTPStepsPage.NavigateToEditSuite();
-            _suiteStep.EditSuit(suite);
+            _suiteStep.EditSuit_UI(suite);
 
             Assert.That(_projectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name), "Edited Suite Name didn't match");
         }

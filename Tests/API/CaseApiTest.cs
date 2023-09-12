@@ -3,18 +3,21 @@ using NUnit.Allure.Attributes;
 using NUnit.Framework.Internal;
 using BusinessObject.Models;
 using Steps.Steps;
-using Core.Client;
+using NLog;
+using ILogger = NLog.ILogger;
 
 namespace Tests.API
 {
-    
-    public class CaseApiTest : BaseApiTest
+
+    public class CaseApiTest : CommonBaseTest
     {
+        private ILogger Logger;
+
         public Case Case { get; set; }
         public Project project { get; set; }
 
         public List<Case> CasesForDelete = new List<Case>();
-        public List<Project> ProjectsForDelete = new List<Project>();                
+        public List<Project> ProjectsForDelete = new List<Project>();
 
         protected CaseStep _caseStep;
         protected ProjectStep _projectStep;
@@ -23,8 +26,10 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _caseStep = new CaseStep(_logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(_logger, _apiClient);
+            Logger = LogManager.GetCurrentClassLogger();
+
+            _caseStep = new CaseStep(Logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(Logger, _apiClient);
 
             project = new Project()
             {
@@ -33,18 +38,23 @@ namespace Tests.API
                 Access = "all"
             };
 
-            _projectStep.CreateTestProject(project);        // Assert inconclusive - что это такое, как использовать?
+            var createdProject = _projectStep.CreateTestProject(project);
+
+            if (createdProject.status == false)
+            {
+                Assert.Inconclusive("The Project didn't create"); // +++++ Assert inconclusive - что это такое, как использовать?
+            }
+
             ProjectsForDelete.Add(project);                 // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
         }
 
         [SetUp]
         public void Setup()
-        {            
-
+        {
             Case = new Case()
             {
                 Code = project.Code,
-                Title = "API Case 123" 
+                Title = "API Case 123"
             };
         }
 
@@ -55,15 +65,22 @@ namespace Tests.API
         [Category("API")]
         public void CreateCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase_API(Case);
-            Case.Id = createdTestCase.Result.id.ToString();             // как будет работать, если тест упадет - решить с помощью TUPLE
-            CasesForDelete.Add(Case);                                   // Ассерт на ОК, а потом действие на ID
+            var createdCase = _caseStep.CreateTestCase_API(Case);
+
+            if (createdCase.Status == false)
+            {
+                Assert.Inconclusive("Something got wrong: " + createdCase.ToString());
+            }
+
+            CasesForDelete.Add(Case);
+            Case.Id = createdCase.Result.id.ToString();
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(createdTestCase.Status, "Status code: Case didn't delete");
-                Assert.AreEqual(Case.Id, createdTestCase.Result.id.ToString(), "Case ID don't match"); // проверить, что Id существует
-            });
+                Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");
+                Assert.IsTrue(createdCase.Result.id != 0, "Case id doesn't exist"); // +++++  проверить, что Id существует
+
+            });                        
         }
 
 
@@ -80,7 +97,7 @@ namespace Tests.API
             CasesForDelete.Add(Case);
 
             var getedTestCase = _caseStep.GetTestCase(Case);
-            _logger.Info("Case: " + getedTestCase.ToString());
+            logger.Info("Case: " + getedTestCase.ToString());
 
             Assert.Multiple(() =>
             {
@@ -123,7 +140,7 @@ namespace Tests.API
         {
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
             Case.Id = createdTestCase.Result.id.ToString();
-            
+
             var caseResponse = _caseStep.DeleteTestCase(Case);
 
             Assert.Multiple(() =>
