@@ -26,7 +26,7 @@ namespace Tests.UI
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.CheckThatPageIsOpen();
+            NavigationSteps.IsPageOpened();
         }
 
         [SetUp]

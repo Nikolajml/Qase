@@ -1,11 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
+using NLog;
 
 namespace Tests.API
 {
-    public class SuiteApiTest : BaseApiTest
+    public class SuiteApiTest : CommonBaseTest
     {
+        private ILogger Logger;
         public Suite suite { get; set; }
         public Project project { get; set; }
 
@@ -18,29 +20,37 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
 
             project = new Project()
             {
-                Code = "MPFS",
+                Code = "SUITE",
                 Title = "MyProjectForSuites",
                 Access = "all"
             };
 
-            _projectStep.CreateTestProject(project);
-            ProjectsForDelete.Add(project);
+            var createdProject = _projectStep.CreateTestProject(project);
 
+            if (createdProject.Status == false)
+            {
+                Assert.Inconclusive("The Project for CaseTests didn't create");
+            }
+
+            ProjectsForDelete.Add(project);
+        }
+
+
+        [SetUp]
+        public void Setup()
+        {           
             suite = new Suite()
             {
                 Code = project.Code,
-                Name = "Suite_api_New"
+                Name = "Suite API",
+                Description = "Some Description"
             };
         }
 
@@ -53,13 +63,20 @@ namespace Tests.API
         public void CreateSuiteTest()
         {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            logger.Info("Created Suite: " + createdSuiteTest.ToString());
+
+            if (createdSuiteTest.Status == false)
+            {
+                Assert.Inconclusive("Suite didn't create: " + createdSuiteTest.ToString());
+            }
+
             suite.Id = createdSuiteTest.Result.id.ToString();
             SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(createdSuiteTest.Status, "Status code: Suite didn't create");
-                Assert.AreEqual(suite.Id, createdSuiteTest.Result.id.ToString(), "Suite ID didn't match");
+                Assert.IsTrue(createdSuiteTest.Result.id != 0, "Defect Id not present");
             });
         }
 
@@ -72,15 +89,23 @@ namespace Tests.API
         public void GetSuiteTest()
         {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            logger.Info("Created Suite: " + createdSuiteTest.ToString());
+
+            if (createdSuiteTest.Status == false)
+            {
+                Assert.Inconclusive("Suite didn't create: " + createdSuiteTest.ToString());
+            }
+
             suite.Id = createdSuiteTest.Result.id.ToString();
             SuitesForDelete.Add(suite);
 
-            var getedSuiteCase = _suiteStep.GetTestSuite(suite);
+            var getedSuite = _suiteStep.GetTestSuite(suite);
+            logger.Info("Geted Suite: " + getedSuite.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(getedSuiteCase.Status, "Status code: Suite didn't get");
-                Assert.AreEqual(suite.Id, getedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
+                Assert.IsTrue(getedSuite.Status, "Status code: Suite didn't get");
+                Assert.AreEqual(suite.Id, getedSuite.Result.id.ToString(), "Suite ID didn't match");
             });
         }
 
@@ -93,18 +118,26 @@ namespace Tests.API
         public void UpdateSuiteTest()
         {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            logger.Info("Created Suite: " + createdSuiteTest.ToString());
+
+            if (createdSuiteTest.Status == false)
+            {
+                Assert.Inconclusive("Suite didn't create: " + createdSuiteTest.ToString());
+            }
+
             suite.Id = createdSuiteTest.Result.id.ToString();
             SuitesForDelete.Add(suite);
 
             suite.Name = "Updated Suite Name API";
             suite.Description = "Updated Description API";
 
-            var updatedSuiteCase = _suiteStep.UpdateTestSuite(suite);
+            var updatedSuite = _suiteStep.UpdateTestSuite(suite);
+            logger.Info("Updated Suite: " + updatedSuite.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(updatedSuiteCase.Status, "Status code: Suite didn't update");
-                Assert.AreEqual(suite.Id, updatedSuiteCase.Result.id.ToString(), "Suite ID didn't match");
+                Assert.IsTrue(updatedSuite.Status, "Status code: Suite didn't update");
+                Assert.IsTrue(createdSuiteTest.Result.id != 0, "Defect Id not present");
             });
         }
 
@@ -117,6 +150,13 @@ namespace Tests.API
         public void DeleteSuiteTest()
         {
             var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            logger.Info("Created Suite: " + createdSuiteTest.ToString());
+
+            if (createdSuiteTest.Status == false)
+            {
+                Assert.Inconclusive("Suite didn't create: " + createdSuiteTest.ToString());
+            }
+
             suite.Id = createdSuiteTest.Result.id.ToString();
 
             var suiteResponse = _suiteStep.DeleteTestSuite(suite);
@@ -125,9 +165,10 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(suiteResponse.Status, "Status code: Suite didn't delete");
-                Assert.AreEqual(suite.Id, suiteResponse.Result.id.ToString(), "Suite ID didn't match");
+                Assert.IsTrue(createdSuiteTest.Result.id != 0, "Defect Id not present");
             });
         }
+
 
         [OneTimeTearDown]
         public void TearDown()

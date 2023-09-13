@@ -1,4 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using Allure.Commons;
+using AngleSharp.Dom;
+using Bogus.DataSets;
+using Core.Utilities.Configuration;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace API.ResponseAPIModels
 {
@@ -35,6 +40,11 @@ namespace API.ResponseAPIModels
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
 
+        public new string ToString()
+        {
+            return $"id: {id}, title: {title}, status: {status}";
+        }
+
     }
 
     public class CaseApiModel
@@ -53,7 +63,7 @@ namespace API.ResponseAPIModels
 
         public new string ToString()
         {
-            return $"status:{Status}";
+            return $"status: {Status}";
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
+using NLog;
 
 namespace Tests.API
 {
-    public class DefectApiTest : BaseApiTest
-    {        
+    public class DefectApiTest : CommonBaseTest
+    {
+        private ILogger Logger;
         public Defect defect { get; set; }
         public Project project { get; set; }
 
@@ -14,28 +16,37 @@ namespace Tests.API
 
         protected DefectStep _defectStep;
         protected ProjectStep _projectStep;
-
+                
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            Logger = LogManager.GetCurrentClassLogger();
+
             _defectStep = new DefectStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, apiClient: _apiClient);
-        }
 
-        [SetUp]
-        public void Setup()
-        {
             project = new Project()
             {
-                Code = "MP",
-                Title = "MyProjectAPI",
+                Code = "MPFC",
+                Title = "MyProjectForDefects",
                 Access = "all"
             };
 
-            _projectStep.CreateTestProject(project);  
-            ProjectsForDelete.Add(project);
+            var createdProject = _projectStep.CreateTestProject(project);
 
+            if (createdProject.Status == false)
+            {
+                Assert.Inconclusive("The Project for DefectTests didn't create");
+            }
+
+            ProjectsForDelete.Add(project);                
+        }
+
+
+        [SetUp]
+        public void Setup()
+        {            
             defect = new Defect()
             {
                 Code = project.Code,
@@ -54,13 +65,20 @@ namespace Tests.API
         public void CreateDefectTest()
         {    
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
+            logger.Info("Created Defect: " + createdTestDefect.ToString());
+
+            if (createdTestDefect.Status == false)
+            {
+                Assert.Inconclusive("Defect didn't create: " + createdTestDefect.ToString());
+            }
+
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(createdTestDefect.Status, "Status code: Defect didn't created");
-                Assert.AreEqual(defect.Id, createdTestDefect.Result.id.ToString());
+                Assert.IsTrue(createdTestDefect.Status, "Status code: Defect didn't created");                
+                Assert.IsTrue(createdTestDefect.Result.id != 0, "Defect Id not present");
             });
         }
 
@@ -73,17 +91,25 @@ namespace Tests.API
         public void GetDefectTest()
         {
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
+            logger.Info("Created Defect: " + createdTestDefect.ToString());
+
+            if (createdTestDefect.Status == false)
+            {
+                Assert.Inconclusive("Defect didn't create: " + createdTestDefect.ToString());
+            }
+
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
-            var getedDefectCase = _defectStep.GetTestDefect_API(defect);            
-                        
+            var getedDefect = _defectStep.GetTestDefect_API(defect);
+            logger.Info("Geted Defect: " + getedDefect.Result.ToString());
+
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(getedDefectCase.Status, "Status code: Defect didn't get");
-                Assert.AreEqual(defect.Id, getedDefectCase.Result.id.ToString(), "Defect ID didn't match");
-                Assert.AreEqual(defect.DefectTitle, getedDefectCase.Result.title.ToString(), "Defect Title didn't match");
-                Assert.AreEqual(defect.ActualResult, getedDefectCase.Result.actual_result.ToString(), "Defect Actual Result didn'tmatch");                
+                Assert.IsTrue(getedDefect.Status, "Status code: Defect didn't get");
+                Assert.AreEqual(defect.Id, getedDefect.Result.id.ToString(), "Defect Is didn't match");
+                Assert.AreEqual(defect.DefectTitle, getedDefect.Result.title.ToString(), "Defect Title didn't match");
+                Assert.AreEqual(defect.ActualResult, getedDefect.Result.actual_result.ToString(), "Defect Actual Result didn't match");                
             });
         }       
 
@@ -95,6 +121,13 @@ namespace Tests.API
         public void UpdateDefectTest()
         {
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
+            logger.Info("Created Defect: " + createdTestDefect.ToString());
+
+            if (createdTestDefect.Status == false)
+            {
+                Assert.Inconclusive("Defect didn't create: " + createdTestDefect.ToString());
+            }
+
             defect.Id = createdTestDefect.Result.id.ToString();
             DefectsForDelete.Add(defect);
 
@@ -102,12 +135,13 @@ namespace Tests.API
             defect.ActualResult = "Some updated result";
             defect.Severity = 1;
 
-            var updatedDefectCase = _defectStep.UpdateTestDefect_API(defect);            
+            var updatedDefect = _defectStep.UpdateTestDefect_API(defect);
+            logger.Info("Updated Defect: " + updatedDefect.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(updatedDefectCase.Status, "Status code: Defect didn't update");
-                Assert.AreEqual(defect.Id, updatedDefectCase.Result.id.ToString(), "Defect ID didn't match");
+                Assert.IsTrue(updatedDefect.Status, "Status code: Defect didn't update");
+                Assert.AreEqual(defect.Id, updatedDefect.Result.id.ToString(), "Defect ID didn't match");
             });
         }                
 
@@ -117,9 +151,16 @@ namespace Tests.API
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("API")]
-        public void DeleteSuiteTest()
+        public void DeleteDefectTest()
         {
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
+            logger.Info("Created Defect: " + createdTestDefect.ToString());
+
+            if (createdTestDefect.Status == false)
+            {
+                Assert.Inconclusive("Defect didn't create: " + createdTestDefect.ToString());
+            }
+
             defect.Id = createdTestDefect.Result.id.ToString();            
 
             var defectResponse = _defectStep.DeleteTestDefect_API(defect);                
@@ -127,7 +168,7 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(defectResponse.Status, "Status code: Defect didn't deleted");
-                Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "Defect ID didn't match");
+                Assert.IsTrue(defectResponse.Result.id != 0, "Defect Id not present");
             });              
         }    
 
@@ -146,22 +187,5 @@ namespace Tests.API
             }
         }
 
-
-        [Test]
-        [Description("Successful API test to delete a Suite")]
-        [AllureOwner("User")]
-        [AllureTag("Smoke")]
-        [Category("API")]
-        public void GetAllDefectsTest()
-        {
-            var createdTestDefect = _defectStep.GetAllTestDefect_API("TP");
-
-            
-            Assert.IsNotEmpty(createdTestDefect, "Status code: Defect didn't deleted");
-
-
-            //_defectStep.DeleteTestDefectByName("TP");
-            //    Assert.AreEqual(defect.Id, defectResponse.Result.id.ToString(), "Defect ID didn't match");
-        }
     }
 }

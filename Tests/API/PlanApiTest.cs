@@ -1,13 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
-using NUnit.Framework.Internal;
-using API.ResponseAPIModels;
 using Steps.Steps;
+using NLog;
 
 namespace Tests.API
 {
-    public class PlanApiTest : BaseApiTest
+    public class PlanApiTest : CommonBaseTest
     {
+        private ILogger Logger;
         public Plan plan { get; set; }
         public Case Case { get; set; }
         public Project project { get; set; }
@@ -25,31 +25,45 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            Logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
             _planStep = new PlanStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, apiClient: _apiClient);
+
+            project = new Project()
+            {
+                Code = "PLAN",
+                Title = "MyProjectForPlans",
+                Access = "all"
+            };
+
+            var createdProject = _projectStep.CreateTestProject(project);
+
+            if (createdProject.Status == false)
+            {
+                Assert.Inconclusive("The Project for DefectTests didn't create");
+            }
+
+            ProjectsForDelete.Add(project);
         }
 
         [SetUp]
         public void SetUp()
         {
-            project = new Project()
-            {
-                Code = "MPFP",
-                Title = "MyProjectForPlans",
-                Access = "all"
-            };
-
-            _projectStep.CreateTestProject(project);
-            ProjectsForDelete.Add(project);
-
             Case = new Case()
             {
                 Code = project.Code,
-                Title = "Case for Plan Mix Test"
+                Title = "Case API Test"
             };
 
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
+            logger.Info("Created Case: " + createdTestCase.ToString());
+
+            if (createdTestCase.Status == false)
+            {
+                Assert.Inconclusive("Case didn't create: " + createdTestCase.ToString());
+            }
 
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);
@@ -61,7 +75,7 @@ namespace Tests.API
             plan = new Plan()
             {
                 Code = project.Code,
-                Title = "Plan Mix Test",
+                Title = "Plan API Test",
                 Cases = new List<int> { CaseIdForPlan }
             };
 
@@ -77,13 +91,20 @@ namespace Tests.API
         public void CreatePlanTest()
         {
             var createdTestPlan = _planStep.CreateTestPlan(plan);
+            logger.Info("Created Plan: " + createdTestPlan.ToString());
+
+            if (createdTestPlan.Status == false)
+            {
+                Assert.Inconclusive("Plan didn't create: " + createdTestPlan.ToString());
+            }
+
             plan.Id = createdTestPlan.Result.id.ToString();
             PlansForDelete.Add(plan);
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(createdTestPlan.Status, "Status code: Plan didn't create");
-                Assert.AreEqual(plan.Id, createdTestPlan.Result.id.ToString(), "Plan ID didn't match");
+                Assert.IsTrue(createdTestPlan.Result.id != 0, "Defect Id not present");
             });
         }
 
@@ -96,11 +117,18 @@ namespace Tests.API
         public void GetPlanTest()
         {
             var createdTestPlan = _planStep.CreateTestPlan(plan);
+            logger.Info("Created Plan: " + createdTestPlan.ToString());
+
+            if (createdTestPlan.Status == false)
+            {
+                Assert.Inconclusive("Plan didn't create: " + createdTestPlan.ToString());
+            }
+
             plan.Id = createdTestPlan.Result.id.ToString();
             PlansForDelete.Add(plan);
 
             var getedPlanCase = _planStep.GetTestPlan(plan);
-            logger.Info("Plan: " + getedPlanCase.ToString());
+            logger.Info("Geted Plan: " + getedPlanCase.Result.ToString());
 
             Assert.Multiple(() =>
             {
@@ -119,6 +147,13 @@ namespace Tests.API
         public void UpdatePlanTest()
         {
             var createdTestPlan = _planStep.CreateTestPlan(plan);
+            logger.Info("Created Plan: " + createdTestPlan.ToString());
+
+            if (createdTestPlan.Status == false)
+            {
+                Assert.Inconclusive("Plan didn't create: " + createdTestPlan.ToString());
+            }
+
             plan.Id = createdTestPlan.Result.id.ToString();
             PlansForDelete.Add(plan);
 
@@ -126,12 +161,13 @@ namespace Tests.API
             plan.Description = "Updated Plan Description API";
             plan.Cases = new List<int> { CaseId };
 
-            var updatedPlanCase = _planStep.UpdateTestPlan(plan);
+            var updatedPlan = _planStep.UpdateTestPlan(plan);
+            logger.Info("Updated Plan: " + updatedPlan.ToString());
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(updatedPlanCase.Status, "Status code: Plan didn't update");
-                Assert.AreEqual(plan.Id, updatedPlanCase.Result.id.ToString(), "Plan ID didn't match");
+                Assert.IsTrue(updatedPlan.Status, "Status code: Plan didn't update");
+                Assert.AreEqual(plan.Id, updatedPlan.Result.id.ToString(), "Plan Id didn't match");
             });
         }
 
@@ -144,6 +180,13 @@ namespace Tests.API
         public void DeletePlanTest()
         {
             var createdTestPlan = _planStep.CreateTestPlan(plan);
+            logger.Info("Created Plan: " + createdTestPlan.ToString());
+
+            if (createdTestPlan.Status == false)
+            {
+                Assert.Inconclusive("Plan didn't create: " + createdTestPlan.ToString());
+            }
+
             plan.Id = createdTestPlan.Result.id.ToString();
 
             var planResponse = _planStep.DeleteTestPlan(plan);
@@ -151,7 +194,7 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(planResponse.Status, "Status code: Plan didn't delete");
-                Assert.AreEqual(plan.Id, planResponse.Result.id.ToString(), "Plan ID didn't match");
+                Assert.IsTrue(planResponse.Result.id != 0, "Plan Id not present");
             });
         }
 

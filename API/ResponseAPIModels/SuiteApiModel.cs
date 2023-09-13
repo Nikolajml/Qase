@@ -1,4 +1,6 @@
-﻿namespace API.ResponseAPIModels
+﻿using Allure.Commons;
+
+namespace API.ResponseAPIModels
 {
     public class SuiteResult
     {
@@ -13,11 +15,21 @@
         //public DateTime updated { get; set; }
         //public DateTime created_at { get; set; }
         //public DateTime updated_at { get; set; }
+
+        public new string ToString()
+        {
+            return $"id: {id}, title: {title}, description: {description}";
+        }
     }
 
     public class SuiteApiModel
     {
         public bool Status { get; set; }
         public SuiteResult Result { get; set; }
+
+        public new string ToString()
+        {
+            return $"Status: {Status}";
+        }
     }
 }

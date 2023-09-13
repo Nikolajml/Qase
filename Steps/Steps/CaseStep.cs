@@ -136,22 +136,6 @@ namespace Steps.Steps
 
 
 
-        //public CaseApiModel CreateTestCaseWithIncorrectRequiredData(Case Case)
-        //{
-        //    var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-        //        .AddUrlSegment("code", Case.Code)
-        //        .AddBody(Case);
-
-        //    return _apiClient.Execute<CaseApiModel>(request);            
-        //}
-
-        //public CaseApiModel CreateTestCaseWithIncorrectAuthenticated(Case Case)
-        //{
-        //    var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post)
-        //        .AddUrlSegment("code", Case.Code)
-        //        .AddBody(Case);
-
-        //    return _apiClient.Execute<CaseApiModel>(request);            
-        //}
+        
     }
 }

@@ -31,6 +31,13 @@ namespace Steps.Steps
             ProjectTPPage.ClickToCaseEdit();
         }
 
+        public void NavigateToEditCase_MIX()
+        {            
+            ProjectTPPage.ClickToCaseTitle();
+            ProjectTPPage.ClickToCaseEdit();
+        }
+
+
         public string CreatedCaseTitleForAssert()
         {
             return ProjectTPPage.GetCreatedCaseTitle();
@@ -56,6 +63,14 @@ namespace Steps.Steps
         public string CreatedSuiteNameForAssert(string text)
         {
             return ProjectTPPage.GetSuiteNameByText(text);
+        }
+
+
+        // Steps for Defects
+
+        public void NavigateToDefectsPage()
+        {
+            ProjectTPPage.NavigateToDefectsPage();
         }
     }
 }

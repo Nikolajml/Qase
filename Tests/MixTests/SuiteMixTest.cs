@@ -26,6 +26,10 @@ namespace Tests.MixTests
         {
             _suiteStep = new SuiteStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            Assert.IsTrue(NavigationSteps.IsPageOpened());
         }
 
         [SetUp]
@@ -37,10 +41,15 @@ namespace Tests.MixTests
                .Build();
 
             var createdTestSuite = _suiteStep.CreateTestSuite(suite);
+            logger.Info("Created Suite: " + createdTestSuite.ToString());
+
+            if (createdTestSuite.Status == false)
+            {
+                Assert.Inconclusive("Suite didn't create: " + createdTestSuite.ToString());
+            }
 
             suite.Id = createdTestSuite.Result.id.ToString();
-
-            Console.WriteLine(suite.Id);
+            logger.Info("Created Suite Id: " + createdTestSuite.Result.id.ToString());
 
             SuitesForDelete.Add(suite);
         }
@@ -50,7 +59,7 @@ namespace Tests.MixTests
         [Description("Creation and deletion Case via API. Editing Case via UI")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
-        [Category("UI")]
+        [Category("MIX")]
         public void EditSuiteMixTest()
         {
             suite.Name = "Edited Mix Suite UI test";

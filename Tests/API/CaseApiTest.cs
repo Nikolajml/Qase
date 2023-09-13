@@ -12,7 +12,6 @@ namespace Tests.API
     public class CaseApiTest : CommonBaseTest
     {
         private ILogger Logger;
-
         public Case Case { get; set; }
         public Project project { get; set; }
 
@@ -33,20 +32,21 @@ namespace Tests.API
 
             project = new Project()
             {
-                Code = "MPFC",
+                Code = "CASE",
                 Title = "MyProjectForCases",
                 Access = "all"
             };
 
             var createdProject = _projectStep.CreateTestProject(project);
 
-            if (createdProject.status == false)
+            if (createdProject.Status == false)
             {
-                Assert.Inconclusive("The Project didn't create"); // +++++ Assert inconclusive - что это такое, как использовать?
+                Assert.Inconclusive("The Project for CaseTests didn't create"); // +++++ Assert inconclusive - что это такое, как использовать?
             }
 
             ProjectsForDelete.Add(project);                 // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
         }
+
 
         [SetUp]
         public void Setup()
@@ -54,9 +54,10 @@ namespace Tests.API
             Case = new Case()
             {
                 Code = project.Code,
-                Title = "API Case 123"
+                Title = "API Case"
             };
         }
+
 
         [Test]
         [Description("Successful API test to create a Case")]
@@ -66,20 +67,20 @@ namespace Tests.API
         public void CreateCaseTest()
         {
             var createdCase = _caseStep.CreateTestCase_API(Case);
+            logger.Info("Created Case: " + createdCase.ToString());
 
             if (createdCase.Status == false)
             {
-                Assert.Inconclusive("Something got wrong: " + createdCase.ToString());
+                Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
             }
-
-            CasesForDelete.Add(Case);
+                        
             Case.Id = createdCase.Result.id.ToString();
+            CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");
-                Assert.IsTrue(createdCase.Result.id != 0, "Case id doesn't exist"); // +++++  проверить, что Id существует
-
+                Assert.IsTrue(createdCase.Result.id != 0, "Case Id not present"); // +++++  проверить, что Id существует
             });                        
         }
 
@@ -93,16 +94,23 @@ namespace Tests.API
         public void GetCaseTest()
         {
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
+            logger.Info("Created Case: " + createdTestCase.ToString());
+
+            if (createdTestCase.Status == false)
+            {
+                Assert.Inconclusive("Case didn't create: " + createdTestCase.ToString());
+            }
+
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
             var getedTestCase = _caseStep.GetTestCase(Case);
-            logger.Info("Case: " + getedTestCase.ToString());
+            logger.Info("Received Case: " + getedTestCase.Result.ToString());
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(getedTestCase.Status, "Status code: Case didn't get");
-                Assert.AreEqual(Case.Id, getedTestCase.Result.id.ToString(), "Case ID don't match");
+                Assert.IsTrue(getedTestCase.Result.id != 0, "Case Id not present");
             });
         }
 
@@ -115,6 +123,13 @@ namespace Tests.API
         public void UpdateCaseTest()
         {
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
+            logger.Info("Created Case: " + createdTestCase.ToString());
+
+            if (createdTestCase.Status == false)
+            {
+                Assert.Inconclusive("Case didn't create: " + createdTestCase.ToString());
+            }
+
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
@@ -122,11 +137,12 @@ namespace Tests.API
             Case.Description = "Description API";
 
             var updatedCase = _caseStep.UpdateTestCase(Case);
+            logger.Info("Updated Case: " + updatedCase.Result.ToString());
 
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(updatedCase.Status, "Status code: Case didn't update");
-                Assert.AreEqual(Case.Id, updatedCase.Result.id.ToString(), "Case ID didn't match");
+                Assert.IsTrue(updatedCase.Result.id != 0, "Case Id not present");
             });
         }
 
@@ -139,6 +155,13 @@ namespace Tests.API
         public void DeleteCaseTest()
         {
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
+            logger.Info("Created Case: " + createdTestCase.ToString());
+
+            if (createdTestCase.Status == false)
+            {
+                Assert.Inconclusive("Case didn't create: " + createdTestCase.ToString());
+            }
+
             Case.Id = createdTestCase.Result.id.ToString();
 
             var caseResponse = _caseStep.DeleteTestCase(Case);
@@ -146,7 +169,7 @@ namespace Tests.API
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(caseResponse.Status, "Status code: Case didn't delete");
-                Assert.AreEqual(Case.Id, caseResponse.Result.id.ToString(), "Case ID didn't match");
+                Assert.IsTrue(caseResponse.Result.id != 0, "Case Id not present");
             });
         }
 

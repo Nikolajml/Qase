@@ -1,4 +1,6 @@
-﻿namespace API.ResponseAPIModels
+﻿using Allure.Commons;
+
+namespace API.ResponseAPIModels
 {
     public class ProjectResult
     {
@@ -8,7 +10,12 @@
 
     public class ProjectApiModel
     {
-        public bool status { get; set; }
+        public bool Status { get; set; }
         public ProjectResult result { get; set; }
+
+        public new string ToString()
+        {
+            return $"Status: {Status}";
+        }
     }
 }

@@ -27,9 +27,12 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver, _apiClient);
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            Assert.IsTrue(NavigationSteps.IsPageOpened());
         }
 
         [SetUp]

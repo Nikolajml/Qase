@@ -19,11 +19,21 @@
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
         public List<object> tags { get; set; }
+
+        public new string ToString()
+        {
+            return $"id: {id}, title: {title}, status: {status}, severity: {severity}, actual result: {actual_result}";
+        }
     }
 
     public class DefectApiModel
     {
         public bool Status { get; set; }
         public DefectResult Result { get; set; }
+
+        public new string ToString()
+        {
+            return $"Status: {Status}";
+        }
     }
 }

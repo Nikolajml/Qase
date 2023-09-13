@@ -11,7 +11,7 @@ using UI.Models;
 
 namespace Tests.NegativeTests
 {
-    public class IncorrectRequiredDataCaseTest : BaseApiTest
+    public class IncorrectRequiredDataCaseTest : CommonBaseTest
     {
         public Case Case { get; set; }        
 

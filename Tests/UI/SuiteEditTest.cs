@@ -23,14 +23,14 @@ namespace Tests.UI
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.CheckThatPageIsOpen();
+            NavigationSteps.IsPageOpened();
         }
 
         [SetUp]
         public void SetUp()
         {
             Suite suite = new SuiteBuilder()
-               .SetSuiteName("New Mix Case UI test")
+               .SetSuiteName(Faker.Name.FullName())
                .SetSuiteCode("TP")
                .Build();
 

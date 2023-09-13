@@ -8,7 +8,7 @@ using UI.Models;
 
 namespace Tests.NegativeTests
 {
-    public class IncorrectAuthenticatedCaseTest : BaseApiTest
+    public class IncorrectAuthenticatedCaseTest : CommonBaseTest
     {
         public Case Case { get; set; }                
         

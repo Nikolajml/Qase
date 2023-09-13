@@ -30,9 +30,20 @@ namespace Steps.Steps
             LoginPage.TryToLogin(user);
         }
 
-        public void CheckThatPageIsOpen()
+        public bool IsPageOpened()
         {
-            ProjectsPage.IsPageOpened();
+            return ProjectsPage.IsPageOpened();
+        }
+
+        //public void NavigateToProjectsPage()
+        //{
+        //    ProjectsPage.OpenPage();
+        //}
+
+
+        public void NavigateToProjectForEditCase_MIX()
+        {
+            ProjectsPage.NavigateToProjectForMixTest();
         }
     }
 }

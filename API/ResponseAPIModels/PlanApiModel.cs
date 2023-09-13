@@ -1,4 +1,6 @@
-﻿namespace API.ResponseAPIModels
+﻿using Allure.Commons;
+
+namespace API.ResponseAPIModels
 {
     public class Cases
     {
@@ -18,11 +20,21 @@
         public DateTime updated_at { get; set; }
         public int average_time { get; set; }
         public List<Cases> cases { get; set; }
+
+        public new string ToString()
+        {
+            return $"id: {id}, title: {title}";
+        }
     }
 
     public class PlanApiModel
     {
         public bool Status { get; set; }
         public PlanResult Result { get; set; }
+
+        public new string ToString()
+        {
+            return $"Status: {Status}";
+        }
     }
 }
