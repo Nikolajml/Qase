@@ -22,7 +22,7 @@ namespace Tests.NegativeTests
 
             Case = new Case()
             {
-                Code = "PP", 
+                Code = "TP", 
                 Title = "Incorrect Authenticated Case"
             };
         }
