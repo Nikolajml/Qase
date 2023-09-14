@@ -5,11 +5,13 @@ using UI.Pages;
 using Core.Utilities.Configuration;
 using Core.Core;
 using OpenQA.Selenium;
+using NLog;
 
 namespace Tests.UI
 {
     public class CaseCreateTest : CommonBaseTest
     {
+        protected ILogger logger;
         Case Case;
         public ProjectTPStepsPage ProjectTPStepsPage;
         public CaseStep _caseStep;
@@ -18,6 +20,8 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);

@@ -1,17 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
-using NUnit.Framework.Internal;
-using BusinessObject.Models;
 using Steps.Steps;
 using NLog;
-using ILogger = NLog.ILogger;
 
 namespace Tests.API
 {
-
     public class CaseApiTest : CommonBaseTest
     {
-        private ILogger Logger;
+        private ILogger logger;
         public Case Case { get; set; }
         public Project project { get; set; }
 
@@ -25,10 +21,10 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            Logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetCurrentClassLogger();
 
-            _caseStep = new CaseStep(Logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(Logger, _apiClient);
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
 
             project = new Project()
             {

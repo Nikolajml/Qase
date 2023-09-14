@@ -9,6 +9,7 @@ namespace Tests.MixTests
 {
     public class CaseMixTest : CommonBaseTest
     {
+        protected ILogger logger;
         Case Case { get; set; }
         Project project { get; set; }
 
@@ -23,6 +24,8 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OneTimeTtestSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _projectStep = new ProjectStep(logger, _apiClient);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);

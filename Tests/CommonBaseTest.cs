@@ -15,7 +15,6 @@ namespace Tests
     {
         public string? BaseUrl;
         protected IWebDriver Driver;
-        protected ILogger logger;
         protected ApiClient _apiClient;
         protected Configurator config;
 
@@ -28,7 +27,6 @@ namespace Tests
             config = new Configurator();
             BaseUrl = config.AppSettings.URL;
             _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
 
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;

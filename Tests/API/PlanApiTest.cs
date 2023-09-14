@@ -7,7 +7,7 @@ namespace Tests.API
 {
     public class PlanApiTest : CommonBaseTest
     {
-        private ILogger Logger;
+        private ILogger logger;
         public Plan plan { get; set; }
         public Case Case { get; set; }
         public Project project { get; set; }
@@ -25,7 +25,7 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            Logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetCurrentClassLogger();
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
             _planStep = new PlanStep(logger, apiClient: _apiClient);

@@ -7,7 +7,7 @@ namespace Tests.API
 {
     public class DefectApiTest : CommonBaseTest
     {
-        private ILogger Logger;
+        private ILogger logger;
         public Defect defect { get; set; }
         public Project project { get; set; }
 
@@ -21,7 +21,7 @@ namespace Tests.API
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            Logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetCurrentClassLogger();
 
             _defectStep = new DefectStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, apiClient: _apiClient);

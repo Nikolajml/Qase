@@ -1,4 +1,5 @@
 ﻿using Core.Core;
+using NLog;
 using NUnit.Allure.Attributes;
 using OpenQA.Selenium;
 using Steps.Steps;
@@ -15,6 +16,7 @@ namespace Tests.UI
 {
     public class DefectCreateTest : CommonBaseTest
     {
+        protected ILogger logger;
         Defect defect;
         public DefectsTPPage DefectsTPPage;
         public DefectStep _defectStep;
@@ -22,7 +24,9 @@ namespace Tests.UI
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
-        {           
+        {
+            logger = LogManager.GetCurrentClassLogger();
+
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             DefectsTPPage = new DefectsTPPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);

@@ -1,4 +1,5 @@
 ﻿using Core.Core;
+using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
@@ -13,6 +14,7 @@ namespace Tests.MixTests
 {
     public class DefectMixTest : CommonBaseTest
     {
+        protected ILogger logger;
         Defect defect { get; set; }
         Project project { get; set; }
 
@@ -28,6 +30,8 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
@@ -81,8 +85,7 @@ namespace Tests.MixTests
         public void EditDefectMixTest()
         {
             defect.DefectTitle = "Edited Mix Defect UI test";
-            defect.ActualResult = "New Updated Result";
-            
+            defect.ActualResult = "New Updated Result";            
             
             NavigationSteps.NavigateToProjectForEditCase_MIX();
             _projectTPStepsPage.NavigateToDefectsPage();

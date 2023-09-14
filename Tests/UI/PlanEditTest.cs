@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Core.Client;
+using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
@@ -13,6 +14,8 @@ namespace Tests.UI
 {
     public class PlanEditTest : CommonBaseTest
     {
+        protected ILogger logger;
+
         Plan plan;
         Case Case;
 
@@ -26,6 +29,8 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver);

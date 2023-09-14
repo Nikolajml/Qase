@@ -1,4 +1,5 @@
 ﻿using Core.Core;
+using NLog;
 using NUnit.Allure.Attributes;
 using OpenQA.Selenium;
 using Steps.Steps;
@@ -14,6 +15,7 @@ namespace Tests.UI
 {
     public class PlanCreateTest : CommonBaseTest
     {
+        protected ILogger logger;
         Plan plan;
         Case Case;
 
@@ -25,6 +27,8 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver);

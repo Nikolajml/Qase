@@ -7,7 +7,7 @@ namespace Tests.API
 {
     public class SuiteApiTest : CommonBaseTest
     {
-        private ILogger Logger;
+        private ILogger logger;
         public Suite suite { get; set; }
         public Project project { get; set; }
 

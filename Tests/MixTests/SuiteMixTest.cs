@@ -1,19 +1,13 @@
-﻿using Core.Client;
-using Core.Core;
+﻿using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tests.UI;
 using UI.Models;
 
 namespace Tests.MixTests
 {
     public class SuiteMixTest : CommonBaseTest
     {
+        protected ILogger logger;
         Suite suite { get; set; }
 
         public List<Suite> SuitesForDelete = new List<Suite>();
@@ -26,6 +20,8 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _suiteStep = new SuiteStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);

@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
@@ -11,7 +12,8 @@ using UI.Models;
 namespace Tests.UI
 {
     public class SuiteCreateTest : CommonBaseTest
-    {        
+    {
+        protected ILogger logger;
         public ProjectTPStepsPage _projectTPStepsPage;
         public SuiteStep _suiteStep;
         public NavigationSteps NavigationSteps;
@@ -19,6 +21,8 @@ namespace Tests.UI
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _suiteStep = new SuiteStep(logger, Driver);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);

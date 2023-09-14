@@ -1,4 +1,5 @@
 ﻿using Core.Core;
+using NLog;
 using NUnit.Allure.Attributes;
 using OpenQA.Selenium;
 using Steps.Steps;
@@ -13,6 +14,7 @@ namespace Tests.UI
 {
     public class CaseEditTest : CommonBaseTest
     {
+        protected ILogger logger;
         Case Case;
         Case CaseForEdit;
         public CaseStep _caseStep;
@@ -21,7 +23,9 @@ namespace Tests.UI
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
-        {            
+        {
+            logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);

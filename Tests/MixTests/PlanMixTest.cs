@@ -1,19 +1,13 @@
-﻿using Core.Core;
+﻿using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Tests.UI;
 using UI.Models;
 
 namespace Tests.MixTests
 {
     public class PlanMixTest : CommonBaseTest
     {
+        protected ILogger logger;
         Plan plan { get; set; }
         Case Case { get; set; }
 
@@ -28,6 +22,8 @@ namespace Tests.MixTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver, _apiClient);
             NavigationSteps = new NavigationSteps(logger, Driver);
