@@ -40,7 +40,7 @@ namespace Tests.API
                 Assert.Inconclusive("The Project for CaseTests didn't create"); // +++++ Assert inconclusive - что это такое, как использовать?
             }
 
-            ProjectsForDelete.Add(project);                 // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
+            ProjectsForDelete.Add(project);            // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
         }
 
 

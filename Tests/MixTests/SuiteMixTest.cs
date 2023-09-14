@@ -9,11 +9,13 @@ namespace Tests.MixTests
     {
         protected ILogger logger;
         Suite suite { get; set; }
+        Project project { get; set; }
+                
+        public List<Project> ProjectsForDelete = new List<Project>();
 
-        public List<Suite> SuitesForDelete = new List<Suite>();
-
+        public ProjectStep _projectStep;
         public SuiteStep _suiteStep;
-        protected ProjectTPStepsPage _projectTPStepsPage;
+        public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
 
 
@@ -22,21 +24,35 @@ namespace Tests.MixTests
         {
             logger = LogManager.GetCurrentClassLogger();
 
+            _projectStep = new ProjectStep(logger, _apiClient);
             _suiteStep = new SuiteStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
-            NavigationSteps = new NavigationSteps(logger, Driver);
-
-            NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            NavigationSteps = new NavigationSteps(logger, Driver);            
         }
 
         [SetUp]
         public void SetUp()
         {
+            project = new Project()
+            {
+                Code = "MIX",
+                Title = "MixPlansTest",
+                Access = "all"
+            };
+
+            var createdProject = _projectStep.CreateTestProject_API(project);
+
+            if (createdProject.Status == false)
+            {
+                Assert.Inconclusive("The Project for SuiteMixTests didn't create");
+            }
+
+            ProjectsForDelete.Add(project);
+
+
             suite = new SuiteBuilder()
                .SetSuiteName("New Mix Case UI test")
-               .SetSuiteCode("TP")
+               .SetSuiteCode(project.Code)
                .Build();
 
             var createdTestSuite = _suiteStep.CreateTestSuite_API(suite);
@@ -50,7 +66,15 @@ namespace Tests.MixTests
             suite.Id = createdTestSuite.Result.id.ToString();
             logger.Info("Created Suite Id: " + createdTestSuite.Result.id.ToString());
 
-            SuitesForDelete.Add(suite);
+            if (createdTestSuite.Status == false)
+            {
+                Assert.Inconclusive("The Project for SuiteMixTests didn't create");
+            }
+
+
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            Assert.IsTrue(NavigationSteps.IsPageOpened());
         }
 
 
@@ -58,12 +82,12 @@ namespace Tests.MixTests
         [Description("Creation and deletion Case via API. Editing Case via UI")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
-        [Category("MIX")]
+        [Category("UI")]
         public void EditSuiteMixTest()
         {
             suite.Name = "Edited Mix Suite UI test";
 
-            _projectTPStepsPage.NavigateToEditSuite();
+            NavigationSteps.NavigateToProjectForEditCase_MIX();
             _suiteStep.EditSuit_UI(suite);
 
             Assert.That(_projectTPStepsPage.CreatedSuiteNameForAssert(suite.Name), Is.EqualTo(suite.Name), "Edited Suite Name didn't match");
@@ -71,10 +95,10 @@ namespace Tests.MixTests
 
         [OneTimeTearDown]
         public void TearDown()
-        {
-            foreach (var testSuite in SuitesForDelete)
+        {      
+            foreach (var projectForDelete in ProjectsForDelete)
             {
-                _suiteStep.DeleteTestSuite_API(testSuite);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

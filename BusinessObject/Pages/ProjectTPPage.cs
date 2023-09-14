@@ -26,6 +26,9 @@ namespace UI.Pages
         private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
         private IWebElement SuiteNameTitleBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .fXc2Go"));
         private IWebElement DefectsCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Defects']"));
+        private IWebElement PlansCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Test Plans']"));
+
+        //PlansCategoryPanel
 
         private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
 
@@ -195,6 +198,13 @@ namespace UI.Pages
         public void NavigateToDefectsPage()
         {
             DefectsCategoryPanel.Click();
+        }
+
+        // Methods for Navigate to Plans Category
+
+        public void NavigateToPlansPage()
+        {
+            PlansCategoryPanel.Click();
         }
 
 

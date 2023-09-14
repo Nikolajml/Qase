@@ -10,59 +10,87 @@ namespace Tests.MixTests
         protected ILogger logger;
         Plan plan { get; set; }
         Case Case { get; set; }
+        Project project { get; set; }
+                
+        public List<Project> ProjectsForDelete = new List<Project>();
 
-        public List<Plan> PlansForDelete = new List<Plan>();
-        public List<Case> CasesForDelete = new List<Case>();
-
-        protected CaseStep _caseStep;
-        protected PlanStep _planStep;
+        public ProjectStep _projectStep;
+        public CaseStep _caseStep;
+        public PlanStep _planStep;
         public NavigationSteps NavigationSteps;
-
+        public ProjectTPStepsPage ProjectTPStepsPage;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             logger = LogManager.GetCurrentClassLogger();
 
+            _projectStep = new ProjectStep(logger, _apiClient);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver, _apiClient);
             NavigationSteps = new NavigationSteps(logger, Driver);
-
-            NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
         }
 
         [SetUp]
         public void SetUp()
-        {  
+        {
+            project = new Project()
+            {
+                Code = "MIX",
+                Title = "MixPlanTest",
+                Access = "all"
+            };
+
+            var createdProject = _projectStep.CreateTestProject_API(project);
+
+            if (createdProject.Status == false)
+            {
+                Assert.Inconclusive("The Project for PlanMixTests didn't create");
+            }
+
+            ProjectsForDelete.Add(project);
+
+
             Case = new Case()
             {
-                Code = "TP",
+                Code = project.Code,
                 Title = "Case for Plan Mix Test"
             };
 
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
 
+            if (createdTestCase.Status == false)
+            {
+                Assert.Inconclusive("The Case for PlanMixTests didn't create");
+            }
+
             Case.Id = createdTestCase.Result.id.ToString();
             int CaseIdForPlan = int.Parse(Case.Id);
-            Console.WriteLine(CaseIdForPlan);
+            Console.WriteLine($"Case Id: {CaseIdForPlan}");
 
-            CasesForDelete.Add(Case);
 
             plan = new Plan()
             {
-                Code = "TP",
+                Code = project.Code,
                 Title = "New Defect MIX",
                 Cases = new List<int> { CaseIdForPlan }
             };
 
             var createdTestPlan = _planStep.CreateTestPlan_API(plan);
 
-            plan.Id = createdTestPlan.Result.id.ToString();
-            Console.WriteLine(plan.Id);
+            if (createdTestPlan.Status == false)
+            {
+                Assert.Inconclusive("The Plan for PlanMixTests didn't create");
+            }
 
-            PlansForDelete.Add(plan);
+            plan.Id = createdTestPlan.Result.id.ToString();
+            Console.WriteLine($"Plan Id: {plan.Id}");
+
+            
+            NavigationSteps.NavigateToLoginPage();
+            NavigationSteps.SuccessfulLogin(config.Admin);
+            Assert.IsTrue(NavigationSteps.IsPageOpened());
         }
 
 
@@ -70,13 +98,14 @@ namespace Tests.MixTests
         [Description("Edit Plan via UI after created and delete plan via API")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
-        [Category("Mix")]
+        [Category("UI")]
         public void EditPlanMixTest()
         {
             plan.Title = "Edited Mix Plan Mix Test";
             plan.Description = "Edited Description";
 
-            _planStep.NavigateToPlanPage();
+            NavigationSteps.NavigateToProjectForEditCase_MIX();
+            ProjectTPStepsPage.NavigateToPlansPage();
             _planStep.EditPlan(plan);
 
             Assert.That(_planStep.CreatedPlanTitleForFirstAssert(), Is.EqualTo(plan.Title), "Edited plan Title didn't match");                        
@@ -85,15 +114,10 @@ namespace Tests.MixTests
 
         [OneTimeTearDown]
         public void TearDown()
-        {
-            foreach (var testPlan in PlansForDelete)
+        {           
+            foreach (var projectForDelete in ProjectsForDelete)
             {
-                _planStep.DeleteTestPlan_API(testPlan);
-            }
-
-            foreach (var testCasen in CasesForDelete)
-            {
-                _caseStep.DeleteTestCase_API(testCasen);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

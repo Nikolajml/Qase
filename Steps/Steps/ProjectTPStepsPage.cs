@@ -72,5 +72,12 @@ namespace Steps.Steps
         {
             ProjectTPPage.NavigateToDefectsPage();
         }
+
+        // Steps for Defects
+
+        public void NavigateToPlansPage()
+        {
+            ProjectTPPage.NavigateToPlansPage();
+        }
     }
 }
