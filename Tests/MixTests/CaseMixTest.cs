@@ -18,13 +18,15 @@ namespace Tests.MixTests
         public ProjectStep _projectStep;
         public CaseStep _caseStep;
         public ProjectTPStepsPage _projectTPStepsPage;
+        public NavigationSteps NavigationSteps;
 
         [OneTimeSetUp]
         public void OneTimeTtestSetUp()
         {
             _projectStep = new ProjectStep(logger, _apiClient);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
-            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);                     
+            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
         }
 
         [SetUp]
@@ -37,7 +39,7 @@ namespace Tests.MixTests
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -58,7 +60,6 @@ namespace Tests.MixTests
             logger.Info("Created Case Id: " + createdTestCase.Result.id.ToString());
                         
             CasesForDelete.Add(Case);
-
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
@@ -88,12 +89,12 @@ namespace Tests.MixTests
         {
             foreach (var testCace in CasesForDelete)
             {
-                _caseStep.DeleteTestCase(testCace);
+                _caseStep.DeleteTestCase_API(testCace);
             }
 
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

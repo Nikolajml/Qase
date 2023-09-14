@@ -38,7 +38,7 @@ namespace Tests.API
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -90,7 +90,7 @@ namespace Tests.API
         [Category("API")]
         public void CreatePlanTest()
         {
-            var createdTestPlan = _planStep.CreateTestPlan(plan);
+            var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
             if (createdTestPlan.Status == false)
@@ -116,7 +116,7 @@ namespace Tests.API
         [Category("API")]
         public void GetPlanTest()
         {
-            var createdTestPlan = _planStep.CreateTestPlan(plan);
+            var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
             if (createdTestPlan.Status == false)
@@ -127,7 +127,7 @@ namespace Tests.API
             plan.Id = createdTestPlan.Result.id.ToString();
             PlansForDelete.Add(plan);
 
-            var getedPlanCase = _planStep.GetTestPlan(plan);
+            var getedPlanCase = _planStep.GetTestPlan_API(plan);
             logger.Info("Geted Plan: " + getedPlanCase.Result.ToString());
 
             Assert.Multiple(() =>
@@ -146,7 +146,7 @@ namespace Tests.API
         [Category("API")]
         public void UpdatePlanTest()
         {
-            var createdTestPlan = _planStep.CreateTestPlan(plan);
+            var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
             if (createdTestPlan.Status == false)
@@ -161,7 +161,7 @@ namespace Tests.API
             plan.Description = "Updated Plan Description API";
             plan.Cases = new List<int> { CaseId };
 
-            var updatedPlan = _planStep.UpdateTestPlan(plan);
+            var updatedPlan = _planStep.UpdateTestPlan_API(plan);
             logger.Info("Updated Plan: " + updatedPlan.ToString());
 
             Assert.Multiple(() =>
@@ -179,7 +179,7 @@ namespace Tests.API
         [Category("API")]
         public void DeletePlanTest()
         {
-            var createdTestPlan = _planStep.CreateTestPlan(plan);
+            var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
             if (createdTestPlan.Status == false)
@@ -189,7 +189,7 @@ namespace Tests.API
 
             plan.Id = createdTestPlan.Result.id.ToString();
 
-            var planResponse = _planStep.DeleteTestPlan(plan);
+            var planResponse = _planStep.DeleteTestPlan_API(plan);
 
             Assert.Multiple(() =>
             {
@@ -204,12 +204,12 @@ namespace Tests.API
         {
             foreach (var planForDelete in PlansForDelete)
             {
-                _planStep.DeleteTestPlan(planForDelete);
+                _planStep.DeleteTestPlan_API(planForDelete);
             }
 
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

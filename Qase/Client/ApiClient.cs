@@ -27,7 +27,6 @@ namespace Core.Client
             {
                 _restClient.AddDefaultHeader("Token", token);
             }
-
         }
 
         public RestResponse Execute(RestRequest request)

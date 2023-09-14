@@ -89,7 +89,7 @@ namespace Steps.Steps
         //    _apiClient = apiClient;
         //}
 
-        public PlanApiModel CreateTestPlan(Plan plan)
+        public PlanApiModel CreateTestPlan_API(Plan plan)
         {
             var request = new RestRequest(Endpoints.CREATE_PLAN, Method.Post)
                 .AddUrlSegment("code", plan.Code)
@@ -98,7 +98,7 @@ namespace Steps.Steps
             return _apiClient.Execute<PlanApiModel>(request);
         }
 
-        public PlanApiModel GetTestPlan(Plan plan)
+        public PlanApiModel GetTestPlan_API(Plan plan)
         {
             var request = new RestRequest(Endpoints.GET_PLAN)
                 .AddUrlSegment("code", plan.Code)
@@ -108,7 +108,7 @@ namespace Steps.Steps
             return _apiClient.Execute<PlanApiModel>(request);
         }
 
-        public PlanApiModel UpdateTestPlan(Plan plan)
+        public PlanApiModel UpdateTestPlan_API(Plan plan)
         {
             var request = new RestRequest(Endpoints.UPDATE_PLAN, Method.Patch)
                 .AddUrlSegment("code", plan.Code)
@@ -118,7 +118,7 @@ namespace Steps.Steps
             return _apiClient.Execute<PlanApiModel>(request);
         }
 
-        public PlanApiModel DeleteTestPlan(Plan plan)
+        public PlanApiModel DeleteTestPlan_API(Plan plan)
         {
             var request = new RestRequest(Endpoints.DELETE_PLAN, Method.Delete)
                 .AddUrlSegment("code", plan.Code)

@@ -22,6 +22,7 @@ namespace Tests.MixTests
 
         protected CaseStep _caseStep;
         protected PlanStep _planStep;
+        public NavigationSteps NavigationSteps;
 
 
         [OneTimeSetUp]
@@ -29,6 +30,7 @@ namespace Tests.MixTests
         {
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver, _apiClient);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
@@ -59,7 +61,7 @@ namespace Tests.MixTests
                 Cases = new List<int> { CaseIdForPlan }
             };
 
-            var createdTestPlan = _planStep.CreateTestPlan(plan);
+            var createdTestPlan = _planStep.CreateTestPlan_API(plan);
 
             plan.Id = createdTestPlan.Result.id.ToString();
             Console.WriteLine(plan.Id);
@@ -90,12 +92,12 @@ namespace Tests.MixTests
         {
             foreach (var testPlan in PlansForDelete)
             {
-                _planStep.DeleteTestPlan(testPlan);
+                _planStep.DeleteTestPlan_API(testPlan);
             }
 
             foreach (var testCasen in CasesForDelete)
             {
-                _caseStep.DeleteTestCase(testCasen);
+                _caseStep.DeleteTestCase_API(testCasen);
             }
         }
     }

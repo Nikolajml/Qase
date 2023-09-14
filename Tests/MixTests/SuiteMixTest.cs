@@ -20,12 +20,15 @@ namespace Tests.MixTests
 
         public SuiteStep _suiteStep;
         protected ProjectTPStepsPage _projectTPStepsPage;
+        public NavigationSteps NavigationSteps;
+
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
             _suiteStep = new SuiteStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
@@ -40,7 +43,7 @@ namespace Tests.MixTests
                .SetSuiteCode("TP")
                .Build();
 
-            var createdTestSuite = _suiteStep.CreateTestSuite(suite);
+            var createdTestSuite = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdTestSuite.ToString());
 
             if (createdTestSuite.Status == false)
@@ -75,7 +78,7 @@ namespace Tests.MixTests
         {
             foreach (var testSuite in SuitesForDelete)
             {
-                _suiteStep.DeleteTestSuite(testSuite);
+                _suiteStep.DeleteTestSuite_API(testSuite);
             }
         }
     }

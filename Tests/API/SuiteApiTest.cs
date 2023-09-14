@@ -32,7 +32,7 @@ namespace Tests.API
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -62,7 +62,7 @@ namespace Tests.API
         [Category("API")]
         public void CreateSuiteTest()
         {
-            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
             if (createdSuiteTest.Status == false)
@@ -88,7 +88,7 @@ namespace Tests.API
         [Category("API")]
         public void GetSuiteTest()
         {
-            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
             if (createdSuiteTest.Status == false)
@@ -99,7 +99,7 @@ namespace Tests.API
             suite.Id = createdSuiteTest.Result.id.ToString();
             SuitesForDelete.Add(suite);
 
-            var getedSuite = _suiteStep.GetTestSuite(suite);
+            var getedSuite = _suiteStep.GetTestSuite_API(suite);
             logger.Info("Geted Suite: " + getedSuite.ToString());
 
             Assert.Multiple(() =>
@@ -117,7 +117,7 @@ namespace Tests.API
         [Category("API")]
         public void UpdateSuiteTest()
         {
-            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
             if (createdSuiteTest.Status == false)
@@ -131,7 +131,7 @@ namespace Tests.API
             suite.Name = "Updated Suite Name API";
             suite.Description = "Updated Description API";
 
-            var updatedSuite = _suiteStep.UpdateTestSuite(suite);
+            var updatedSuite = _suiteStep.UpdateTestSuite_API(suite);
             logger.Info("Updated Suite: " + updatedSuite.ToString());
 
             Assert.Multiple(() =>
@@ -149,7 +149,7 @@ namespace Tests.API
         [Category("API")]
         public void DeleteSuiteTest()
         {
-            var createdSuiteTest = _suiteStep.CreateTestSuite(suite);
+            var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
             if (createdSuiteTest.Status == false)
@@ -159,7 +159,7 @@ namespace Tests.API
 
             suite.Id = createdSuiteTest.Result.id.ToString();
 
-            var suiteResponse = _suiteStep.DeleteTestSuite(suite);
+            var suiteResponse = _suiteStep.DeleteTestSuite_API(suite);
             logger.Info("Suite Id: " + suiteResponse.Result.id.ToString());
 
             Assert.Multiple(() =>
@@ -175,12 +175,12 @@ namespace Tests.API
         {
             foreach (var suiteForDelete in SuitesForDelete)
             {
-                _suiteStep.DeleteTestSuite(suiteForDelete);
+                _suiteStep.DeleteTestSuite_API(suiteForDelete);
             }
 
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

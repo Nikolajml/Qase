@@ -58,7 +58,7 @@ namespace Steps.Steps
 
         //Methods for API tests        
 
-        public SuiteApiModel CreateTestSuite(Suite suite)
+        public SuiteApiModel CreateTestSuite_API(Suite suite)
         {            
               var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
                   .AddUrlSegment("code", suite.Code)
@@ -67,7 +67,7 @@ namespace Steps.Steps
               return _apiClient.Execute<SuiteApiModel>(request);
         }
 
-        public SuiteApiModel GetTestSuite(Suite suite)
+        public SuiteApiModel GetTestSuite_API(Suite suite)
         {
             var request = new RestRequest(Endpoints.GET_SUITE)
                 .AddUrlSegment("code", suite.Code)
@@ -77,7 +77,7 @@ namespace Steps.Steps
             return _apiClient.Execute<SuiteApiModel>(request);            
         }
 
-        public SuiteApiModel UpdateTestSuite(Suite suite)
+        public SuiteApiModel UpdateTestSuite_API(Suite suite)
         {
             var request = new RestRequest(Endpoints.UPDATE_SUITE, Method.Patch)
                 .AddUrlSegment("code", suite.Code)
@@ -87,7 +87,7 @@ namespace Steps.Steps
             return _apiClient.Execute<SuiteApiModel>(request);
         }
 
-        public SuiteApiModel DeleteTestSuite(Suite suite)
+        public SuiteApiModel DeleteTestSuite_API(Suite suite)
         {
             var request = new RestRequest(Endpoints.DELETE_SUITE, Method.Delete)
                 .AddUrlSegment("code", suite.Code)

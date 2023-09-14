@@ -12,13 +12,15 @@ namespace Tests.UI
     {
         Case Case;
         public ProjectTPStepsPage ProjectTPStepsPage;
-        public CaseStep _caseStep;               
+        public CaseStep _caseStep;
+        public NavigationSteps NavigationSteps;
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);

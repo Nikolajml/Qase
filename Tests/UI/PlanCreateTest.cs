@@ -18,6 +18,7 @@ namespace Tests.UI
         Case Case;
 
         public ProjectTPStepsPage ProjectTPStepsPage;
+        public NavigationSteps NavigationSteps;
         public PlanStep _planStep;
         public CaseStep _caseStep;      
 
@@ -26,7 +27,8 @@ namespace Tests.UI
         {
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
-            _planStep = new PlanStep(logger, Driver);            
+            _planStep = new PlanStep(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);

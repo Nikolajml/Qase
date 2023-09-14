@@ -22,9 +22,6 @@ namespace Tests
         private AllureLifecycle _allure;
         public Faker Faker = new Faker();
 
-        public NavigationSteps NavigationSteps;
-
-
         [OneTimeSetUp]
         public void Setup()
         {
@@ -35,8 +32,6 @@ namespace Tests
 
             Driver = new Browser().Driver;
             _allure = AllureLifecycle.Instance;
-
-            NavigationSteps = new NavigationSteps(logger, Driver);          
         }
 
         [OneTimeTearDown]

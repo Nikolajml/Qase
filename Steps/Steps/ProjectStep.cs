@@ -23,7 +23,7 @@ namespace Steps.Steps
             _logger = logger;                   
         }
 
-        public ProjectApiModel CreateTestProject(Project project)
+        public ProjectApiModel CreateTestProject_API(Project project)
         {
             var request = new RestRequest(Endpoints.CREATE_PROJECT, Method.Post)
                 .AddBody(project);
@@ -33,7 +33,7 @@ namespace Steps.Steps
             return _apiClient.Execute<ProjectApiModel>(request);
         }                
 
-        public ProjectApiModel DeleteTestProject(Project project)
+        public ProjectApiModel DeleteTestProject_API(Project project)
         {
             var request = new RestRequest(Endpoints.DELETE_PROJECT, Method.Delete)
                 .AddUrlSegment("code", project.Code)

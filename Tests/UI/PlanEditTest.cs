@@ -19,6 +19,7 @@ namespace Tests.UI
         public ProjectTPStepsPage ProjectTPStepsPage;
         public PlanStep _planStep;
         public CaseStep _caseStep;
+        public NavigationSteps NavigationSteps;
 
         public List<Case> CasesForDelete = new List<Case>();
 
@@ -28,6 +29,7 @@ namespace Tests.UI
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _planStep = new PlanStep(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
@@ -63,8 +65,7 @@ namespace Tests.UI
         [AllureTag("Smoke")]
         [Category("UI")]
         public void CreatePlanTest()
-        {
-            
+        {            
             plan = new PlanBuilder()
                .SetPlanTitle("Plan_Edit")
                .Build();

@@ -1,4 +1,5 @@
 ﻿using Core.Client;
+using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System;
@@ -13,6 +14,7 @@ namespace Tests.NegativeTests
 {
     public class IncorrectRequiredDataCaseTest : CommonBaseTest
     {
+        public ILogger logger;
         public Case Case { get; set; }        
 
         protected CaseStep _caseStep;
@@ -37,8 +39,8 @@ namespace Tests.NegativeTests
         [Category("Negative")]
         public void IncorrectRequiredDataCreateCaseTest()
         {
-            var createdTestCase = _caseStep.CreateTestCase_API(Case);                       
-                        
+            var createdTestCase = _caseStep.CreateTestCase_API(Case);
+
             Assert.IsFalse(createdTestCase.Status, "Status is not False");
             Assert.AreEqual("The title field is required.", createdTestCase.Message, "Error message doesn't match to expected error message");
         }

@@ -17,12 +17,14 @@ namespace Tests.UI
         Case CaseForEdit;
         public CaseStep _caseStep;
         public ProjectTPStepsPage _projectTPStepsPage;
+        public NavigationSteps NavigationSteps;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {            
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);

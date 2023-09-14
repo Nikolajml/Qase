@@ -33,7 +33,7 @@ namespace Tests.API
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -183,7 +183,7 @@ namespace Tests.API
 
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
 

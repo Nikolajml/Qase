@@ -14,14 +14,17 @@ namespace Tests.UI
 {
     public class DefectEditTest : CommonBaseTest
     {
-        Defect defect;        
-        public DefectStep _defectStep;
-
+        Defect defect;   
         
+        public DefectStep _defectStep;
+        public NavigationSteps NavigationSteps;
+
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {            
             _defectStep = new DefectStep(logger, Driver, _apiClient);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
@@ -38,7 +41,6 @@ namespace Tests.UI
                 ActualResult = "Result",
                 Severity = 2
             };
-
 
             _defectStep.CreateTestDefect_API(defect);
         }

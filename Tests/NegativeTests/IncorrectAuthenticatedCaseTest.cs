@@ -1,5 +1,6 @@
 ﻿using Core.Client;
 using Core.Utilities.Configuration;
+using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using System.Net;
@@ -10,6 +11,7 @@ namespace Tests.NegativeTests
 {
     public class IncorrectAuthenticatedCaseTest : CommonBaseTest
     {
+        public ILogger logger;
         public Case Case { get; set; }                
         
         protected CaseStep _caseStep;

@@ -37,7 +37,7 @@ namespace Tests.API
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -104,7 +104,7 @@ namespace Tests.API
             Case.Id = createdTestCase.Result.id.ToString();
             CasesForDelete.Add(Case);
 
-            var getedTestCase = _caseStep.GetTestCase(Case);
+            var getedTestCase = _caseStep.GetTestCase_API(Case);
             logger.Info("Received Case: " + getedTestCase.Result.ToString());
 
             Assert.Multiple(() =>
@@ -136,7 +136,7 @@ namespace Tests.API
             Case.Title = "Update API";
             Case.Description = "Description API";
 
-            var updatedCase = _caseStep.UpdateTestCase(Case);
+            var updatedCase = _caseStep.UpdateTestCase_API(Case);
             logger.Info("Updated Case: " + updatedCase.Result.ToString());
 
             Assert.Multiple(() =>
@@ -164,7 +164,7 @@ namespace Tests.API
 
             Case.Id = createdTestCase.Result.id.ToString();
 
-            var caseResponse = _caseStep.DeleteTestCase(Case);
+            var caseResponse = _caseStep.DeleteTestCase_API(Case);
 
             Assert.Multiple(() =>
             {
@@ -179,12 +179,12 @@ namespace Tests.API
         {
             foreach (var caseForDelete in CasesForDelete)
             {
-                _caseStep.DeleteTestCase(caseForDelete);
+                _caseStep.DeleteTestCase_API(caseForDelete);
             }
 
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

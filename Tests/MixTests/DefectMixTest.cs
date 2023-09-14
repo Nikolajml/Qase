@@ -22,6 +22,7 @@ namespace Tests.MixTests
         public DefectStep _defectStep;
         public ProjectStep _projectStep;
         public ProjectTPStepsPage _projectTPStepsPage;
+        public NavigationSteps NavigationSteps;
 
 
         [OneTimeSetUp]
@@ -30,6 +31,7 @@ namespace Tests.MixTests
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
         }
 
         [SetUp]
@@ -42,7 +44,7 @@ namespace Tests.MixTests
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject(project);
+            var createdProject = _projectStep.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -96,7 +98,7 @@ namespace Tests.MixTests
         {
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject(projectForDelete);
+                _projectStep.DeleteTestProject_API(projectForDelete);
             }
         }
     }

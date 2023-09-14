@@ -17,13 +17,15 @@ namespace Tests.UI
     {
         Defect defect;
         public DefectsTPPage DefectsTPPage;
-        public DefectStep _defectStep;                
+        public DefectStep _defectStep;
+        public NavigationSteps NavigationSteps;
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {           
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             DefectsTPPage = new DefectsTPPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);

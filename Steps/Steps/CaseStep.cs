@@ -53,26 +53,16 @@ namespace Steps.Steps
         }
                        
         // Methods for API tests
-        public CaseApiModel CreateTestCase_API(Case Case)   // TUPLE - почитать, что это такое? Нужно вернуть респонс (статус код) - это одна часть TUPLE, вторая часть TUPLE - модель.
-        {                                                   // Подход с TUPLES перенестся на страницу с сервисами. Тройной TUPLE - код контент error
-                                                            // Понятно прописать методы - API - UI
-                                                        
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post) // Использовать как для позитивных, так и для негативных тестов - сделал ++++++
+        public CaseApiModel CreateTestCase_API(Case Case)   // Понятно прописать методы - API - UI
+        {                                               
+            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post) 
                 .AddUrlSegment("code", Case.Code)
                 .AddBody(Case);                         // сделать логер частью Page and Service
 
             return _apiClient.Execute<CaseApiModel>(request);
-
-
-            //var response = _apiClient.Execute(request); // здесь будет метод из сервисов сервис
-
-            //Assert.AreEqual(HttpStatusCode.OK, response.StatusCode); // Ассерты должны быть только в тестах
-            //Assert.IsNotEmpty(response.Content);
-
-            //return JsonSerializer.Deserialize<CaseApiModel>(response.Content);
         }               
 
-        public CaseApiModel GetTestCase(Case Case)
+        public CaseApiModel GetTestCase_API(Case Case)
         {
             var request = new RestRequest(Endpoints.GET_CASE)
                 .AddUrlSegment("code", Case.Code)
@@ -82,7 +72,7 @@ namespace Steps.Steps
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
-        public CaseApiModel UpdateTestCase(Case testCase)
+        public CaseApiModel UpdateTestCase_API(Case testCase)
         {
             var request = new RestRequest(Endpoints.UPDATE_CASE, Method.Patch)
                 .AddUrlSegment("code", testCase.Code)
@@ -92,7 +82,7 @@ namespace Steps.Steps
             return _apiClient.Execute<CaseApiModel>(request);
         }
 
-        public CaseApiModel DeleteTestCase(Case Case)
+        public CaseApiModel DeleteTestCase_API(Case Case)
         {
             var request = new RestRequest(Endpoints.DELETE_CASE, Method.Delete)
                 .AddUrlSegment("code", Case.Code)
@@ -116,7 +106,7 @@ namespace Steps.Steps
                     Code = code,
                 };
 
-                DeleteTestCase(testCaseForDelte);
+                DeleteTestCase_API(testCaseForDelte);
             }
         }
 
@@ -132,10 +122,5 @@ namespace Steps.Steps
 
             return response.Result.entities;
         }
-
-
-
-
-        
     }
 }

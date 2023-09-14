@@ -14,12 +14,14 @@ namespace Tests.UI
     {        
         public ProjectTPStepsPage _projectTPStepsPage;
         public SuiteStep _suiteStep;
+        public NavigationSteps NavigationSteps;
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
             _suiteStep = new SuiteStep(logger, Driver);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin);
