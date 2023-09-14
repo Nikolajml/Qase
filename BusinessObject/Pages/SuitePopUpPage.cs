@@ -11,7 +11,7 @@ namespace UI.Pages
         private IWebElement SuiteNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SuiteDescriptionInputBy => Driver.FindElement(By.XPath("//*[@id='description']"));
         private IWebElement SuitePreconditionsInputBy => Driver.FindElement(By.XPath("//*[@id='preconditions']"));
-        private IWebElement CreateSuiteButtonBy => Driver.FindElement(By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']"));  // // (//span[@class='ZwgkIF'])[7]\")   //*[@class='j4xaa7 u0i1tV J4xngT']"
+        private IWebElement CreateSuiteButtonBy => Driver.FindElement(By.XPath("(//span[@class='ZwgkIF'])[7]"));  // // (//span[@class='ZwgkIF'])[7]\")   //*[@class='j4xaa7 u0i1tV J4xngT']"
         private IWebElement EllipsisEditBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h"));
         private IWebElement EditSuiteButtonBy => Driver.FindElement(By.XPath("//div[@class='Cr3S77']//i[@class='far fa-pencil']"));
         private IWebElement SaveEditedSuiteBy => Driver.FindElement(By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']"));
