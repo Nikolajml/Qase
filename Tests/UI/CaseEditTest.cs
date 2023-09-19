@@ -1,14 +1,13 @@
-﻿using Core.Core;
+﻿using Bogus;
+using Core.Core;
 using NLog;
 using NUnit.Allure.Attributes;
 using OpenQA.Selenium;
 using Steps.Steps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UI.Models;
+using NUnit.Framework.Interfaces;
+using Core.Client;
+using Core.Utilities.Configuration;
 
 namespace Tests.UI
 {
@@ -21,9 +20,19 @@ namespace Tests.UI
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
 
+        public string? BaseUrl;
+        protected IWebDriver Driver;
+        public Faker Faker = new Faker();
+
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            BaseUrl = config.AppSettings.URL;
+            Driver = new Browser().Driver;
+
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _caseStep = new CaseStep(logger, Driver, _apiClient);
@@ -69,6 +78,18 @@ namespace Tests.UI
         {
             _caseStep.DeleteTestCaseByName(Case.Title, Case.Code);
             _caseStep.DeleteTestCaseByName(CaseForEdit.Title, "TP");
+
+            
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+                byte[] screenshotBytes = screenshot.AsByteArray;
+                                
+                _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+            }
+
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

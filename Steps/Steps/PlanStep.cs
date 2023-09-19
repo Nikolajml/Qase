@@ -1,4 +1,5 @@
 ﻿using API.ResponseAPIModels;
+using API.Services;
 using Core.Client;
 using Core.Utilities;
 using NLog;
@@ -12,6 +13,7 @@ namespace Steps.Steps
     public class PlanStep
     {
         public PlanTPPage PlanTPPage;
+        public PlanService PlanService;
         protected ApiClient _apiClient;        
         protected ILogger _logger;        
 
@@ -25,6 +27,11 @@ namespace Steps.Steps
             if (apiClient != null)
             {
                 _apiClient = apiClient;
+            }
+
+            if (apiClient != null)
+            {
+                PlanService = new PlanService(logger, apiClient);
             }
 
             _logger = logger;
@@ -82,50 +89,34 @@ namespace Steps.Steps
         {
             PlanTPPage.DeletePlan();
         }
-
-
-        //public PlanStep(ApiClient apiClient)
-        //{
-        //    _apiClient = apiClient;
-        //}
+                
 
         public PlanApiModel CreateTestPlan_API(Plan plan)
         {
-            var request = new RestRequest(Endpoints.CREATE_PLAN, Method.Post)
-                .AddUrlSegment("code", plan.Code)
-                .AddBody(plan);
+            var response = PlanService.CreatePlan_API(plan);
 
-            return _apiClient.Execute<PlanApiModel>(request);
+            return response;
         }
 
         public PlanApiModel GetTestPlan_API(Plan plan)
         {
-            var request = new RestRequest(Endpoints.GET_PLAN)
-                .AddUrlSegment("code", plan.Code)
-                .AddUrlSegment("id", plan.Id)
-                .AddBody(plan);
+            var response = PlanService.GetPlan_API(plan);
 
-            return _apiClient.Execute<PlanApiModel>(request);
+            return response;
         }
 
         public PlanApiModel UpdateTestPlan_API(Plan plan)
         {
-            var request = new RestRequest(Endpoints.UPDATE_PLAN, Method.Patch)
-                .AddUrlSegment("code", plan.Code)
-                .AddUrlSegment("id", plan.Id)
-                .AddBody(plan);
+            var response = PlanService.UpdatePlan_API(plan);
 
-            return _apiClient.Execute<PlanApiModel>(request);
+            return response;
         }
 
         public PlanApiModel DeleteTestPlan_API(Plan plan)
         {
-            var request = new RestRequest(Endpoints.DELETE_PLAN, Method.Delete)
-                .AddUrlSegment("code", plan.Code)
-                .AddUrlSegment("id", plan.Id)
-                .AddBody(plan);
+            var response = PlanService.DeletePlan_API(plan);
 
-            return _apiClient.Execute<PlanApiModel>(request);
+            return response;
         }
     }
 }

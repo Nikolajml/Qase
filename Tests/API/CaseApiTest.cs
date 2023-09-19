@@ -2,6 +2,8 @@
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using NLog;
+using Core.Client;
+using Core.Utilities.Configuration;
 
 namespace Tests.API
 {
@@ -17,10 +19,13 @@ namespace Tests.API
         protected CaseStep _caseStep;
         protected ProjectStep _projectStep;
 
+        protected ApiClient _apiClient;
+
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
@@ -37,10 +42,10 @@ namespace Tests.API
 
             if (createdProject.Status == false)
             {
-                Assert.Inconclusive("The Project for CaseTests didn't create"); // +++++ Assert inconclusive - что это такое, как использовать?
+                Assert.Inconclusive("The Project for CaseTests didn't create");
             }
 
-            ProjectsForDelete.Add(project);            // +++++ Use OneTimeSetup for Project -  сделал, вынес createProject на уровень OneTimeSetup
+            ProjectsForDelete.Add(project);
         }
 
 
@@ -65,7 +70,7 @@ namespace Tests.API
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());
 
-            if (createdCase.Status == false)
+            if (createdCase.Status == false)                                       
             {
                 Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
             }
@@ -74,9 +79,9 @@ namespace Tests.API
             CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>
-            {
-                Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");
-                Assert.IsTrue(createdCase.Result.id != 0, "Case Id not present"); // +++++  проверить, что Id существует
+            {                                                                               // Написать тестовый класс, где получу каждый статус теста - test pass, test faild 
+                Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");       // статусы тстов NUnit and Allure
+                Assert.IsTrue(createdCase.Result.id != 0, "Case Id not present");
             });                        
         }
 

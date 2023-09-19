@@ -4,11 +4,18 @@ using OpenQA.Selenium;
 
 namespace UI.Pages
 {
-    public class CasePage : BasePage
+    public class CasePage : BasePage        // use logger Debug Info
     {
-        private static string END_POINT = "case/TP/create";        
-                
-        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
+        private static string END_POINT = "case/TP/create";
+
+        private IWebElement CreateCaseButtonBy
+        {
+            get
+            {
+                return Driver.FindElement(By.CssSelector(".tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus"));
+            }
+        } // что такое Stale Element Exception?
+
         private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));     
 
@@ -37,6 +44,8 @@ namespace UI.Pages
         // CREATED CASE
         public void ClickToCaseButton()
         {
+            var a = CreateCaseButtonBy.Displayed;
+            
             CreateCaseButtonBy.Click();
         }
 

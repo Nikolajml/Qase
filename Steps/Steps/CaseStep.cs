@@ -1,4 +1,5 @@
 ﻿using API.ResponseAPIModels;
+using API.Services;
 using Core.Client;
 using Core.Utilities;
 using NLog;
@@ -15,6 +16,7 @@ namespace Steps.Steps
     public class CaseStep
     {
         public CasePage CasePage;
+        public CaseService CaseService;
         protected ApiClient _apiClient;
         protected ILogger _logger;
 
@@ -30,12 +32,17 @@ namespace Steps.Steps
                 _apiClient = apiClient;
             }
 
+            if (apiClient != null)
+            {
+                CaseService = new CaseService(logger, apiClient);
+            }
+
             _logger = logger;
         }
 
-        public bool IsPageOpened() // ++++++ Название Check нехорошо - уже переделал 
+        public bool IsPageOpened() 
         {
-            return CasePage.IsPageOpened(); // ++++++ ассерт должен быть только на уровне тестов - вынес на уровень тестов 
+            return CasePage.IsPageOpened(); 
         }
 
         public void CreateCase(Case Case)
@@ -53,43 +60,32 @@ namespace Steps.Steps
         }
                        
         // Methods for API tests
-        public CaseApiModel CreateTestCase_API(Case Case)   // Понятно прописать методы - API - UI
+        public CaseApiModel CreateTestCase_API(Case Case) 
         {                                               
-            var request = new RestRequest(Endpoints.CREATE_CASE, Method.Post) 
-                .AddUrlSegment("code", Case.Code)
-                .AddBody(Case);                         // сделать логер частью Page and Service
+            var response = CaseService.CreateCase_API(Case);                         // сделать логер частью Page and Service
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            return response;
         }               
 
         public CaseApiModel GetTestCase_API(Case Case)
         {
-            var request = new RestRequest(Endpoints.GET_CASE)
-                .AddUrlSegment("code", Case.Code)
-                .AddUrlSegment("id", Case.Id)
-                .AddBody(Case);
+            var response = CaseService.GetCase_API(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            return response;
         }
 
         public CaseApiModel UpdateTestCase_API(Case testCase)
         {
-            var request = new RestRequest(Endpoints.UPDATE_CASE, Method.Patch)
-                .AddUrlSegment("code", testCase.Code)
-                .AddUrlSegment("id", testCase.Id)
-                .AddBody(new Case() { Title = testCase.Title, Description = testCase.Description });
+            var response = CaseService.UpdateCase_API(testCase);
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            return response;
         }
 
         public CaseApiModel DeleteTestCase_API(Case Case)
         {
-            var request = new RestRequest(Endpoints.DELETE_CASE, Method.Delete)
-                .AddUrlSegment("code", Case.Code)
-                .AddUrlSegment("id", Case.Id)
-                .AddBody(Case);
+            var response = CaseService.DeleteCase_API(Case);
                         
-            return _apiClient.Execute<CaseApiModel>(request);
+            return response;
         }                
 
         public void DeleteTestCaseByName(string name, string code)
@@ -110,13 +106,9 @@ namespace Steps.Steps
             }
         }
 
-        public List<CaseResult> GetAllTestCase_API(string code, int limit = 90)
-        {
-            var request = new RestRequest(Endpoints.GET_ALL_CASE)
-                 .AddUrlSegment("code", code)
-                 .AddParameter("limit", limit);
-
-            var response = _apiClient.Execute<GetAllTestCase>(request);
+        public List<CaseResult> GetAllTestCase_API(string code)
+        {            
+            var response = CaseService.GetAllCase_API(code);
 
             _logger.Info("Case: " + response.ToString());
 

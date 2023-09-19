@@ -3,16 +3,17 @@ using NLog;
 
 //namespace API.Services
 //{
-//    //public class BaseService
-//    //{
-//    //    protected ApiClient _apiClient;
+//    public class BaseService
+//    {
+//        protected ApiClient _apiClient;
+//        protected ILogger _logger;
 
-//    //    protected Logger _logger = LogManager.GetCurrentClassLogger();
+//        public BaseService(ILogger logger, ApiClient apiClient)
+//        {
+//            _apiClient = apiClient;
 
-//    //    public BaseService(ApiClient apiClient)
-//    //    {
-//    //        _apiClient = apiClient;
-//    //    }
-//    //}
+//            _logger = logger;
+//        }
+//    }
 
 //}

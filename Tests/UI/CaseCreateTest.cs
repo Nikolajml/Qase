@@ -1,11 +1,13 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
-using UI.Pages;
-using Core.Utilities.Configuration;
 using Core.Core;
 using OpenQA.Selenium;
 using NLog;
+using Bogus;
+using NUnit.Framework.Interfaces;
+using Core.Client;
+using Core.Utilities.Configuration;
 
 namespace Tests.UI
 {
@@ -17,9 +19,19 @@ namespace Tests.UI
         public CaseStep _caseStep;
         public NavigationSteps NavigationSteps;
 
+        public string? BaseUrl;
+        protected IWebDriver Driver;
+        public Faker Faker = new Faker();
+
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
+            BaseUrl = config.AppSettings.URL;
+            Driver = new Browser().Driver;
+
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _caseStep = new CaseStep(logger, Driver, _apiClient);
@@ -53,6 +65,18 @@ namespace Tests.UI
         public void EditTearDown()
         {
             _caseStep.DeleteTestCaseByName(Case.Title, "TP");
+
+
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+                byte[] screenshotBytes = screenshot.AsByteArray;
+                                
+                _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+            }
+
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

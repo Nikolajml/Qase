@@ -44,7 +44,6 @@ namespace API.ResponseAPIModels
         {
             return $"id: {id}, title: {title}, status: {status}";
         }
-
     }
 
     public class CaseApiModel
@@ -54,6 +53,9 @@ namespace API.ResponseAPIModels
 
         [JsonPropertyName("result")]
         public CaseResult Result { get; set; }
+
+        // Добавить Статус код
+
 
         [JsonPropertyName("error")]
         public string Error { get; set; }

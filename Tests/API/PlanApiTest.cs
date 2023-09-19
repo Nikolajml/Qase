@@ -2,6 +2,8 @@
 using NUnit.Allure.Attributes;
 using Steps.Steps;
 using NLog;
+using Core.Client;
+using Core.Utilities.Configuration;
 
 namespace Tests.API
 {
@@ -20,11 +22,14 @@ namespace Tests.API
         protected PlanStep _planStep;
         protected ProjectStep _projectStep;
 
+        protected ApiClient _apiClient;
+
         int CaseId { get; set; }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);

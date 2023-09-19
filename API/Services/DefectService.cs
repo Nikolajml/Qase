@@ -3,53 +3,59 @@ using API.ResponseAPIModels;
 using Core.Client;
 using Core.Utilities;
 using RestSharp;
+using NLog;
 
-//namespace API.Services
-//{
-//    //public class DefectService
-//    //{
-//    //    //public DefectService(ApiClient apiClient) : base(apiClient)
-//    //    //{
+namespace API.Services
+{
+    public class DefectService
+    {
+        protected ApiClient _apiClient;
+        protected ILogger _logger;
 
-//    //    //}
+        public DefectService(ILogger logger, ApiClient apiClient)
+        {
+            _apiClient = apiClient;
 
-//    //    //public DefectApiModel GetDefect(Defect defect)
-//    //    //{
-//    //    //    var request = new RestRequest(Endpoints.GET_DEFECT)
-//    //    //        .AddUrlSegment("code", defect.Code)
-//    //    //        .AddUrlSegment("id", defect.Id)                
-//    //    //        .AddBody(defect);
+            _logger = logger;
+        }
 
-//    //    //    return _apiClient.Execute<DefectApiModel>(request);
-//    //    //}
+        public DefectApiModel GetDefect_API(Defect defect)
+        {
+            var request = new RestRequest(Endpoints.GET_DEFECT)
+                .AddUrlSegment("code", defect.Code)
+                .AddUrlSegment("id", defect.Id)
+                .AddBody(defect);
 
-//    //    //public DefectApiModel CreateDefect(Defect defect)
-//    //    //{
-//    //    //    var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
-//    //    //        .AddUrlSegment("code", defect.Code)                
-//    //    //        .AddBody(defect);
+            return _apiClient.Execute<DefectApiModel>(request);
+        }
 
-//    //    //    return _apiClient.Execute<DefectApiModel>(request);
-//    //    //}
+        public DefectApiModel CreateDefect_API(Defect defect)
+        {
+            var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
+                .AddUrlSegment("code", defect.Code)
+                .AddBody(defect);
 
-//    //    //public DefectApiModel UpdateDefect(Defect defect)
-//    //    //{
-//    //    //    var request = new RestRequest(Endpoints.UPDATE_DEFECT, Method.Patch)
-//    //    //        .AddUrlSegment("code", defect.Code)
-//    //    //        .AddUrlSegment("id", defect.Id)                
-//    //    //        .AddBody(defect);
+            return _apiClient.Execute<DefectApiModel>(request);
+        }
 
-//    //    //    return _apiClient.Execute<DefectApiModel>(request);
-//    //    //}
+        public DefectApiModel UpdateDefect_API(Defect defect)
+        {
+            var request = new RestRequest(Endpoints.UPDATE_DEFECT, Method.Patch)
+                .AddUrlSegment("code", defect.Code)
+                .AddUrlSegment("id", defect.Id)
+                .AddBody(defect);
 
-//    //    //public DefectApiModel DeleteDefect(Defect defect)
-//    //    //{
-//    //    //    var request = new RestRequest(Endpoints.DELETE_DEFECT, Method.Delete)
-//    //    //        .AddUrlSegment("code", defect.Code)
-//    //    //        .AddUrlSegment("id", defect.Id)                
-//    //    //        .AddBody(defect);
+            return _apiClient.Execute<DefectApiModel>(request);
+        }
 
-//    //    //    return _apiClient.Execute<DefectApiModel>(request);
-//    //    //}
-//    //}
-//}
+        public DefectApiModel DeleteDefect_API(Defect defect)
+        {
+            var request = new RestRequest(Endpoints.DELETE_DEFECT, Method.Delete)
+                .AddUrlSegment("code", defect.Code)
+                .AddUrlSegment("id", defect.Id)
+                .AddBody(defect);
+
+            return _apiClient.Execute<DefectApiModel>(request);
+        }
+    }
+}

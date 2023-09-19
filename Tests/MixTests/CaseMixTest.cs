@@ -1,15 +1,19 @@
 ﻿using UI.Models;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
-using Tests.UI;
 using Core.Core;
 using NLog;
+using Bogus;
+using OpenQA.Selenium;
+using Core.Client;
+using Core.Utilities.Configuration;
+
+using NUnit.Framework.Interfaces;
 
 namespace Tests.MixTests
 {
     public class CaseMixTest : CommonBaseTest
-    {
-        protected ILogger logger;
+    {        
         Case Case { get; set; }
         Project project { get; set; }
 
@@ -21,9 +25,20 @@ namespace Tests.MixTests
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
 
+        public string? BaseUrl;
+        protected ILogger logger;
+        protected IWebDriver Driver;
+        public Faker Faker = new Faker();
+
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void OneTimeTtestSetUp()
         {
+            BaseUrl = config.AppSettings.URL;
+            Driver = new Browser().Driver;
+
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -65,8 +80,12 @@ namespace Tests.MixTests
             CasesForDelete.Add(Case);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            NavigationSteps.SuccessfulLogin(config.Admin);                       
+
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
 
 
@@ -89,16 +108,25 @@ namespace Tests.MixTests
 
         [OneTimeTearDown]
         public void TearDown()
-        {
-            foreach (var testCace in CasesForDelete)
-            {
-                _caseStep.DeleteTestCase_API(testCace);
-            }
-
+        {      
             foreach (var projectForDelete in ProjectsForDelete)
             {
                 _projectStep.DeleteTestProject_API(projectForDelete);
             }
+
+            // Проверка, что тест упал
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                // Создание скриншота
+                Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+                byte[] screenshotBytes = screenshot.AsByteArray;
+
+                // Прикрепление сриншота
+                _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+            }
+
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

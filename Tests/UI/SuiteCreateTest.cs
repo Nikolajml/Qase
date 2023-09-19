@@ -1,13 +1,11 @@
 ﻿using Bogus;
+using Core.Core;
 using NLog;
 using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Steps.Steps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UI.Models;
+using NUnit.Framework.Interfaces;
 
 namespace Tests.UI
 {
@@ -18,9 +16,16 @@ namespace Tests.UI
         public SuiteStep _suiteStep;
         public NavigationSteps NavigationSteps;
 
+        public string? BaseUrl;
+        protected IWebDriver Driver;
+        public Faker Faker = new Faker();
+
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
         {
+            BaseUrl = config.AppSettings.URL;
+            Driver = new Browser().Driver;
+
             logger = LogManager.GetCurrentClassLogger();
 
             _suiteStep = new SuiteStep(logger, Driver);
@@ -55,6 +60,18 @@ namespace Tests.UI
         public void TearDown()
         {
             _suiteStep.DeleteSuite_UI();
+
+
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+                byte[] screenshotBytes = screenshot.AsByteArray;
+
+                _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+            }
+
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

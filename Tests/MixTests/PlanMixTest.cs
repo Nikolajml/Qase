@@ -1,7 +1,13 @@
-﻿using NLog;
+﻿using Bogus;
+using Core.Client;
+using Core.Core;
+using Core.Utilities.Configuration;
+using NLog;
 using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using Steps.Steps;
 using UI.Models;
+using NUnit.Framework.Interfaces;
 
 namespace Tests.MixTests
 {
@@ -20,9 +26,19 @@ namespace Tests.MixTests
         public NavigationSteps NavigationSteps;
         public ProjectTPStepsPage ProjectTPStepsPage;
 
+        public string? BaseUrl;
+        protected IWebDriver Driver;
+        public Faker Faker = new Faker();
+
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            BaseUrl = config.AppSettings.URL;
+            Driver = new Browser().Driver;
+
+            _apiClient = new ApiClient(new Configurator().Bearer);
             logger = LogManager.GetCurrentClassLogger();
 
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -119,6 +135,18 @@ namespace Tests.MixTests
             {
                 _projectStep.DeleteTestProject_API(projectForDelete);
             }
+
+            
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+                byte[] screenshotBytes = screenshot.AsByteArray;
+
+                _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+            }
+
+            Driver.Quit();
+            Driver.Dispose();
         }
     }
 }

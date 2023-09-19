@@ -1,4 +1,5 @@
 ﻿using API.ResponseAPIModels;
+using API.Services;
 using Core.Client;
 using Core.Utilities;
 using NLog;
@@ -11,7 +12,8 @@ namespace Steps.Steps
 {
     public class SuiteStep
     {      
-        public SuitePopUpPage SuitePopUpPage; 
+        public SuitePopUpPage SuitePopUpPage;
+        public SuiteService SuiteService; 
         protected ApiClient _apiClient;
         protected ILogger _logger;
 
@@ -25,6 +27,11 @@ namespace Steps.Steps
             if (apiClient != null)
             {
                 _apiClient = apiClient;
+            }
+
+            if (apiClient != null)
+            {
+                SuiteService = new SuiteService(logger, apiClient);
             }
 
             _logger = logger;
@@ -60,41 +67,31 @@ namespace Steps.Steps
 
         public SuiteApiModel CreateTestSuite_API(Suite suite)
         {            
-              var request = new RestRequest(Endpoints.CREATE_SUITE, Method.Post)
-                  .AddUrlSegment("code", suite.Code)
-                  .AddBody(suite);
+              var response = SuiteService.CreateSuite_API(suite);
 
-              return _apiClient.Execute<SuiteApiModel>(request);
+              return response;
         }
+              
 
         public SuiteApiModel GetTestSuite_API(Suite suite)
         {
-            var request = new RestRequest(Endpoints.GET_SUITE)
-                .AddUrlSegment("code", suite.Code)
-                .AddUrlSegment("id", suite.Id)
-                .AddBody(suite);
+            var response = SuiteService.GetSuite_API(suite);
 
-            return _apiClient.Execute<SuiteApiModel>(request);            
+            return response;            
         }
 
         public SuiteApiModel UpdateTestSuite_API(Suite suite)
         {
-            var request = new RestRequest(Endpoints.UPDATE_SUITE, Method.Patch)
-                .AddUrlSegment("code", suite.Code)
-                .AddUrlSegment("id", suite.Id)
-                .AddBody(suite);
+            var response = SuiteService.UpdateSuite_API(suite);
 
-            return _apiClient.Execute<SuiteApiModel>(request);
+            return response;
         }
 
         public SuiteApiModel DeleteTestSuite_API(Suite suite)
         {
-            var request = new RestRequest(Endpoints.DELETE_SUITE, Method.Delete)
-                .AddUrlSegment("code", suite.Code)
-                .AddUrlSegment("id", suite.Id)
-                .AddBody(suite);
+            var response = SuiteService.DeleteSuite_API(suite);
 
-            return _apiClient.Execute<SuiteApiModel>(request);
+            return response;
         }
     }
 }

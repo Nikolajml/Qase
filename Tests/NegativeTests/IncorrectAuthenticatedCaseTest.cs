@@ -16,10 +16,14 @@ namespace Tests.NegativeTests
         
         protected CaseStep _caseStep;
 
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void Setup()
         {
             _apiClient = new ApiClient();
+            logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
 
             Case = new Case()

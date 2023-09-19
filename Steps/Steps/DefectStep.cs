@@ -1,6 +1,8 @@
 ﻿using API.ResponseAPIModels;
+using API.Services;
 using Core.Client;
 using Core.Utilities;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NLog;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -13,8 +15,10 @@ namespace Steps.Steps
     public class DefectStep
     {
         public DefectsTPPage DefectsTPPage;
+        public DefectService DefectService;
         protected ApiClient _apiClient;
         protected ILogger _logger;
+
         public DefectStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
             if (driver != null)
@@ -25,6 +29,11 @@ namespace Steps.Steps
             if (apiClient != null)
             {
                 _apiClient = apiClient;
+            }
+
+            if (apiClient != null)
+            {
+                DefectService = new DefectService(logger, apiClient);
             }
 
             _logger = logger;
@@ -96,41 +105,30 @@ namespace Steps.Steps
 
         public DefectApiModel CreateTestDefect_API(Defect defect)
         {
-            var request = new RestRequest(Endpoints.CREATE_DEFECT, Method.Post)
-                .AddUrlSegment("code", defect.Code)
-                .AddBody(defect);
+            var response = DefectService.CreateDefect_API(defect);                         // сделать логер частью Page and Service
 
-            return _apiClient.Execute<DefectApiModel>(request);   
+            return response;
         }
 
         public DefectApiModel GetTestDefect_API(Defect defect)
         {
-            var request = new RestRequest(Endpoints.GET_DEFECT)
-                .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", defect.Id)
-                .AddBody(defect);
+            var response = DefectService.GetDefect_API(defect);
 
-            return _apiClient.Execute<DefectApiModel>(request);                        
+            return response;
         }
 
         public DefectApiModel UpdateTestDefect_API(Defect defect)
         {
-            var request = new RestRequest(Endpoints.UPDATE_DEFECT, Method.Patch)
-                .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", defect.Id)
-                .AddBody(defect);
+            var response = DefectService.UpdateDefect_API(defect);
 
-            return _apiClient.Execute<DefectApiModel>(request);
+            return response;
         }
 
         public DefectApiModel DeleteTestDefect_API(Defect defect)
         {
-            var request = new RestRequest(Endpoints.DELETE_DEFECT, Method.Delete)
-                .AddUrlSegment("code", defect.Code)
-                .AddUrlSegment("id", defect.Id)
-                .AddBody(defect);
+            var response = DefectService.DeleteDefect_API(defect);
 
-            return _apiClient.Execute<DefectApiModel>(request);
+            return response;
         }
 
 
@@ -154,11 +152,11 @@ namespace Steps.Steps
         }
                 
 
-        public List<DefectResult> GetAllTestDefect_API(string code, int limit = 90)
+        public List<DefectResult> GetAllTestDefect_API(string code)
         {
             var request = new RestRequest(Endpoints.GET_ALL_DEFECT)
                  .AddUrlSegment("code", code)
-                 .AddParameter("limit", limit);
+                 .AddParameter("limit", 90);
 
             var response = _apiClient.Execute<GetAllTestDefect>(request);
 

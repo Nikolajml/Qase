@@ -1,4 +1,5 @@
 ﻿using Core.Client;
+using Core.Utilities.Configuration;
 using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
@@ -19,9 +20,14 @@ namespace Tests.NegativeTests
 
         protected CaseStep _caseStep;
 
+        protected ApiClient _apiClient;
+
         [OneTimeSetUp]
         public void Setup()
         {
+            _apiClient = new ApiClient(new Configurator().Bearer);
+            logger = LogManager.GetCurrentClassLogger();
+
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
 
             Case = new Case()

@@ -32,13 +32,9 @@ namespace Steps.Steps
 
         public bool IsPageOpened()
         {
-            return ProjectsPage.IsPageOpened();
+            return ProjectsPage.IsPageOpened();        
         }
-
-        //public void NavigateToProjectsPage()
-        //{
-        //    ProjectsPage.OpenPage();
-        //}
+                
 
 
         public void NavigateToProjectForEditCase_MIX()
