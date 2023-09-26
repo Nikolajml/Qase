@@ -65,10 +65,10 @@ namespace Tests.StatusTests
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());
 
-            if (createdCase.Status == false)                        // the test will fail because a required field is missing
-            {
-                Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
-            }
+            //if (createdCase.Status == false)                        // the test will fail because a required field is missing
+            //{
+            //    Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
+            //}
 
             Case.Id = createdCase.Result.id.ToString();
 
