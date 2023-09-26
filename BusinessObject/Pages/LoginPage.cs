@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Configuration;
 using NLog;
 using OpenQA.Selenium;
+using UI.Models;
 
 namespace UI.Pages
 {
@@ -35,27 +36,30 @@ namespace UI.Pages
 
         private void SetUserName(string username)
         {
+            _logger.Debug($"Set user name: {username}");
             EmailInputBy.SendKeys(username);
         }
 
         private void SetPassword(string password)
         {
+            _logger.Debug($"Set pasword: {password}");
             PasswordInputBy.SendKeys(password);
         }
 
         private void ClickRememberMeCheckBox()
         {
+            _logger.Debug($"Click to RememberMe");
             RememberMeCheckboxBy.Click();
         }
 
         private void ClickSignInButton()
         {
+            _logger.Debug($"Click to Sign In");
             SignInButtonBy.Click();
         }
 
-
         public void TryToLogin(User user)
-        {
+        {   
             SetUserName(user.Username);
             SetPassword(user.Password);
             ClickRememberMeCheckBox();

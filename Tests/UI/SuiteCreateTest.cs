@@ -33,8 +33,12 @@ namespace Tests.UI
             NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.IsPageOpened();
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
 
         [Test]

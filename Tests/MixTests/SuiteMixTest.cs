@@ -13,22 +13,20 @@ namespace Tests.MixTests
 {
     public class SuiteMixTest : CommonBaseTest
     {
+        public string? BaseUrl;
+        protected ApiClient _apiClient;
         protected ILogger logger;
+        protected IWebDriver Driver;
+
         Suite suite { get; set; }
         Project project { get; set; }
-                
-        public List<Project> ProjectsForDelete = new List<Project>();
-
-        public ProjectStep _projectStep;
+         
         public SuiteStep _suiteStep;
         public ProjectTPStepsPage _projectTPStepsPage;
-        public NavigationSteps NavigationSteps;
-
-        public string? BaseUrl;
-        protected IWebDriver Driver;
+        public NavigationSteps NavigationSteps;                
+        
         public Faker Faker = new Faker();
 
-        protected ApiClient _apiClient;
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
@@ -36,7 +34,7 @@ namespace Tests.MixTests
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(new Configurator().Bearer);
+            _apiClient = new ApiClient(config.Bearer!);
             logger = LogManager.GetCurrentClassLogger();
 
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -48,6 +46,15 @@ namespace Tests.MixTests
         [SetUp]
         public void SetUp()
         {
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
+
+            _apiClient._logger = logger;
+            _projectStep = new ProjectStep(logger, _apiClient);
+            _suiteStep = new SuiteStep(logger, Driver, _apiClient);
+            _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
+            NavigationSteps = new NavigationSteps(logger, Driver);
+
+            // Creating a Project for test
             project = new Project()
             {
                 Code = "MIX",
@@ -64,7 +71,7 @@ namespace Tests.MixTests
 
             ProjectsForDelete.Add(project);
 
-
+            // Creation a Suite for test
             suite = new SuiteBuilder()
                .SetSuiteName("New Mix Case UI test")
                .SetSuiteCode(project.Code)
@@ -80,16 +87,15 @@ namespace Tests.MixTests
 
             suite.Id = createdTestSuite.Result.id.ToString();
             logger.Info("Created Suite Id: " + createdTestSuite.Result.id.ToString());
-
-            if (createdTestSuite.Status == false)
-            {
-                Assert.Inconclusive("The Project for SuiteMixTests didn't create");
-            }
-
-
+                        
+            // Successful login
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            NavigationSteps.SuccessfulLogin(config.Admin!);            
+
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The ProjectsPage for SuiteMixTests didn't open");
+            }
         }
 
 
@@ -100,6 +106,8 @@ namespace Tests.MixTests
         [Category("UI")]
         public void EditSuiteMixTest()
         {
+            logger.Debug("EditSuiteMixTest!");
+
             suite.Name = "Edited Mix Suite UI test";
 
             NavigationSteps.NavigateToProjectForEditCase_MIX();
@@ -110,13 +118,7 @@ namespace Tests.MixTests
 
         [OneTimeTearDown]
         public void TearDown()
-        {      
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
-
-
+        {    
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();

@@ -9,27 +9,23 @@ namespace Tests.API
 {
     public class DefectApiTest : CommonBaseTest
     {
+        protected ApiClient _apiClient;
         private ILogger logger;
+
         public Defect defect { get; set; }
         public Project project { get; set; }
-
-        public List<Defect> DefectsForDelete = new List<Defect>();
-        public List<Project> ProjectsForDelete = new List<Project>();
-
-        protected DefectStep _defectStep;
-        protected ProjectStep _projectStep;
-
-        protected ApiClient _apiClient;
+                
+        protected DefectStep _defectStep;        
 
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
-
+            logger = LogManager.GetLogger($"Defect_OneTimeSetUp");
+            _apiClient = new ApiClient(logger, config.Bearer!);
+                        
             _defectStep = new DefectStep(logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
 
             project = new Project()
             {
@@ -51,7 +47,14 @@ namespace Tests.API
 
         [SetUp]
         public void Setup()
-        {            
+        {
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
+
+            _apiClient._logger = logger;
+            _defectStep = new DefectStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
+
+
             defect = new Defect()
             {
                 Code = project.Code,
@@ -68,7 +71,9 @@ namespace Tests.API
         [AllureTag("Smoke")]
         [Category("API")]
         public void CreateDefectTest()
-        {    
+        {
+            logger.Debug("CreateDefectTest!");
+
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             logger.Info("Created Defect: " + createdTestDefect.ToString());
 
@@ -78,7 +83,6 @@ namespace Tests.API
             }
 
             defect.Id = createdTestDefect.Result.id.ToString();
-            DefectsForDelete.Add(defect);
 
             Assert.Multiple(() =>
             {
@@ -95,6 +99,8 @@ namespace Tests.API
         [Category("API")]
         public void GetDefectTest()
         {
+            logger.Debug("GetDefectTest!");
+
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             logger.Info("Created Defect: " + createdTestDefect.ToString());
 
@@ -104,7 +110,6 @@ namespace Tests.API
             }
 
             defect.Id = createdTestDefect.Result.id.ToString();
-            DefectsForDelete.Add(defect);
 
             var getedDefect = _defectStep.GetTestDefect_API(defect);
             logger.Info("Geted Defect: " + getedDefect.Result.ToString());
@@ -125,6 +130,8 @@ namespace Tests.API
         [Category("API")]
         public void UpdateDefectTest()
         {
+            logger.Debug("UpdateDefectTest!");
+
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             logger.Info("Created Defect: " + createdTestDefect.ToString());
 
@@ -134,7 +141,6 @@ namespace Tests.API
             }
 
             defect.Id = createdTestDefect.Result.id.ToString();
-            DefectsForDelete.Add(defect);
 
             defect.DefectTitle = "Updated Defect";
             defect.ActualResult = "Some updated result";
@@ -158,6 +164,8 @@ namespace Tests.API
         [Category("API")]
         public void DeleteDefectTest()
         {
+            logger.Debug("DeleteDefectTest!");
+
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
             logger.Info("Created Defect: " + createdTestDefect.ToString());
 
@@ -175,22 +183,6 @@ namespace Tests.API
                 Assert.IsTrue(defectResponse.Status, "Status code: Defect didn't deleted");
                 Assert.IsTrue(defectResponse.Result.id != 0, "Defect Id not present");
             });              
-        }    
-
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            foreach (var defectForDelete in DefectsForDelete)
-            {
-                _defectStep.DeleteTestDefect_API(defectForDelete);
-            }
-
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
-        }
-
+        } 
     }
 }

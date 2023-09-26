@@ -47,12 +47,16 @@ namespace Steps.Steps
 
         public void CreateCase(Case Case)
         {
+            _logger.Info($"Create test case new info: {Case}");
+
             CasePage.SetCaseName(Case.Title);
             CasePage.ClickToSaveCaseButton();
         }
 
         public void EditCase(Case Case)
         {
+            _logger.Info($"Edit test case new info: {Case}");
+
             CasePage.ClickToCaseTitleField();
             CasePage.ClearCaseTitleField();
             CasePage.SetEditedCaseName(Case.Title);
@@ -62,7 +66,7 @@ namespace Steps.Steps
         // Methods for API tests
         public CaseApiModel CreateTestCase_API(Case Case) 
         {                                               
-            var response = CaseService.CreateCase_API(Case);                         // сделать логер частью Page and Service
+            var response = CaseService.CreateCase_API(Case);                     
 
             return response;
         }               

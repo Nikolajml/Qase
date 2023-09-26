@@ -3,19 +3,21 @@ using API.Services;
 using Core.Client;
 using Core.Utilities;
 using NLog;
+using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using RestSharp;
 using UI.Models;
 using UI.Pages;
+using ILogger = NLog.ILogger;
 
 namespace Steps.Steps
 {
     public class SuiteStep
-    {      
-        public SuitePopUpPage SuitePopUpPage;
-        public SuiteService SuiteService; 
+    {
         protected ApiClient _apiClient;
         protected ILogger _logger;
+        public SuitePopUpPage SuitePopUpPage;
+        public SuiteService SuiteService;         
 
         public SuiteStep(ILogger logger, IWebDriver driver = null, ApiClient apiClient = null)
         {
@@ -40,6 +42,8 @@ namespace Steps.Steps
 
         public void CreateSuit(Suite suite)
         {
+            _logger.Info($"Create test suite new info: {suite}");
+
             //SuitePopUpPage.OpenPage();
             //SuitePopUpPage.IsPageOpened();
             SuitePopUpPage.SetSuiteName(suite.Name);
@@ -50,6 +54,8 @@ namespace Steps.Steps
 
         public void EditSuit_UI(Suite suite)
         {
+            _logger.Info($"Edit test suite new info: {suite}");
+
             SuitePopUpPage.ClickToEditSuiteIcon();
             SuitePopUpPage.ClickToClearNameField();
             SuitePopUpPage.ClearNameField();

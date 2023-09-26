@@ -13,17 +13,19 @@ namespace Tests.UI
 {
     public class CaseCreateTest : CommonBaseTest
     {
-        protected ILogger logger;
+        public string? BaseUrl;
+
         Case Case;
+
+        protected ILogger logger;
+        protected IWebDriver Driver;
+        protected ApiClient _apiClient;
+
         public ProjectTPStepsPage ProjectTPStepsPage;
         public CaseStep _caseStep;
-        public NavigationSteps NavigationSteps;
-
-        public string? BaseUrl;
-        protected IWebDriver Driver;
-        public Faker Faker = new Faker();
-
-        protected ApiClient _apiClient;
+        public NavigationSteps NavigationSteps;                
+        
+        public Faker Faker = new Faker(); 
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
@@ -31,17 +33,22 @@ namespace Tests.UI
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
+            _apiClient = new ApiClient(config.Bearer!);
+            logger = LogManager.GetLogger("CreateCaseTest");
 
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.IsPageOpened();
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+                        
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
+
 
         [Test]
         [Description("Successful UI test to create a Case")]
@@ -54,7 +61,7 @@ namespace Tests.UI
                 .SetCaseTitle(Faker.Name.FullName())
                 .Build();
 
-            ProjectTPStepsPage.NavigateToCreateCase();            
+            ProjectTPStepsPage.NavigateToCreateCase();
             Assert.IsTrue(_caseStep.IsPageOpened(), "The CasePage wasn't opened");
 
             _caseStep.CreateCase(Case);
@@ -71,7 +78,7 @@ namespace Tests.UI
             {
                 Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
                 byte[] screenshotBytes = screenshot.AsByteArray;
-                                
+
                 _allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
             }
 

@@ -25,6 +25,8 @@ namespace Steps.Steps
 
         public void NavigateToEditCase()
         {
+
+            _logger.Info("Navigate to edit case");
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
             ProjectTPPage.ClickToCaseTitle();

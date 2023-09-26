@@ -2,6 +2,7 @@
 using Core.Client;
 using Core.Utilities;
 using NLog;
+using NUnit.Framework.Internal;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace Steps.Steps
     public class ProjectStep
     {
         protected ApiClient _apiClient;
-        protected ILogger _logger;  
+        protected NLog.ILogger _logger;  
 
-        public ProjectStep(ILogger logger, ApiClient apiClient)
+        public ProjectStep(NLog.ILogger logger, ApiClient apiClient)
         {
             _apiClient = apiClient;            
             _logger = logger;                   
@@ -30,6 +31,7 @@ namespace Steps.Steps
 
             _logger.Info("Create test project " + project.ToString());
 
+            _logger.Debug("CreateTestProject_API - 2");
             return _apiClient.Execute<ProjectApiModel>(request);
         }                
 

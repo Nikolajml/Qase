@@ -9,29 +9,24 @@ namespace Tests.API
 {
     public class PlanApiTest : CommonBaseTest
     {
+        protected ApiClient _apiClient;
         private ILogger logger;
+
         public Plan plan { get; set; }
         public Case Case { get; set; }
-        public Project project { get; set; }
-
-        public List<Case> CasesForDelete = new List<Case>();
-        public List<Plan> PlansForDelete = new List<Plan>();
-        public List<Project> ProjectsForDelete = new List<Project>();
+        public Project project { get; set; }               
 
         protected CaseStep _caseStep;
-        protected PlanStep _planStep;
-        protected ProjectStep _projectStep;
-
-        protected ApiClient _apiClient;
+        protected PlanStep _planStep;              
 
         int CaseId { get; set; }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
-
+            logger = LogManager.GetLogger($"Plan_OneTimeSetUp");
+            _apiClient = new ApiClient(logger, config.Bearer!);
+                        
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
             _planStep = new PlanStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, apiClient: _apiClient);
@@ -56,6 +51,13 @@ namespace Tests.API
         [SetUp]
         public void SetUp()
         {
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
+
+            _apiClient._logger = logger;
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
+            _planStep = new PlanStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
+
             Case = new Case()
             {
                 Code = project.Code,
@@ -74,17 +76,13 @@ namespace Tests.API
             int CaseIdForPlan = int.Parse(Case.Id);
             CaseId = CaseIdForPlan;
             Console.WriteLine(CaseIdForPlan);
-
-            CasesForDelete.Add(Case);
-
+                        
             plan = new Plan()
             {
                 Code = project.Code,
                 Title = "Plan API Test",
                 Cases = new List<int> { CaseIdForPlan }
             };
-
-            PlansForDelete.Add(plan);
         }
 
 
@@ -95,6 +93,8 @@ namespace Tests.API
         [Category("API")]
         public void CreatePlanTest()
         {
+            logger.Debug("CreatePlanTest!");
+
             var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
@@ -104,7 +104,6 @@ namespace Tests.API
             }
 
             plan.Id = createdTestPlan.Result.id.ToString();
-            PlansForDelete.Add(plan);
 
             Assert.Multiple(() =>
             {
@@ -121,6 +120,8 @@ namespace Tests.API
         [Category("API")]
         public void GetPlanTest()
         {
+            logger.Debug("GetPlanTest!");
+
             var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
@@ -130,7 +131,6 @@ namespace Tests.API
             }
 
             plan.Id = createdTestPlan.Result.id.ToString();
-            PlansForDelete.Add(plan);
 
             var getedPlanCase = _planStep.GetTestPlan_API(plan);
             logger.Info("Geted Plan: " + getedPlanCase.Result.ToString());
@@ -151,6 +151,8 @@ namespace Tests.API
         [Category("API")]
         public void UpdatePlanTest()
         {
+            logger.Debug("UpdatePlanTest!");
+
             var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
@@ -160,7 +162,6 @@ namespace Tests.API
             }
 
             plan.Id = createdTestPlan.Result.id.ToString();
-            PlansForDelete.Add(plan);
 
             plan.Title = "Updated Plan Title API";
             plan.Description = "Updated Plan Description API";
@@ -184,6 +185,8 @@ namespace Tests.API
         [Category("API")]
         public void DeletePlanTest()
         {
+            logger.Debug("DeletePlanTest!");
+
             var createdTestPlan = _planStep.CreateTestPlan_API(plan);
             logger.Info("Created Plan: " + createdTestPlan.ToString());
 
@@ -201,21 +204,6 @@ namespace Tests.API
                 Assert.IsTrue(planResponse.Status, "Status code: Plan didn't delete");
                 Assert.IsTrue(planResponse.Result.id != 0, "Plan Id not present");
             });
-        }
-
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            foreach (var planForDelete in PlansForDelete)
-            {
-                _planStep.DeleteTestPlan_API(planForDelete);
-            }
-
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using Core.Utilities.Configuration;
 using NLog;
 using OpenQA.Selenium;
+using UI.Models;
 
 namespace UI.Pages
 {
     public class CasePage : BasePage        // use logger Debug Info
     {
-        private static string END_POINT = "case/TP/create";
+        private const string END_POINT = "case/TP/create";
 
         private IWebElement CreateCaseButtonBy
         {
@@ -18,8 +19,7 @@ namespace UI.Pages
 
         private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));     
-
-        private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
+                
 
         public CasePage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
@@ -41,39 +41,41 @@ namespace UI.Pages
         }
            
 
-        // CREATED CASE
+        // Created case
         public void ClickToCaseButton()
         {
-            var a = CreateCaseButtonBy.Displayed;
-            
+            _logger.Debug($"Click to create case button");
             CreateCaseButtonBy.Click();
         }
 
         public void SetCaseName(string caseName)
         {
+            _logger.Debug($"Set case name");
             CaseNameInputBy.SendKeys(caseName);
         }
 
         public void ClickToSaveCaseButton()
         {
+            _logger.Debug($"Click to SaveButton to save the created case");
             SaveCaseButtonBy.Click();
         }
 
-        // EDIT CASE
-        
-
+        // Edit case     
         public void ClickToCaseTitleField()
         {
+            _logger.Debug($"Click to case title field");
             CaseNameInputBy.Click();
         }
 
         public void ClearCaseTitleField()
         {
+            _logger.Debug($"Clear case title field");
             CaseNameInputBy.Clear();
         }
                 
         public void SetEditedCaseName(string caseName)
         {
+            _logger.Debug($"Set edited case name");
             CaseNameInputBy.Clear();
             CaseNameInputBy.SendKeys(caseName);
         }

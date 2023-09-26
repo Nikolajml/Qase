@@ -9,24 +9,20 @@ namespace Tests.API
 {
     public class CaseApiTest : CommonBaseTest
     {
-        private ILogger logger;
-        public Case Case { get; set; }
-        public Project project { get; set; }
-
-        public List<Case> CasesForDelete = new List<Case>();
-        public List<Project> ProjectsForDelete = new List<Project>();
-
-        protected CaseStep _caseStep;
-        protected ProjectStep _projectStep;
-
         protected ApiClient _apiClient;
+        private ILogger logger;
+
+        public Case Case { get; set; }
+        public Project project { get; set; }              
+
+        protected CaseStep _caseStep;   
 
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetLogger($"Case_OneTimeSetUp");
+            _apiClient = new ApiClient(logger, config.Bearer!);
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -52,6 +48,12 @@ namespace Tests.API
         [SetUp]
         public void Setup()
         {
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
+
+            _apiClient._logger = logger;
+            _caseStep = new CaseStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
+
             Case = new Case()
             {
                 Code = project.Code,
@@ -67,22 +69,23 @@ namespace Tests.API
         [Category("API")]
         public void CreateCaseTest()
         {
+            logger.Debug("CreateCaseTest!");
+
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());
 
-            if (createdCase.Status == false)                                       
+            if (createdCase.Status == false)
             {
                 Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
             }
-                        
+
             Case.Id = createdCase.Result.id.ToString();
-            CasesForDelete.Add(Case);
 
             Assert.Multiple(() =>
             {                                                                               // Написать тестовый класс, где получу каждый статус теста - test pass, test faild 
                 Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");       // статусы тстов NUnit and Allure
                 Assert.IsTrue(createdCase.Result.id != 0, "Case Id not present");
-            });                        
+            });
         }
 
 
@@ -94,6 +97,8 @@ namespace Tests.API
 
         public void GetCaseTest()
         {
+            logger.Debug("GetCaseTest!");
+
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdTestCase.ToString());
 
@@ -103,7 +108,6 @@ namespace Tests.API
             }
 
             Case.Id = createdTestCase.Result.id.ToString();
-            CasesForDelete.Add(Case);
 
             var getedTestCase = _caseStep.GetTestCase_API(Case);
             logger.Info("Received Case: " + getedTestCase.Result.ToString());
@@ -123,6 +127,8 @@ namespace Tests.API
         [Category("API")]
         public void UpdateCaseTest()
         {
+            logger.Debug("UpdateCaseTest!");
+
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdTestCase.ToString());
 
@@ -132,7 +138,6 @@ namespace Tests.API
             }
 
             Case.Id = createdTestCase.Result.id.ToString();
-            CasesForDelete.Add(Case);
 
             Case.Title = "Update API";
             Case.Description = "Description API";
@@ -155,8 +160,10 @@ namespace Tests.API
         [Category("API")]
         public void DeleteCaseTest()
         {
+            logger.Debug("DeleteCaseTest!");
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdTestCase.ToString());
+
 
             if (createdTestCase.Status == false)
             {
@@ -172,21 +179,6 @@ namespace Tests.API
                 Assert.IsTrue(caseResponse.Status, "Status code: Case didn't delete");
                 Assert.IsTrue(caseResponse.Result.id != 0, "Case Id not present");
             });
-        }
-
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            foreach (var caseForDelete in CasesForDelete)
-            {
-                _caseStep.DeleteTestCase_API(caseForDelete);
-            }
-
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
         }
     }
 }

@@ -45,88 +45,105 @@ namespace UI.Pages
         // CREATE DEFECTS
         public void ClickToCreateNewDefectButton()
         {
+            _logger.Debug($"Click to create defect button");
             CreateNewDefectButtonBy.Click();
         }
 
         public void SetDefectTitle(string defectTitle)
         {
+            _logger.Debug($"Set a defect title");
             DefectTitleInputBy.SendKeys(defectTitle);
         }
 
         public void SetActualresult(string actualResult)
         {
+            _logger.Debug($"Set actual result for the defect");
             ActualResultInputBy.SendKeys(actualResult);
         }
 
 
         public void ClickToCreateDefectButton()
         {
+            _logger.Debug($"Click Create Defect Button");
             SaveDefectButtonBy.Click();
         }
 
         // METHODS FOR SECOND ASSERT
         public void ClickToDefectTitleToSecondAssert()
         {
+            _logger.Debug($"Click to defect title for second assert");
             DefectTitleBy.Click();
         }
 
         public string GetDefectTitleForSecondAssert()
         {
+            _logger.Debug($"Get defect title for second assert");
             return DefectTitleForSecondAssertBy.Text;
         }
 
         public string GetDefectDescriptionForSecondAssert()
         {
+            _logger.Debug($"Get defect description for second assert");
             return DefectDescriptionForSecondAssertBy.Text;
         }
 
         // EDIT DEFECTS
         public void ClickToDefectTitle()
         {
+            _logger.Debug($"Click to defect title for edit");
             DefectTitleBy.Click();
         }
 
         public void ClickToDefectEdit()
         {
+            _logger.Debug($"Click to defect edit");
             EditDefectButtonBy.Click();
         }
 
         public void ClickToClearTitleDefectField()
         {
+            _logger.Debug($"Click to clear defect title");
             DefectTitleInputBy.Click();
         }
         public void ClearTitleDefectField()
         {
+            _logger.Debug($"Clear defect title");
             DefectTitleInputBy.Clear();
         }
 
         public void SetEditedDefectTitle(string defectTitle)
         {
+            _logger.Debug($"Set edited defect title");
             DefectTitleInputBy.SendKeys(defectTitle);
         }
 
         public void ClickToClearActualResult()
         {
+            _logger.Debug($"Ckick to clear actual result");
             ActualResultInputBy.Click();
         }
 
         public void ClearActualResultField()
         {
+            _logger.Debug($"Clear actual result");
             ActualResultInputBy.Clear();
         }
 
         public void SetEditedActualResult(string actualResult)
         {
+            _logger.Debug($"Set edited actual result");
             ActualResultInputBy.SendKeys(actualResult);
         }
         public void ClickToUpdateDefectButton()
         {
+            _logger.Debug($"Cleck to update actual result for defect");
             UpdateDefectButtonBy.Click();
         }
 
         // METHOD TO ASSERT
         public string GetDefectTitle()
         {
+            _logger.Debug($"Get defect title for assert");
             return DefectTitleBy.GetAttribute("innerText");
         }
 
@@ -134,16 +151,19 @@ namespace UI.Pages
 
         public void ClickToDropDownToDeleteDefect()
         {
+            _logger.Debug($"Click on the DropDown to delete defect");
             DeleteDefectDropDown.Click();
         }
 
         public void ClickToDeleteDefectButtonToDeleteDefect()
         {
+            _logger.Debug($"Click on the DeleteDefect Button to delete defect");
             DeleteDefectButton.Click();
         }
 
         public void ClickToConfirmDeleteDefectButtonToDeleteDefect()
         {
+            _logger.Debug($"Click on the ConfirmDeleteButton to delete defect");
             ConfirmDeleteDefectButton.Click();
         }
     }

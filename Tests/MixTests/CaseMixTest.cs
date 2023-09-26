@@ -18,9 +18,9 @@ namespace Tests.MixTests
         Project project { get; set; }
 
         public List<Case> CasesForDelete = new List<Case>();
-        public List<Project> ProjectsForDelete = new List<Project>();
+        //public List<Project> ProjectsForDelete = new List<Project>();
 
-        public ProjectStep _projectStep;
+        //public ProjectStep _projectStep;
         public CaseStep _caseStep;
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
@@ -80,7 +80,7 @@ namespace Tests.MixTests
             CasesForDelete.Add(Case);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);                       
+            NavigationSteps.SuccessfulLogin(config.Admin!);                       
 
             if (NavigationSteps.IsPageOpened() == false)
             {

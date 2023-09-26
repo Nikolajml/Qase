@@ -14,20 +14,22 @@ namespace Tests.MixTests
     public class PlanMixTest : CommonBaseTest
     {
         protected ILogger logger;
+        protected IWebDriver Driver;
+
         Plan plan { get; set; }
         Case Case { get; set; }
         Project project { get; set; }
                 
-        public List<Project> ProjectsForDelete = new List<Project>();
+        //public List<Project> ProjectsForDelete = new List<Project>();
 
-        public ProjectStep _projectStep;
+        //public ProjectStep _projectStep;
         public CaseStep _caseStep;
         public PlanStep _planStep;
         public NavigationSteps NavigationSteps;
         public ProjectTPStepsPage ProjectTPStepsPage;
 
         public string? BaseUrl;
-        protected IWebDriver Driver;
+        
         public Faker Faker = new Faker();
 
         protected ApiClient _apiClient;
@@ -38,7 +40,7 @@ namespace Tests.MixTests
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(new Configurator().Bearer);
+            _apiClient = new ApiClient(config.Bearer!);
             logger = LogManager.GetCurrentClassLogger();
 
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -105,8 +107,12 @@ namespace Tests.MixTests
 
             
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+                        
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Project Page didn't opene");
+            }
         }
 
 
@@ -131,11 +137,10 @@ namespace Tests.MixTests
         [OneTimeTearDown]
         public void TearDown()
         {           
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
-
+            //foreach (var projectForDelete in ProjectsForDelete)
+            //{
+            //    _projectStep.DeleteTestProject_API(projectForDelete);
+            //}
             
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {

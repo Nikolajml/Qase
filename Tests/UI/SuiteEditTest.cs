@@ -13,16 +13,17 @@ namespace Tests.UI
     public class SuiteEditTest : CommonBaseTest
     {
         protected ILogger logger;
+        protected IWebDriver Driver;
+        protected ApiClient _apiClient;
 
         public ProjectTPStepsPage _projectTPStepsPage;
         public SuiteStep _suiteStep;
         public NavigationSteps NavigationSteps;
 
         public string? BaseUrl;
-        protected IWebDriver Driver;
+        
         public Faker Faker = new Faker();
 
-        protected ApiClient _apiClient;
 
         [OneTimeSetUp]
         public void OniTimeTtestSetUp()
@@ -37,8 +38,12 @@ namespace Tests.UI
             NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.IsPageOpened();
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
 
         [SetUp]
@@ -73,7 +78,6 @@ namespace Tests.UI
         public void TearDown()
         {
             _suiteStep.DeleteSuite_UI();
-
 
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {

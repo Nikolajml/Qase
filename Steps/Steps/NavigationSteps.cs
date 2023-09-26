@@ -27,6 +27,8 @@ namespace Steps.Steps
 
         public void SuccessfulLogin(User user)
         {
+            _logger.Info($"User for LogIn: {user}");
+
             LoginPage.TryToLogin(user);
         }
 

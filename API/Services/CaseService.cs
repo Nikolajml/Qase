@@ -4,6 +4,11 @@ using API.ResponseAPIModels;
 using UI.Models;
 using Core.Utilities;
 using Core.Client;
+using AngleSharp.Io;
+using Newtonsoft.Json;
+using System.Text.Json;
+using Bogus.Bson;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace API.Services
 {
@@ -44,7 +49,11 @@ namespace API.Services
                 .AddUrlSegment("code", Case.Code)
                 .AddBody(Case);
 
-            return _apiClient.Execute<CaseApiModel>(request);
+            var response = _apiClient.Execute(request);
+            var responseModel = JsonSerializer.Deserialize<CaseApiModel>(response.Content);
+            responseModel.StatusCode = response.StatusCode;
+
+            return responseModel;
         }
 
         public CaseApiModel UpdateCase_API(Case Case)

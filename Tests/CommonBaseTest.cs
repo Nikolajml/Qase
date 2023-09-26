@@ -8,6 +8,7 @@ using NUnit.Allure.Core;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using Steps.Steps;
+using UI.Models;
 
 namespace Tests
 {
@@ -15,7 +16,10 @@ namespace Tests
     public class CommonBaseTest
     {
         protected Configurator config;
-        protected AllureLifecycle _allure;                
+        protected AllureLifecycle _allure;
+
+        public List<Project> ProjectsForDelete = new List<Project>();
+        protected ProjectStep _projectStep;
 
         [OneTimeSetUp]
         public void Setup()
@@ -27,7 +31,11 @@ namespace Tests
         [OneTimeTearDown]           // скриншот делать один раз за класс 
         public void TearDown()      // вынести в TearDown часто повторяющиеся действия как Project
         {
-            
+            foreach (var projectForDelete in ProjectsForDelete)
+            {
+                _projectStep.DeleteTestProject_API(projectForDelete);
+            }
+
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Tests.NegativeTests
         {
             var createdTestCase = _caseStep.CreateTestCase_API(Case);
 
-            Assert.IsFalse(createdTestCase.Status, "Status is not False");
+            Assert.IsTrue(createdTestCase.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity, "Status is not False");
             Assert.AreEqual("The title field is required.", createdTestCase.Message, "Error message doesn't match to expected error message");
         }
     }

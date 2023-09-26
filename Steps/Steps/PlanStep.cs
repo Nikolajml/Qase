@@ -3,10 +3,12 @@ using API.Services;
 using Core.Client;
 using Core.Utilities;
 using NLog;
+using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using RestSharp;
 using UI.Models;
 using UI.Pages;
+using ILogger = NLog.ILogger;
 
 namespace Steps.Steps
 {
@@ -38,14 +40,20 @@ namespace Steps.Steps
         }
 
 
+        public bool IsPageOpened()
+        {
+            return PlanTPPage.IsPageOpened();
+        }
+
         public void NavigateToPlanPage()
         {
             PlanTPPage.OpenPage();
-            //PlanTPPage.IsPageOpened();
         }
 
         public void CreatePlan(Plan plan)
-        {            
+        {
+            _logger.Info($"Create test plan new info: {plan}");
+
             PlanTPPage.ClickToCreatePlanButton();
             PlanTPPage.SetPlanTitle(plan.Title);
             PlanTPPage.SetPlanDescription(plan.Description);
@@ -76,7 +84,9 @@ namespace Steps.Steps
         }
 
         public void EditPlan(Plan plan)
-        {            
+        {
+            _logger.Info($"Edit test plan new info: {plan}");
+
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
             PlanTPPage.ClickToClearTitlePlanField();
@@ -87,7 +97,9 @@ namespace Steps.Steps
 
         public void DeletePlan_UI()
         {
-            PlanTPPage.DeletePlan();
+            PlanTPPage.ClickToEllipsis();
+            PlanTPPage.ClickToDeletePlanButton();
+            PlanTPPage.ClickToConfirmDeletePlanButton();
         }
                 
 

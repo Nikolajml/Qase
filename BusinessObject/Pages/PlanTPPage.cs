@@ -135,19 +135,13 @@ namespace UI.Pages
         }
 
 
-        // METHOD TO ASSERT
+        // Method for assert
         public string GetPlanTitle()
         {
             return GetPlanTitleBy.GetAttribute("innerText");
         }
 
-        // METHOD TO ASSERT
-        public void DeletePlan()
-        {
-            ClickToEllipsis();
-            ClickToDeletePlanButton();
-            ClickToConfirmDeletePlanButton();
-        }
+        // Methods for delete plan        
 
         public void ClickToDeletePlanButton()
         {

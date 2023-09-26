@@ -9,24 +9,21 @@ namespace Tests.API
 {
     public class SuiteApiTest : CommonBaseTest
     {
+        protected ApiClient _apiClient;
         private ILogger logger;
+
         public Suite suite { get; set; }
         public Project project { get; set; }
 
-        public List<Suite> SuitesForDelete = new List<Suite>();
-        public List<Project> ProjectsForDelete = new List<Project>();
-
         protected SuiteStep _suiteStep;
-        protected ProjectStep _projectStep;
-
-        protected ApiClient _apiClient;
+                 
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _apiClient = new ApiClient(new Configurator().Bearer);
-            logger = LogManager.GetCurrentClassLogger();
-
+            logger = LogManager.GetLogger($"Suite_OneTimeSetUp");
+            _apiClient = new ApiClient(logger, config.Bearer!);
+                        
             _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
 
@@ -50,7 +47,13 @@ namespace Tests.API
 
         [SetUp]
         public void Setup()
-        {           
+        {
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
+
+            _apiClient._logger = logger;
+            _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
+            _projectStep = new ProjectStep(logger, _apiClient);
+
             suite = new Suite()
             {
                 Code = project.Code,
@@ -67,6 +70,8 @@ namespace Tests.API
         [Category("API")]
         public void CreateSuiteTest()
         {
+            logger.Debug("CreateSuitTest!");
+
             var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
@@ -76,7 +81,6 @@ namespace Tests.API
             }
 
             suite.Id = createdSuiteTest.Result.id.ToString();
-            SuitesForDelete.Add(suite);
 
             Assert.Multiple(() =>
             {
@@ -93,6 +97,8 @@ namespace Tests.API
         [Category("API")]
         public void GetSuiteTest()
         {
+            logger.Debug("GetSuitTest!");
+
             var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
@@ -102,7 +108,6 @@ namespace Tests.API
             }
 
             suite.Id = createdSuiteTest.Result.id.ToString();
-            SuitesForDelete.Add(suite);
 
             var getedSuite = _suiteStep.GetTestSuite_API(suite);
             logger.Info("Geted Suite: " + getedSuite.ToString());
@@ -122,6 +127,8 @@ namespace Tests.API
         [Category("API")]
         public void UpdateSuiteTest()
         {
+            logger.Debug("UpdateSuitTest!");
+
             var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
@@ -131,7 +138,6 @@ namespace Tests.API
             }
 
             suite.Id = createdSuiteTest.Result.id.ToString();
-            SuitesForDelete.Add(suite);
 
             suite.Name = "Updated Suite Name API";
             suite.Description = "Updated Description API";
@@ -154,6 +160,8 @@ namespace Tests.API
         [Category("API")]
         public void DeleteSuiteTest()
         {
+            logger.Debug("DeleteSuitTest!");
+
             var createdSuiteTest = _suiteStep.CreateTestSuite_API(suite);
             logger.Info("Created Suite: " + createdSuiteTest.ToString());
 
@@ -172,21 +180,6 @@ namespace Tests.API
                 Assert.IsTrue(suiteResponse.Status, "Status code: Suite didn't delete");
                 Assert.IsTrue(createdSuiteTest.Result.id != 0, "Defect Id not present");
             });
-        }
-
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            foreach (var suiteForDelete in SuitesForDelete)
-            {
-                _suiteStep.DeleteTestSuite_API(suiteForDelete);
-            }
-
-            foreach (var projectForDelete in ProjectsForDelete)
-            {
-                _projectStep.DeleteTestProject_API(projectForDelete);
-            }
         }
     }
 }

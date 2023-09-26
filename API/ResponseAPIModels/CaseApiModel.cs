@@ -2,6 +2,7 @@
 using AngleSharp.Dom;
 using Bogus.DataSets;
 using Core.Utilities.Configuration;
+using System.Net;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
@@ -48,13 +49,16 @@ namespace API.ResponseAPIModels
 
     public class CaseApiModel
     {
+
+        // Добавить Статус код
+        public HttpStatusCode StatusCode { get; set; }
+
         [JsonPropertyName("status")]
         public bool Status { get; set; }
 
         [JsonPropertyName("result")]
         public CaseResult Result { get; set; }
 
-        // Добавить Статус код
 
 
         [JsonPropertyName("error")]

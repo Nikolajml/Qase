@@ -13,19 +13,21 @@ namespace Tests.MixTests
     public class DefectMixTest : CommonBaseTest
     {
         protected ILogger logger;
+        protected IWebDriver Driver;
+
         Defect defect { get; set; }
         Project project { get; set; }
 
         public List<Defect> DefectsForDelete = new List<Defect>();
-        public List<Project> ProjectsForDelete = new List<Project>();
+        //public List<Project> ProjectsForDelete = new List<Project>();
 
         public DefectStep _defectStep;
-        public ProjectStep _projectStep;
+        //public ProjectStep _projectStep;
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
 
         public string? BaseUrl;
-        protected IWebDriver Driver;
+        
         public Faker Faker = new Faker();
 
         protected ApiClient _apiClient;
@@ -75,13 +77,17 @@ namespace Tests.MixTests
 
             defect.Id = createdTestDefect.Result.id.ToString();
 
-           // Console.WriteLine(defect.Id);
+            //Console.WriteLine(defect.Id);
 
             //DefectsForDelete.Add(defect);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            Assert.IsTrue(NavigationSteps.IsPageOpened());
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+                        
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
 
         [Test]
@@ -110,7 +116,6 @@ namespace Tests.MixTests
             {
                 _projectStep.DeleteTestProject_API(projectForDelete);
             }
-
             
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {

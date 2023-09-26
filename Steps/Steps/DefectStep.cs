@@ -46,7 +46,9 @@ namespace Steps.Steps
         }
 
         public void CreateDefect_UI(Defect defect)
-        {                        
+        {
+            _logger.Info($"Create test defect new info: {defect}");
+
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
             DefectsTPPage.SetActualresult(defect.ActualResult);
@@ -73,9 +75,6 @@ namespace Steps.Steps
             return DefectsTPPage.GetDefectDescriptionForSecondAssert();
         }
 
-
-
-
         public void NavigateToDefectPage_UI()
         {
             DefectsTPPage.OpenPage();
@@ -83,6 +82,8 @@ namespace Steps.Steps
 
         public void EditDefect_UI(Defect defect)
         {
+            _logger.Info($"Edit test defect new info: {defect}");
+
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
             DefectsTPPage.ClickToClearTitleDefectField();
@@ -94,7 +95,6 @@ namespace Steps.Steps
             DefectsTPPage.ClickToUpdateDefectButton();
         }
 
-
         public void DeleteDefect_UI()
         {
             DefectsTPPage.ClickToDropDownToDeleteDefect();
@@ -102,10 +102,9 @@ namespace Steps.Steps
             DefectsTPPage.ClickToConfirmDeleteDefectButtonToDeleteDefect();
         }
 
-
         public DefectApiModel CreateTestDefect_API(Defect defect)
         {
-            var response = DefectService.CreateDefect_API(defect);                         // сделать логер частью Page and Service
+            var response = DefectService.CreateDefect_API(defect);                       
 
             return response;
         }
@@ -131,8 +130,6 @@ namespace Steps.Steps
             return response;
         }
 
-
-
         public void DeleteTestDefectByName(string name, string code)
         {
             var listOfDefects = GetAllTestDefect_API(code);
@@ -149,8 +146,7 @@ namespace Steps.Steps
 
                 DeleteTestDefect_API(testDefectForDelete);
             }
-        }
-                
+        }                
 
         public List<DefectResult> GetAllTestDefect_API(string code)
         {

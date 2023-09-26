@@ -19,7 +19,7 @@ namespace UI.Pages
         private IWebElement SuiteNameInputForClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameEditBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.XPath("//*[@class='btn me-2 btn-primary'][2]")); //  //.tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus
+        private IWebElement CreateCaseButtonBy => Driver.FindElement(By.XPath("//*[@class='btn me-2 btn-primary'][2]")); //.tXTVFF .yxKHfs:nth-child(3) .Cr3S77:nth-child(2) .fa-plus
         private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));
         private IWebElement CreatedCaseTitle => Driver.FindElement(By.CssSelector(".Azji8w .EllwN3:nth-last-child(2) .wq7uNh"));
@@ -27,8 +27,7 @@ namespace UI.Pages
         private IWebElement SuiteNameTitleBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .fXc2Go"));
         private IWebElement DefectsCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Defects']"));
         private IWebElement PlansCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Test Plans']"));
-
-        //PlansCategoryPanel
+                
 
         private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
 
@@ -43,16 +42,18 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"Page opened status: {SuiteButtonBy.Displayed}");
             return SuiteButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 
 
-        // CREATE SUITE
+        // Create suite
         public void ClickToSuiteButton()
         {
             SuiteButtonBy.Click();
@@ -78,7 +79,7 @@ namespace UI.Pages
         }
 
 
-        //EDIT SUITE
+        //Edit suite
         public void ClickToEllipsis()
         {
             EllipsisEditBy.Click();
@@ -110,46 +111,14 @@ namespace UI.Pages
         }
 
 
-
-        //// CREATED CASE
+        // Created case
         public void ClickToCaseButton()
         {
             CreateCaseButtonBy.Click();
-        }
-
-        //public void SetCaseName(string caseName)
-        //{
-        //    CaseNameInputBy.SendKeys(caseName);
-        //}
-
-        //public void ClickToSaveCaseButton()
-        //{
-        //    SaveCaseButtonBy.Click();
-        //}
-
-        //// EDIT CASE
-        //public void ClickToCaseTitle()
-        //{
-        //    CreatedCaseTitle.Click();
-        //}
-
-        //public void ClickToCaseEdit()
-        //{
-        //    CaseEditBy.Click();
-        //}
-
-        //public void ClickToCaseTitleField()
-        //{
-        //    CaseNameInputBy.Click();
-        //}
-
-        //public void ClearCaseTitleField()
-        //{
-        //    CaseNameInputBy.Clear();
-        //}
+        }    
               
 
-        // METHODS TO ASSERTS
+        // Methods to assert
         public string GetSuiteName()
         {
             return SuiteNameTitleBy.GetAttribute("innerText");
@@ -160,19 +129,7 @@ namespace UI.Pages
             var locator = string.Format(SuiteNameByTextTeplmate, text);
             return Driver.FindElement(By.XPath(locator)).GetAttribute("innerText");
         }
-
-        //public void SetEditedCaseName(string caseName)
-        //{
-        //    CaseNameInputBy.Clear();
-        //    CaseNameInputBy.SendKeys(caseName);
-        //}
-
-
-
-
-
-
-
+                
 
         public string GetCreatedCaseTitle()
         {
@@ -192,21 +149,17 @@ namespace UI.Pages
         }
 
 
-
         // Methods for Navigate to Defects Category
-
         public void NavigateToDefectsPage()
         {
             DefectsCategoryPanel.Click();
         }
 
-        // Methods for Navigate to Plans Category
 
+        // Methods for Navigate to Plans Category
         public void NavigateToPlansPage()
         {
             PlansCategoryPanel.Click();
         }
-
-
     }
 }

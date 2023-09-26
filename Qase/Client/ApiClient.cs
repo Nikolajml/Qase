@@ -7,12 +7,31 @@ namespace Core.Client
 {
     public class ApiClient
     {
-        protected readonly Logger _logger;
+        public ILogger _logger;
         private readonly RestClient _restClient;
 
         public ApiClient(string token = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
+
+            var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
+            {
+                ThrowOnAnyError = false,
+                MaxTimeout = 10000
+            };
+
+            _restClient = new RestClient(options);
+            _restClient.AddDefaultHeader("accept", "application/json");
+
+            if (token != null)
+            {
+                _restClient.AddDefaultHeader("Token", token);
+            }
+        }
+
+        public ApiClient(ILogger logger, string token = null)
+        {
+            _logger = logger;
 
             var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
             {

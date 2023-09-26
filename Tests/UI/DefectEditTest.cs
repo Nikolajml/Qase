@@ -31,15 +31,19 @@ namespace Tests.UI
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(new Configurator().Bearer);
+            _apiClient = new ApiClient(config.Bearer!);
             logger = LogManager.GetCurrentClassLogger();
 
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             NavigationSteps = new NavigationSteps(logger, Driver);
 
             NavigationSteps.NavigateToLoginPage();
-            NavigationSteps.SuccessfulLogin(config.Admin);
-            NavigationSteps.IsPageOpened();
+            NavigationSteps.SuccessfulLogin(config.Admin!);
+
+            if (NavigationSteps.IsPageOpened() == false)
+            {
+                Assert.Inconclusive("The Projects Page didn't open");
+            }
         }
 
         [SetUp]
