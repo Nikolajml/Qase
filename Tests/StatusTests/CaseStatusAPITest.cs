@@ -2,16 +2,11 @@
 using NLog;
 using NUnit.Allure.Attributes;
 using Steps.Steps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UI.Models;
 
 namespace Tests.StatusTests
 {
-    public class CaseStatusTest2 : CommonBaseTest
+    public class CaseStatusAPITest : CommonBaseTest
     {
         protected ApiClient _apiClient;
         private ILogger logger;
@@ -21,10 +16,11 @@ namespace Tests.StatusTests
 
         protected CaseStep _caseStep;
 
+
         [SetUp]
         public void Setup()
         {            
-            logger = LogManager.GetLogger($"CreateCase with wrong Data");
+            logger = LogManager.GetLogger($"CaseTest with wrong SetUp");
             _apiClient = new ApiClient(logger, config.Bearer!);
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
@@ -34,7 +30,7 @@ namespace Tests.StatusTests
             {
                 Code = "CASE",
                 Title = "MyProjectForCases",
-                Access = "all" 
+                Access = ""                     // test will fail because the project won't be created
             };
 
             var createdProject = _projectStep.CreateTestProject_API(project);
@@ -49,32 +45,32 @@ namespace Tests.StatusTests
             Case = new Case()
             {
                 Code = project.Code,
-                Title = ""
+                Title = "API Case"
             };
         }
 
         [Test]
-        [Description("Unsuccessful CreateCaseAPITest with wrong Data")]
+        [Description("Unsuccessful CreateCaseAPITest with wrong SetUp")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("WRONG")]
-        public void CreateCaseTestWithWrongCaseData()
+        public void CreateCaseTestWithWrongSetUp()
         {
-            //logger.Debug("CreateUnsuccessfulCaseTest!");
+            logger.Debug("CreateUnsuccessfulCaseTest!");
 
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());
 
-            //if (createdCase.Status == false)                        // the test will fail because a required field is missing
-            //{
-            //    Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
-            //}
+            if (createdCase.Status == false)
+            {
+                Assert.Inconclusive("Case didn't create: " + createdCase.ToString());
+            }
 
             Case.Id = createdCase.Result.id.ToString();
 
             Assert.Multiple(() =>
-            {
-                Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");
+            {                                                                               
+                Assert.IsTrue(createdCase.Status, "Status code: Case didn't create");       
                 Assert.IsTrue(createdCase.Result.id != 0, "Case Id not present");
             });
         }
