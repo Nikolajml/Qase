@@ -24,10 +24,8 @@ namespace Tests.StatusTests
 
         [SetUp]
         public void Setup()
-        {
-            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
-
-            logger = LogManager.GetLogger($"Case_OneTimeSetUp");
+        {            
+            logger = LogManager.GetLogger($"CaseTest with wrong SetUp");
             _apiClient = new ApiClient(logger, config.Bearer!);
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);

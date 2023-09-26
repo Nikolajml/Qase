@@ -23,10 +23,8 @@ namespace Tests.StatusTests
 
         [SetUp]
         public void Setup()
-        {
-            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
-
-            logger = LogManager.GetLogger($"Case_OneTimeSetUp");
+        {            
+            logger = LogManager.GetLogger($"CreateCase with wrong Data");
             _apiClient = new ApiClient(logger, config.Bearer!);
 
             _caseStep = new CaseStep(logger, apiClient: _apiClient);
@@ -56,13 +54,13 @@ namespace Tests.StatusTests
         }
 
         [Test]
-        [Description("Unsuccessful CreateCaseAPITest with wrong SetUp")]
+        [Description("Unsuccessful CreateCaseAPITest with wrong Data")]
         [AllureOwner("User")]
         [AllureTag("Smoke")]
         [Category("WRONG")]
         public void CreateCaseTestWithWrongCaseData()
         {
-            logger.Debug("CreateUnsuccessfulCaseTest!");
+            //logger.Debug("CreateUnsuccessfulCaseTest!");
 
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());
