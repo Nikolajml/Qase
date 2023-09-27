@@ -33,7 +33,7 @@ namespace Tests.UI
             Driver = new Browser().Driver;
 
             _apiClient = new ApiClient(config.Bearer!);
-            logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetLogger("EditCaseUITest");
 
             _caseStep = new CaseStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);

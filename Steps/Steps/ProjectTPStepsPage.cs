@@ -19,13 +19,13 @@ namespace Steps.Steps
         // Steps for Case
         public void NavigateToCreateCase()
         {
+            _logger.Info("Navigate to create case");
             ProjectTPPage.OpenPage();
             ProjectTPPage.ClickToCaseButton();
         }
 
         public void NavigateToEditCase()
         {
-
             _logger.Info("Navigate to edit case");
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
@@ -34,7 +34,8 @@ namespace Steps.Steps
         }
 
         public void NavigateToEditCase_MIX()
-        {            
+        {
+            _logger.Info("Navigate to edit case for Mix Tests");
             ProjectTPPage.ClickToCaseTitle();
             ProjectTPPage.ClickToCaseEdit();
         }
@@ -50,6 +51,7 @@ namespace Steps.Steps
 
         public void NavigateToCreateSuite()
         {
+            _logger.Info("Navigate to create suite");
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
             ProjectTPPage.ClickToSuiteButton();
@@ -58,6 +60,7 @@ namespace Steps.Steps
         
         public void NavigateToEditSuite()
         {
+            _logger.Info("Navigate to edit suite");
             ProjectTPPage.OpenPage();
             ProjectTPPage.IsPageOpened();
         }
@@ -72,6 +75,7 @@ namespace Steps.Steps
 
         public void NavigateToDefectsPage()
         {
+            _logger.Info("Navigate to defect page");
             ProjectTPPage.NavigateToDefectsPage();
         }
 
@@ -79,6 +83,7 @@ namespace Steps.Steps
 
         public void NavigateToPlansPage()
         {
+            _logger.Info("Navigate to plan page");
             ProjectTPPage.NavigateToPlansPage();
         }
     }

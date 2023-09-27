@@ -32,11 +32,13 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"Case Page opened status: {SaveCaseButtonBy.Displayed}");
             return SaveCaseButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
            
@@ -50,13 +52,13 @@ namespace UI.Pages
 
         public void SetCaseName(string caseName)
         {
-            _logger.Debug($"Set case name");
+            _logger.Debug($"Set case name: {caseName}");
             CaseNameInputBy.SendKeys(caseName);
         }
 
         public void ClickToSaveCaseButton()
         {
-            _logger.Debug($"Click to SaveButton to save the created case");
+            _logger.Debug($"Click to 'Save Button' to save the created case");
             SaveCaseButtonBy.Click();
         }
 
@@ -75,7 +77,7 @@ namespace UI.Pages
                 
         public void SetEditedCaseName(string caseName)
         {
-            _logger.Debug($"Set edited case name");
+            _logger.Debug($"Set edited case name: {caseName}");
             CaseNameInputBy.Clear();
             CaseNameInputBy.SendKeys(caseName);
         }

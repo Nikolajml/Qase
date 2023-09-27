@@ -39,11 +39,13 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"PlanTP Page opened status: {CreatePlanButtonBy.Displayed}");
             return CreatePlanButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 

@@ -60,7 +60,7 @@ namespace Tests.StatusTests
         [Category("WRONG")]
         public void CreateCaseTestWithWrongCaseData()
         {
-            //logger.Debug("CreateUnsuccessfulCaseTest!");
+            logger.Debug("CaseTest with incorrect data!");
 
             var createdCase = _caseStep.CreateTestCase_API(Case);
             logger.Info("Created Case: " + createdCase.ToString());

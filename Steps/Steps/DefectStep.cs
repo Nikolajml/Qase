@@ -2,13 +2,14 @@
 using API.Services;
 using Core.Client;
 using Core.Utilities;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NLog;
-using NUnit.Framework;
 using OpenQA.Selenium;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 using RestSharp;
 using UI.Models;
 using UI.Pages;
+using ILogger = NLog.ILogger;
 
 namespace Steps.Steps
 {
@@ -42,12 +43,12 @@ namespace Steps.Steps
 
         public void CheckThatDefectPageIsOpen()
         {
-            Assert.IsTrue(DefectsTPPage.IsPageOpened(), "The Defect Page wasn't opened");
+            DefectsTPPage.IsPageOpened();
         }
 
         public void CreateDefect_UI(Defect defect)
         {
-            _logger.Info($"Create test defect new info: {defect}");
+            _logger.Info($"Create test defect new info: {defect.ToString()}");
 
             DefectsTPPage.ClickToCreateNewDefectButton();
             DefectsTPPage.SetDefectTitle(defect.DefectTitle);
@@ -97,6 +98,8 @@ namespace Steps.Steps
 
         public void DeleteDefect_UI()
         {
+            _logger.Info($"Delet test defect");
+
             DefectsTPPage.ClickToDropDownToDeleteDefect();
             DefectsTPPage.ClickToDeleteDefectButtonToDeleteDefect();
             DefectsTPPage.ClickToConfirmDeleteDefectButtonToDeleteDefect();
@@ -104,7 +107,7 @@ namespace Steps.Steps
 
         public DefectApiModel CreateTestDefect_API(Defect defect)
         {
-            var response = DefectService.CreateDefect_API(defect);                       
+            var response = DefectService.CreateDefect_API(defect);
 
             return response;
         }

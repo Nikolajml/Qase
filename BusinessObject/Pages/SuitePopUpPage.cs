@@ -11,9 +11,7 @@ namespace UI.Pages
         private IWebElement SuiteNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
         private IWebElement SuiteDescriptionInputBy => Driver.FindElement(By.XPath("//*[@id='description']"));
         private IWebElement SuitePreconditionsInputBy => Driver.FindElement(By.XPath("//*[@id='preconditions']"));
-        private IWebElement CreateSuiteButtonBy => Driver.FindElement(By.XPath("(//span[@class='ZwgkIF'])[7]"));  // // (//span[@class='ZwgkIF'])[7]\")   //*[@class='j4xaa7 u0i1tV J4xngT']"
-        private IWebElement EllipsisEditBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .SmsctB .fa-ellipsis-h"));
-        private IWebElement EditSuiteButtonBy => Driver.FindElement(By.XPath("//div[@class='Cr3S77']//i[@class='far fa-pencil']"));
+        private IWebElement CreateSuiteButtonBy => Driver.FindElement(By.XPath("(//span[@class='ZwgkIF'])[7]"));  // // (//span[@class='ZwgkIF'])[7]\")   //*[@class='j4xaa7 u0i1tV J4xngT']"       
         private IWebElement SaveEditedSuiteBy => Driver.FindElement(By.XPath("//*[@class='j4xaa7 u0i1tV J4xngT']"));
         private IWebElement SuiteNameInputForClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
         private IWebElement SuiteNameFieldClearBy => Driver.FindElement(By.XPath("//*[@class='XRXnTf']"));
@@ -36,20 +34,16 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"SuitePopUp Page opened status: {CreateSuiteButtonBy.Displayed}");
             return CreateSuiteButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
-
-
-        //CREATE SUITE
-        //public void ClickToSuiteButton()
-        //{
-        //    SuiteButtonBy.Click();
-        //}
+                        
 
         public void SetSuiteName(string suiteName)
         {
@@ -70,17 +64,7 @@ namespace UI.Pages
             CreateSuiteButtonBy.Click();
         }
 
-
-        //EDIT SUITE
-        //public void ClickToEllipsis()
-        //{
-        //    EllipsisEditBy.Click();
-        //}
-
-        //public void ClickToEdit()
-        //{
-        //    EditSuiteButtonBy.Click();
-        //}
+        // Edit suite      
         public void ClickToEditSuiteIcon()
         {
             EditSuiteIcon.Click();
@@ -106,9 +90,7 @@ namespace UI.Pages
             SaveEditedSuiteBy.Click();
         }
 
-
-
-        // METHODS TO ASSERTS
+        // Methods for assert
         public string GetSuiteName()
         {
             return SuiteNameTitleBy.GetAttribute("innerText");
@@ -120,9 +102,7 @@ namespace UI.Pages
             return Driver.FindElement(By.XPath(locator)).GetAttribute("innerText");
         }               
 
-
         // Method for delete suite
-
         public void DeleteSuite()
         {
             ClickToDeleteSuiteIcon();

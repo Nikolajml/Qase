@@ -23,16 +23,19 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"Projects Page opened status: {CreateNewProjectButtonBy.Displayed}");
             return CreateNewProjectButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 
         public void NavigateToProjectForMixTest()
         {
+            _logger.Debug($"Navigate to Projects for mix tests");
             ProjectTitleForMixTests.Click();
         }
     }

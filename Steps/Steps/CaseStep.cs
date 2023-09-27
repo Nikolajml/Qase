@@ -1,13 +1,8 @@
 ﻿using API.ResponseAPIModels;
 using API.Services;
 using Core.Client;
-using Core.Utilities;
 using NLog;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using RestSharp;
-using System.Net;
-using System.Text.Json;
 using UI.Models;
 using UI.Pages;
 
@@ -40,6 +35,8 @@ namespace Steps.Steps
             _logger = logger;
         }
 
+
+        // Methods for UI tests
         public bool IsPageOpened() 
         {
             return CasePage.IsPageOpened(); 
@@ -47,7 +44,7 @@ namespace Steps.Steps
 
         public void CreateCase(Case Case)
         {
-            _logger.Info($"Create test case new info: {Case}");
+            _logger.Info($"Create test case new info: {Case.ToString()}");
 
             CasePage.SetCaseName(Case.Title);
             CasePage.ClickToSaveCaseButton();
@@ -55,7 +52,7 @@ namespace Steps.Steps
 
         public void EditCase(Case Case)
         {
-            _logger.Info($"Edit test case new info: {Case}");
+            _logger.Info($"Edit test case new info: {Case.ToString()}");
 
             CasePage.ClickToCaseTitleField();
             CasePage.ClearCaseTitleField();
@@ -113,8 +110,6 @@ namespace Steps.Steps
         public List<CaseResult> GetAllTestCase_API(string code)
         {            
             var response = CaseService.GetAllCase_API(code);
-
-            _logger.Info("Case: " + response.ToString());
 
             return response.Result.entities;
         }

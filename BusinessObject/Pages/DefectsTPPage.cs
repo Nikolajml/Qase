@@ -33,11 +33,13 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"Defects Page opened status: {CreateNewDefectButtonBy.Displayed}");
             return CreateNewDefectButtonBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 
@@ -51,13 +53,13 @@ namespace UI.Pages
 
         public void SetDefectTitle(string defectTitle)
         {
-            _logger.Debug($"Set a defect title");
+            _logger.Debug($"Set a defect title: {defectTitle}");
             DefectTitleInputBy.SendKeys(defectTitle);
         }
 
         public void SetActualresult(string actualResult)
         {
-            _logger.Debug($"Set actual result for the defect");
+            _logger.Debug($"Set actual result for the defect: {actualResult}");
             ActualResultInputBy.SendKeys(actualResult);
         }
 
@@ -113,7 +115,7 @@ namespace UI.Pages
 
         public void SetEditedDefectTitle(string defectTitle)
         {
-            _logger.Debug($"Set edited defect title");
+            _logger.Debug($"Set edited defect title: {defectTitle}");
             DefectTitleInputBy.SendKeys(defectTitle);
         }
 
@@ -131,7 +133,7 @@ namespace UI.Pages
 
         public void SetEditedActualResult(string actualResult)
         {
-            _logger.Debug($"Set edited actual result");
+            _logger.Debug($"Set edited actual result: {actualResult}");
             ActualResultInputBy.SendKeys(actualResult);
         }
         public void ClickToUpdateDefectButton()
@@ -140,7 +142,7 @@ namespace UI.Pages
             UpdateDefectButtonBy.Click();
         }
 
-        // METHOD TO ASSERT
+        // Method for assert
         public string GetDefectTitle()
         {
             _logger.Debug($"Get defect title for assert");
@@ -148,7 +150,6 @@ namespace UI.Pages
         }
 
         //Method for delete Defect
-
         public void ClickToDropDownToDeleteDefect()
         {
             _logger.Debug($"Click on the DropDown to delete defect");

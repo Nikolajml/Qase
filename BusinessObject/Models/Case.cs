@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Allure.Commons;
+using System.Text.Json.Serialization;
 
 namespace UI.Models
 {
@@ -8,5 +9,11 @@ namespace UI.Models
         public string Description { get; set; }
         [JsonPropertyName("code")] public string Code { get; set; }
         [JsonPropertyName("suite_id")] public string Id { get; set; }
+
+
+        public new string ToString()
+        {
+            return $"Title: {Title}, Description: {Description}";
+        }
     }
 }

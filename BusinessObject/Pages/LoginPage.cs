@@ -26,11 +26,13 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
+            _logger.Debug($"Login Page opened status: {RememberMeCheckboxBy.Displayed}");
             return RememberMeCheckboxBy.Displayed;
         }
 
         public override void OpenPage()
         {
+            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
         }
 

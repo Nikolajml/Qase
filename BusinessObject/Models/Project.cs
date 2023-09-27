@@ -10,5 +10,10 @@ namespace UI.Models
         [JsonPropertyName("access")] public string Access { get; set; }
         [JsonPropertyName("group")] public string Group { get; set; }
 
+        public new string ToString()
+        {
+            return $"Title: {Title}";
+        }
+
     }
 }

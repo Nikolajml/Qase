@@ -31,7 +31,7 @@ namespace Steps.Steps
 
             _logger.Info("Create test project " + project.ToString());
 
-            _logger.Debug("CreateTestProject_API - 2");
+            _logger.Debug("CreateTestProject_API");
             return _apiClient.Execute<ProjectApiModel>(request);
         }                
 

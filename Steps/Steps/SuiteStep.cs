@@ -43,9 +43,7 @@ namespace Steps.Steps
         public void CreateSuit(Suite suite)
         {
             _logger.Info($"Create test suite new info: {suite}");
-
-            //SuitePopUpPage.OpenPage();
-            //SuitePopUpPage.IsPageOpened();
+            
             SuitePopUpPage.SetSuiteName(suite.Name);
             SuitePopUpPage.SetSuiteDescriptione(suite.Description);
             SuitePopUpPage.SetSuitePreconditionse(suite.Preconditions);
@@ -65,6 +63,8 @@ namespace Steps.Steps
 
         public void DeleteSuite_UI()
         {
+            _logger.Info($"Delete test suite");
+
             SuitePopUpPage.DeleteSuite();
         }
 
