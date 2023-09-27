@@ -33,7 +33,7 @@ namespace Tests.UI
             Driver = new Browser().Driver;
 
             _apiClient = new ApiClient(config.Bearer!);
-            logger = LogManager.GetLogger("CreateDefectUITest");
+            logger = LogManager.GetLogger("CreateDefectTestUI");
 
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             DefectsTPPage = new DefectsTPPage(logger, Driver);

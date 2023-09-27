@@ -39,7 +39,7 @@ namespace Steps.Steps
             _logger = logger;
         }
 
-
+        // Methods for UI tsts
         public bool IsPageOpened()
         {
             return PlanTPPage.IsPageOpened();
@@ -52,7 +52,7 @@ namespace Steps.Steps
 
         public void CreatePlan(Plan plan)
         {
-            _logger.Info($"Create test plan new info: {plan}");
+            _logger.Info($"Create test plan new info: {plan.ToString()}");
 
             PlanTPPage.ClickToCreatePlanButton();
             PlanTPPage.SetPlanTitle(plan.Title);
@@ -85,7 +85,7 @@ namespace Steps.Steps
 
         public void EditPlan(Plan plan)
         {
-            _logger.Info($"Edit test plan new info: {plan}");
+            _logger.Info($"Edit test plan new info: {plan.ToString()}");
 
             PlanTPPage.ClickToEllipsis();
             PlanTPPage.ClickToEdit();
@@ -102,7 +102,7 @@ namespace Steps.Steps
             PlanTPPage.ClickToConfirmDeletePlanButton();
         }
                 
-
+        // Methods for API tests
         public PlanApiModel CreateTestPlan_API(Plan plan)
         {
             var response = PlanService.CreatePlan_API(plan);

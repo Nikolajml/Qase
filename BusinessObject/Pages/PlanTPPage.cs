@@ -24,8 +24,7 @@ namespace UI.Pages
         private IWebElement GetPlanDescriptionForSecondAssertBy => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']")); ////*[@class='testcase-title']
         private IWebElement PlanDeleteButton => Driver.FindElement(By.XPath("(//button[@role='menuitem'])[2]"));
         private IWebElement ConfirmPlanDeleteButton => Driver.FindElement(By.XPath("//button[@class='j4xaa7 b_jd28 J4xngT']"));
-
-        
+                
 
         public PlanTPPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
@@ -50,110 +49,126 @@ namespace UI.Pages
         }
 
 
-        // CREATE PLAN
+        // Create plan
         public void ClickToCreatePlanButton()
         {
+            _logger.Debug($"Click on the 'CreatePlanButton'");
             CreatePlanButtonBy.Click();
         }
 
         public void SetPlanTitle(string planTitle)
         {
+            _logger.Debug($"Set plan title: {planTitle}");
             PlanTitleInputBy.SendKeys(planTitle);
         }
 
         public void SetPlanDescription(string planDescription)
         {
+            _logger.Debug($"Set plan description: {planDescription}");
             PlanDescriptionInputBy.SendKeys(planDescription);
         }
 
         public void ClickToAddCaseButton()
         {
+            _logger.Debug($"Click on the 'AddCaseButton'");
             AddCasesButtonBy.Click();
         }
 
         public void ClickToControlIndicatorToChooseCase()
         {
+            _logger.Debug($"Click on the 'ControlIndicator' to choose case");
             ControlCaseIndicatorBy.Click();
         }
 
         public void ClickToDoneButton()
         {
+            _logger.Debug($"Click on the 'DoneButton'");
             DoneButtonBy.Click();
         }
 
         public void ClickToSavePlanButton()
         {
+            _logger.Debug($"Click on the 'SavePlanButton'");
             SavePlanButtonBy.Click();
         }
 
         // Second assert for created Plan
         public void ClickToCreatedPlanTitleToAssert()
         {
+            _logger.Debug($"Click on the 'CreatedPlanTitle' to assert");
             Thread.Sleep(1000);
             GetPlanTitleBy.Click();
         }
 
         public string GetPlanTitleForSecondAssert()
         {
+            _logger.Debug($"Get plan title for the second assert");
             return GetPlanTitleForSecondAssertBy.Text;
         }
 
         public string GetPlanDescriptionForSecondAssert()
         {
+            _logger.Debug($"Get plan description for the second assert");
             return GetPlanDescriptionForSecondAssertBy.GetAttribute("innerText");
         }
 
-        // EDIT PLAN
+        // Edit plan
         public void ClickToEllipsis()
         {
+            _logger.Debug($"Click on the 'Ellipsis'");
             EllipsisButtonForPlanEditBy.Click();
         }
 
         public void ClickToEdit()
         {
+            _logger.Debug($"Click on the 'Edit'");
             PlanEditButtonBy.Click();
         }
 
         public void ClickToClearTitlePlanField()
-        {            
+        {
+            _logger.Debug($"Click to clear title plan field");
             PlanTitleInputForClearBy.Click();
             Thread.Sleep(1000);
         }
 
         public void ClearTitlePlanField()
         {
+            _logger.Debug($"Clear title plan field");
             PlanTitleFieldClearBy.Clear();
             
         }
 
         public void EditPlanTitle(string planTitle)
-        {            
+        {
+            _logger.Debug($"Edit plan title: {planTitle}");
             PlanTitleInputBy.SendKeys(planTitle);
         }
 
         public void ClickToSaveEditButton()
         {
+            _logger.Debug($"Click to save 'EditButton'");
             SavePlanButtonBy.Click();
         }
-
 
         // Method for assert
         public string GetPlanTitle()
         {
+            _logger.Debug($"Get plan title for assert");
             return GetPlanTitleBy.GetAttribute("innerText");
         }
 
-        // Methods for delete plan        
-
+        // Methods for delete plan 
         public void ClickToDeletePlanButton()
         {
+            _logger.Debug($"Click to delete plan");
             PlanDeleteButton.Click();
         }
 
         public void ClickToConfirmDeletePlanButton()
         {
+            _logger.Debug($"Click to confirm delete plan");
             ConfirmPlanDeleteButton.Click();
-        }
-        
+        }        
     }
 }

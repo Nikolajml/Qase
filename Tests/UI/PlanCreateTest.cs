@@ -35,7 +35,7 @@ namespace Tests.UI
             Driver = new Browser().Driver;
 
             _apiClient = new ApiClient(config.Bearer!);
-            logger = LogManager.GetLogger("CreatePlanTest");
+            logger = LogManager.GetLogger("CreatePlanTestUI");
 
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);

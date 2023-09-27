@@ -32,7 +32,7 @@ namespace Tests.UI
             Driver = new Browser().Driver;
 
             _apiClient = new ApiClient(config.Bearer!);
-            logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetLogger("EditDefectTestUI");
 
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             NavigationSteps = new NavigationSteps(logger, Driver);

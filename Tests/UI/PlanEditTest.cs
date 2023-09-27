@@ -38,8 +38,8 @@ namespace Tests.UI
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(config.Bearer!);            
-            logger = LogManager.GetCurrentClassLogger();
+            _apiClient = new ApiClient(config.Bearer!);
+            logger = LogManager.GetLogger("EditPlanTestUI");
 
             ProjectTPStepsPage = new ProjectTPStepsPage(logger, Driver);
             _caseStep = new CaseStep(logger, Driver, _apiClient);

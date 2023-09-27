@@ -47,60 +47,58 @@ namespace UI.Pages
 
         public void SetSuiteName(string suiteName)
         {
+            _logger.Debug($"Set suite name: {suiteName}");
             SuiteNameInputBy.SendKeys(suiteName);
         }
 
         public void SetSuiteDescriptione(string suiteDescription)
         {
+            _logger.Debug($"Set suite description: {suiteDescription}");
             SuiteDescriptionInputBy.SendKeys(suiteDescription);
         }
         public void SetSuitePreconditionse(string suitePreconditions)
         {
+            _logger.Debug($"Set suite precondition: {suitePreconditions}");
             SuitePreconditionsInputBy.SendKeys(suitePreconditions);
         }
 
         public void ClickToCreateSuiteButton()
         {
+            _logger.Debug($"Click on the 'Create suite button'");
             CreateSuiteButtonBy.Click();
         }
 
         // Edit suite      
         public void ClickToEditSuiteIcon()
         {
+            _logger.Debug($"Click on the 'EditSuiteIcon'");
             EditSuiteIcon.Click();
         }
 
         public void ClickToClearNameField()
         {
+            _logger.Debug($"Click to clear name field");
             SuiteNameInputForClearBy.Click();
         }
 
         public void ClearNameField()
         {
+            _logger.Debug($"Clear name field");
             SuiteNameFieldClearBy.Clear();
         }
 
         public void EditSuiteName(string suiteName)
         {
+            _logger.Debug($"Edit suite name {suiteName}");
             SuiteNameEditBy.SendKeys(suiteName);
         }
 
         public void ClickToSaveEditButton()
         {
+            _logger.Debug($"Click on the 'SaveEditButton'");
             SaveEditedSuiteBy.Click();
         }
-
-        // Methods for assert
-        public string GetSuiteName()
-        {
-            return SuiteNameTitleBy.GetAttribute("innerText");
-        }
-
-        public string GetSuiteNameByText(string text)
-        {
-            var locator = string.Format(SuiteNameByTextTeplmate, text);
-            return Driver.FindElement(By.XPath(locator)).GetAttribute("innerText");
-        }               
+                    
 
         // Method for delete suite
         public void DeleteSuite()

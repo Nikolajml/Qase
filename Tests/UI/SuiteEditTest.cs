@@ -31,7 +31,8 @@ namespace Tests.UI
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            logger = LogManager.GetCurrentClassLogger();
+            _apiClient = new ApiClient(config.Bearer!);
+            logger = LogManager.GetLogger("EditSuiteTestUI");
 
             _suiteStep = new SuiteStep(logger, Driver, _apiClient);
             _projectTPStepsPage = new ProjectTPStepsPage(logger, Driver);

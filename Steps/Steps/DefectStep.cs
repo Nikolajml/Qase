@@ -41,6 +41,7 @@ namespace Steps.Steps
         }
 
 
+        // Methods for UI tests
         public void CheckThatDefectPageIsOpen()
         {
             DefectsTPPage.IsPageOpened();
@@ -83,7 +84,7 @@ namespace Steps.Steps
 
         public void EditDefect_UI(Defect defect)
         {
-            _logger.Info($"Edit test defect new info: {defect}");
+            _logger.Info($"Edit test defect new info: {defect.ToString()}");
 
             DefectsTPPage.ClickToDefectTitle();
             DefectsTPPage.ClickToDefectEdit();
@@ -105,6 +106,7 @@ namespace Steps.Steps
             DefectsTPPage.ClickToConfirmDeleteDefectButtonToDeleteDefect();
         }
 
+        // Methods for API tests
         public DefectApiModel CreateTestDefect_API(Defect defect)
         {
             var response = DefectService.CreateDefect_API(defect);
