@@ -1,32 +1,51 @@
 ﻿using NLog;
-using Qase.Utilities.Configuration;
-using RestSharp.Authenticators;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp.Authenticators.OAuth2;
-using Newtonsoft.Json.Linq;
+using Core.Utilities.Configuration;
+using System.Net.Mime;
 
-namespace Qase.Client
+namespace Core.Client
 {
     public class ApiClient
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
+        public ILogger _logger;
         private readonly RestClient _restClient;
 
-        public ApiClient()
+        public ApiClient(string token = null)
         {
-            var options = new RestClientOptions(Configurator.AppSettings.ApiURL)
-            {                   
+            _logger = LogManager.GetCurrentClassLogger();
+
+            var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
+            {
                 ThrowOnAnyError = false,
                 MaxTimeout = 10000
             };
 
             _restClient = new RestClient(options);
+            _restClient.AddDefaultHeader("accept", "application/json");
+
+            if (token != null)
+            {
+                _restClient.AddDefaultHeader("Token", token);
+            }
+        }
+
+        public ApiClient(ILogger logger, string token = null)
+        {
+            _logger = logger;
+
+            var options = new RestClientOptions(new Configurator().AppSettings.ApiURL)
+            {
+                ThrowOnAnyError = false,
+                MaxTimeout = 10000
+            };
+
+            _restClient = new RestClient(options);
+            _restClient.AddDefaultHeader("accept", "application/json");
+
+            if (token != null)
+            {
+                _restClient.AddDefaultHeader("Token", token);
+            }
         }
 
         public RestResponse Execute(RestRequest request)
@@ -49,6 +68,6 @@ namespace Qase.Client
             _logger.Info("Response Body: " + response.Content);
 
             return response.Data;
-        }       
+        }
     }
 }

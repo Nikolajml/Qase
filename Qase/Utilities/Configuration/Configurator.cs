@@ -1,27 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Qase.Models.Enum;
-using Qase.Models;
 
 
-namespace Qase.Utilities.Configuration
+namespace Core.Utilities.Configuration
 {
-    public static class Configurator
+    public class Configurator
     {
-        private static readonly Lazy<IConfiguration> s_configuration;
-        public static IConfiguration Configuration => s_configuration.Value;
+        private readonly Lazy<IConfiguration> s_configuration;
+        public  IConfiguration Configuration => s_configuration.Value;
 
-        static Configurator()
+        public Configurator()
         {
             s_configuration = new Lazy<IConfiguration>(BuildConfiguration);
         }
 
-        private static IConfiguration BuildConfiguration()
+        private IConfiguration BuildConfiguration()
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var builder = new ConfigurationBuilder()
@@ -38,7 +31,7 @@ namespace Qase.Utilities.Configuration
             return builder.Build();
         }
 
-        public static AppSettings AppSettings
+        public AppSettings AppSettings
         {
             get
             {
@@ -47,12 +40,13 @@ namespace Qase.Utilities.Configuration
 
                 appSettings.URL = child["URL"];
                 appSettings.ApiURL = child["apiUrl"];
+                appSettings.ApiURL = child["apiUrl"];
 
                 return appSettings;
             }
         }
 
-        public static List<User?> Users
+        public List<User?> Users
         {
             get
             {
@@ -80,10 +74,10 @@ namespace Qase.Utilities.Configuration
             }
         }
 
-        public static User? Admin => Users.Find(x => x?.UserType == UserType.Admin);
+        public  User? Admin => Users.Find(x => x?.UserType == UserType.Admin);
 
-        public static User? UserByUsername(string username) => Users.Find(x => x?.Username == username);
-        public static string? Bearer => Configuration[nameof(Bearer)];
-        public static string? BrowserType => Configuration[nameof(BrowserType)];
+        public  User? UserByUsername(string username) => Users.Find(x => x?.Username == username);
+        public  string? Bearer => Configuration[nameof(Bearer)];
+        public  string? BrowserType => Configuration[nameof(BrowserType)];
     }
 }
