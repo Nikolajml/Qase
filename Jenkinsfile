@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'windows'}
+    agent {label 'agent1'}
 
  parameters {
         string(
