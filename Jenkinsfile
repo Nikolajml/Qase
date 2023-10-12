@@ -1,5 +1,7 @@
 pipeline {
-    agent {label 'windows'}
+    node('windows') {
+    // some block
+}
 
  parameters {
         string(
