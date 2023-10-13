@@ -8,18 +8,7 @@ pipeline {
         description: """ --filter 'FullyQualifiedName~YourNamespace.YourTestClass.YourTestMethod'
 --filter 'Name=YourTestMethod'""")
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'Branch', type: 'PT_BRANCH'
-  }
-
-       stages {
-        stage('Set env variables') {
-            steps {
-               script{
-               bat 'set BEARER=${Bearer}'
-               bat 'set USERNAME=${Username}'
-               bat 'set PASSWORD=${Password}'
-               }
-            }
-        }
+  }  
 
         stages {
         stage('Checkout') {
