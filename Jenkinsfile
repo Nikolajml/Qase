@@ -1,6 +1,7 @@
 pipeline {
     agent {label 'agent1'}
 
+
  parameters {
         string(
         name: 'TestFilter', 
@@ -9,6 +10,15 @@ pipeline {
 --filter 'Name=YourTestMethod'""")
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'Branch', type: 'PT_BRANCH'
   }  
+
+  stages {
+        stage('Set env variables') {
+            steps {
+               script{
+               bat 'set BEARER=${Bearer}'
+               }
+            }
+        }
 
         stages {
         stage('Checkout') {
