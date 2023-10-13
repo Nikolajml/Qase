@@ -50,11 +50,6 @@ namespace Tests.API
         {
             logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
 
-            _apiClient._logger = logger;
-            _defectStep = new DefectStep(logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(logger, _apiClient);
-
-
             defect = new Defect()
             {
                 Code = project.Code,

@@ -25,7 +25,8 @@ namespace Core.Utilities.Configuration
 
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile);
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables();                
+                //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
             return builder.Build();
@@ -39,7 +40,6 @@ namespace Core.Utilities.Configuration
                 var child = Configuration.GetSection("AppSettings");
 
                 appSettings.URL = child["URL"];
-                appSettings.ApiURL = child["apiUrl"];
                 appSettings.ApiURL = child["apiUrl"];
 
                 return appSettings;
@@ -77,7 +77,7 @@ namespace Core.Utilities.Configuration
         public  User? Admin => Users.Find(x => x?.UserType == UserType.Admin);
 
         public  User? UserByUsername(string username) => Users.Find(x => x?.Username == username);
-        public  string? Bearer => Configuration[nameof(Bearer)];
-        public  string? BrowserType => Configuration[nameof(BrowserType)];
+        public string? Bearer => Configuration[nameof(Bearer)];
+        public  string? BrowserType => Configuration[nameof(BrowserType)];        
     }
 }
