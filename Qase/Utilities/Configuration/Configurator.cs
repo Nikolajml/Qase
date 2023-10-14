@@ -21,13 +21,11 @@ namespace Core.Utilities.Configuration
                 .SetBasePath(basePath ?? throw new InvalidOperationException())
                 .AddJsonFile("appsettings.json");
                         
-            var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
-
-            string myEnvVariable = File.ReadAllText("env.txt");
+            var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");                        
 
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables(myEnvVariable);                
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables("BEARER");                
                 //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
