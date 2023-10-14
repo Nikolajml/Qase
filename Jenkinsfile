@@ -1,9 +1,13 @@
 pipeline {
     agent {label 'agent1'}
 
-    environment {
-        BEARER = "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86"
+    stage('Environment Setup') {
+    steps {
+        bat '''
+        set BEARER="2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86"        
+        '''
     }
+}
         
  parameters {
         string(
@@ -25,13 +29,7 @@ pipeline {
             steps {
                 bat "dotnet build"                
             }
-        }       
-        
-        stage('Build') {
-            steps {                
-                bat "--env-var ${env.BEARER}"
-            }
-        }    
+        }         
 
         stage('Test') {
             steps {
