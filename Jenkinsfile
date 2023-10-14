@@ -26,16 +26,7 @@ pipeline {
                 bat "dotnet build"                
             }
         }    
-        
-        stage('Build envFile') {
-            steps {
-                writeFile file: 'env.txt', text: env.BEARER
-                bat 'dotnet myScript.dll'
-            }
-        }
-
-
-
+                
         stage('Test') {
             steps {
                 bat "dotnet test ${TestFilter}"
