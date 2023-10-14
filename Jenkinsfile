@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "dotnet build"
+                sh "dotnet build --environment MY_VARIABLE=${env.MY_VARIABLE}"                
             }
         }               
 
