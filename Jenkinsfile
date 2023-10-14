@@ -1,14 +1,18 @@
 pipeline {
     agent {label 'agent1'}
 
-    stage('Environment Setup') {
+    environment {
+        BEARER = '2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86'
+    }     
+    
+    stage('Build envFile') {
     steps {
-        bat '''
-        set BEARER="2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86"        
-        '''
+        writeFile file: 'env.txt', text: env.BEARER
+        bat 'dotnet myScript.dll'
     }
 }
-        
+    
+    
  parameters {
         string(
         name: 'TestFilter', 
@@ -30,6 +34,8 @@ pipeline {
                 bat "dotnet build"                
             }
         }         
+
+
 
         stage('Test') {
             steps {

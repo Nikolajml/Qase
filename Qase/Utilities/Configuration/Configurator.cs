@@ -23,9 +23,11 @@ namespace Core.Utilities.Configuration
                         
             var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
 
+            string myEnvVariable = File.ReadAllText("env.txt");
+
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables();                
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables(myEnvVariable);                
                 //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
