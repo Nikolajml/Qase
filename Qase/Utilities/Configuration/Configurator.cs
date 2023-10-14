@@ -20,7 +20,7 @@ namespace Core.Utilities.Configuration
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath ?? throw new InvalidOperationException())
                 .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables("Bearer");
                         
             var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
                        
