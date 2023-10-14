@@ -25,7 +25,7 @@ namespace Core.Utilities.Configuration
                         
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables("BEARER");
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables("BEARER_LOCAL");
                 //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
