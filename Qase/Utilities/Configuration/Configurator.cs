@@ -22,10 +22,12 @@ namespace Core.Utilities.Configuration
                 .AddJsonFile("appsettings.json");
                         
             var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
-                        
+
+            string bearerLocal = Environment.GetEnvironmentVariable("BEARER_LOCAL");
+
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables("BEARER_");
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables(bearerLocal);
                 //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
