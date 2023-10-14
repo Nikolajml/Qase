@@ -35,8 +35,7 @@ namespace Core.Utilities.Configuration
         }
 
         public AppSettings AppSettings
-        {
-            
+        {            
             get
             {                
                 var appSettings = new AppSettings();
