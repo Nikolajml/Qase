@@ -19,14 +19,13 @@ namespace Core.Utilities.Configuration
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath ?? throw new InvalidOperationException())
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables("Bearer");
+                .AddJsonFile("appsettings.json");
                         
             var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
                        
             foreach (var appSettingFile in appSettingFiles)
             {
-                builder.AddJsonFile(appSettingFile);
+                builder.AddJsonFile(appSettingFile).AddEnvironmentVariables("Bearer");
                 //что-то должно приходить из AppSetting file что-то должно приходить из enviroments variables
             }
 
