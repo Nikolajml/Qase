@@ -2,10 +2,9 @@ pipeline {
     agent {label 'agent1'}
 
     environment {
-        BEARER = '2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86'
+        BEARER = "2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86"
     }
-
-
+        
  parameters {
         string(
         name: 'TestFilter', 
@@ -13,17 +12,8 @@ pipeline {
         description: """ --filter 'FullyQualifiedName~YourNamespace.YourTestClass.YourTestMethod'
 --filter 'Name=YourTestMethod'""")
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'Branch', type: 'PT_BRANCH'
-  }  
-
-  stages {
-        stage('Set env variables') {
-            steps {
-               script{
-               bat 'set BEARER=${Bearer}'
-               }
-            }
-        }
-
+  }
+         
         stages {
         stage('Checkout') {
             steps {
@@ -33,7 +23,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "dotnet build"
+                sh "dotnet run --env-var ${env.BEARER}"
             }
         }
 
