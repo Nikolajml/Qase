@@ -23,9 +23,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "dotnet run --env-var ${env.BEARER}"
+                bat "dotnet build"
             }
-        }
+        }               
 
         stage('Test') {
             steps {
