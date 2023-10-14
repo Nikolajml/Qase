@@ -2,10 +2,9 @@ pipeline {
     agent {label 'agent1'}
 
     environment {
-    BEARER = '2e4eae09e9a329ebea38ef86fbb0e98cd810cee178e4bfea3b9e4dca28a71e86'
-    }     
-       
-    
+    BEARER = credentials('Bearer')
+    }    
+           
  parameters {
         string(
         name: 'TestFilter', 
