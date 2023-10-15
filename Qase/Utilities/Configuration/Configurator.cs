@@ -20,10 +20,10 @@ namespace Core.Utilities.Configuration
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath ?? throw new InvalidOperationException())
                 .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables("Bearer");
-                        
+                .AddEnvironmentVariables();
+
             var appSettingFiles = Directory.EnumerateFiles(basePath ?? string.Empty, "appsettings.*.json");
-                       
+
             foreach (var appSettingFile in appSettingFiles)
             {
                 builder.AddJsonFile(appSettingFile);
@@ -76,7 +76,6 @@ namespace Core.Utilities.Configuration
         }
 
         public  User? Admin => Users.Find(x => x?.UserType == UserType.Admin);
-
         public  User? UserByUsername(string username) => Users.Find(x => x?.Username == username);
         public string? Bearer => Configuration[nameof(Bearer)];
         public  string? BrowserType => Configuration[nameof(BrowserType)];        
