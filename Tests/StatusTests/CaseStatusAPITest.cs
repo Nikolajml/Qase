@@ -15,6 +15,7 @@ namespace Tests.StatusTests
         public Project project { get; set; }
 
         protected CaseStep _caseStep;
+        protected ProjectStep _projectStep;
 
 
         [SetUp]

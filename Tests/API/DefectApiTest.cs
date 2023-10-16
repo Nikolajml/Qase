@@ -15,7 +15,7 @@ namespace Tests.API
         public Defect defect { get; set; }
         public Project project { get; set; }
                 
-        protected DefectStep _defectStep;        
+        protected DefectStep _defectStep;
 
 
         [OneTimeSetUp]

@@ -5,7 +5,7 @@ using UI.Models;
 
 namespace UI.Pages
 {
-    public class CasePage : BasePage        // use logger Debug Info
+    public class CasePage : BasePage
     {
         private const string END_POINT = "case/TP/create";
 
@@ -17,8 +17,8 @@ namespace UI.Pages
             }
         } // что такое Stale Element Exception?
 
-        private IWebElement CaseNameInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));
-        private IWebElement SaveCaseButtonBy => Driver.FindElement(By.XPath("//*[@id='save-case']"));     
+        private IWebElement CaseNameInput => Driver.FindElement(By.XPath("//*[@id='title']"));
+        private IWebElement SaveCaseButton => Driver.FindElement(By.XPath("//*[@id='save-case']"));     
                 
 
         public CasePage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
@@ -32,14 +32,14 @@ namespace UI.Pages
 
         public override bool IsPageOpened()
         {
-            _logger.Debug($"Case Page opened status: {SaveCaseButtonBy.Displayed}");
-            return SaveCaseButtonBy.Displayed;
+            _logger.Debug($"Case Page opened status: {SaveCaseButton.Displayed}");
+            return SaveCaseButton.Displayed;
         }
 
         public override void OpenPage()
         {
-            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
-            Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
+            _logger.Debug($"Navigate to {config.AppSettings.URL + END_POINT}");            
+            Driver.Navigate().GoToUrl(config.AppSettings.URL + END_POINT);
         }
            
 
@@ -53,33 +53,33 @@ namespace UI.Pages
         public void SetCaseName(string caseName)
         {
             _logger.Debug($"Set case name: {caseName}");
-            CaseNameInputBy.SendKeys(caseName);
+            CaseNameInput.SendKeys(caseName);
         }
 
         public void ClickToSaveCaseButton()
         {
             _logger.Debug($"Click to 'Save Button' to save the created case");
-            SaveCaseButtonBy.Click();
+            SaveCaseButton.Click();
         }
 
         // Edit case     
         public void ClickToCaseTitleField()
         {
             _logger.Debug($"Click to case title field");
-            CaseNameInputBy.Click();
+            CaseNameInput.Click();
         }
 
         public void ClearCaseTitleField()
         {
             _logger.Debug($"Clear case title field");
-            CaseNameInputBy.Clear();
+            CaseNameInput.Clear();
         }
                 
         public void SetEditedCaseName(string caseName)
         {
             _logger.Debug($"Set edited case name: {caseName}");
-            CaseNameInputBy.Clear();
-            CaseNameInputBy.SendKeys(caseName);
+            CaseNameInput.Clear();
+            CaseNameInput.SendKeys(caseName);
         }
     }
 }

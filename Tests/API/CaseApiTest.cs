@@ -15,7 +15,7 @@ namespace Tests.API
         public Case Case { get; set; }
         public Project project { get; set; }              
 
-        protected CaseStep _caseStep;   
+        protected CaseStep _caseStep;
 
 
         [OneTimeSetUp]
@@ -48,11 +48,7 @@ namespace Tests.API
         [SetUp]
         public void Setup()
         {
-            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
-
-            _apiClient._logger = logger;
-            _caseStep = new CaseStep(logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(logger, _apiClient);
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");                       
 
             Case = new Case()
             {

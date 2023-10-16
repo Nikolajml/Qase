@@ -23,8 +23,8 @@ namespace Tests.MixTests
          
         public SuiteStep _suiteStep;
         public ProjectTPStepsPage _projectTPStepsPage;
-        public NavigationSteps NavigationSteps;                
-        
+        public NavigationSteps NavigationSteps;
+
         public Faker Faker = new Faker();
 
 

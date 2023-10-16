@@ -19,7 +19,7 @@ namespace Tests
         protected AllureLifecycle _allure;
 
         public List<Project> ProjectsForDelete = new List<Project>();
-        protected ProjectStep _projectStep;
+        protected ProjectStep? _projectStep;
 
         [OneTimeSetUp]
         public void Setup()
@@ -33,7 +33,7 @@ namespace Tests
         {
             foreach (var projectForDelete in ProjectsForDelete)
             {
-                _projectStep.DeleteTestProject_API(projectForDelete);
+                _projectStep!.DeleteTestProject_API(projectForDelete);
             }
 
         }

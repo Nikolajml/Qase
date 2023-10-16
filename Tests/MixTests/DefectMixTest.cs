@@ -25,6 +25,7 @@ namespace Tests.MixTests
         //public ProjectStep _projectStep;
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
+        protected ProjectStep _projectStep;
 
         public string? BaseUrl;
         

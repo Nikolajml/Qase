@@ -17,7 +17,8 @@ namespace Tests.API
         public Project project { get; set; }               
 
         protected CaseStep _caseStep;
-        protected PlanStep _planStep;              
+        protected PlanStep _planStep;
+        protected ProjectStep _projectStep;
 
         int CaseId { get; set; }
 
@@ -52,12 +53,7 @@ namespace Tests.API
         public void SetUp()
         {
             logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
-
-            _apiClient._logger = logger;
-            _caseStep = new CaseStep(logger, apiClient: _apiClient);
-            _planStep = new PlanStep(logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(logger, _apiClient);
-
+                        
             Case = new Case()
             {
                 Code = project.Code,

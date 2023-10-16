@@ -39,8 +39,8 @@ namespace UI.Pages
 
         public override void OpenPage()
         {
-            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
-            Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
+            _logger.Debug($"Navigate to {config.AppSettings.URL + END_POINT}");
+            Driver.Navigate().GoToUrl(config.AppSettings.URL + END_POINT);
         }
 
 
@@ -70,7 +70,7 @@ namespace UI.Pages
             SaveDefectButtonBy.Click();
         }
 
-        // METHODS FOR SECOND ASSERT
+        // Methods for seconds assert
         public void ClickToDefectTitleToSecondAssert()
         {
             _logger.Debug($"Click to defect title for second assert");
@@ -89,7 +89,7 @@ namespace UI.Pages
             return DefectDescriptionForSecondAssertBy.Text;
         }
 
-        // EDIT DEFECTS
+        // Eedit defect
         public void ClickToDefectTitle()
         {
             _logger.Debug($"Click to defect title for edit");

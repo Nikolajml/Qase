@@ -16,7 +16,7 @@ namespace Tests.API
         public Project project { get; set; }
 
         protected SuiteStep _suiteStep;
-                 
+
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -48,11 +48,7 @@ namespace Tests.API
         [SetUp]
         public void Setup()
         {
-            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");
-
-            _apiClient._logger = logger;
-            _suiteStep = new SuiteStep(logger, apiClient: _apiClient);
-            _projectStep = new ProjectStep(logger, _apiClient);
+            logger = LogManager.GetLogger($"{TestContext.CurrentContext.Test.Name}");                       
 
             suite = new Suite()
             {
