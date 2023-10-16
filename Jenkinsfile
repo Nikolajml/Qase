@@ -2,7 +2,7 @@ pipeline {
     agent {label 'agent1'}
 
     environment {
-    Bearer=env.BEARER
+    Bearer = env.BEARER
     }    
            
  parameters {
