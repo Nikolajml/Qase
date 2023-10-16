@@ -39,7 +39,7 @@ namespace Steps.Steps
                 
 
 
-        public void NavigateToProjectForEditCase_MIX()
+        public void NavigateToProjectForEditMixTest_MIX()
         {
             ProjectsPage.NavigateToProjectForMixTest();
         }

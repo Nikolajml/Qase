@@ -126,7 +126,7 @@ namespace Tests.MixTests
             plan.Title = "Edited Mix Plan Mix Test";
             plan.Description = "Edited Description";
 
-            NavigationSteps.NavigateToProjectForEditCase_MIX();
+            NavigationSteps.NavigateToProjectForEditMixTest_MIX();
             ProjectTPStepsPage.NavigateToPlansPage();
             _planStep.EditPlan(plan);
 

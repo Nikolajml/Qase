@@ -44,8 +44,8 @@ namespace UI.Pages
 
         public override void OpenPage()
         {
-            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
-            Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
+            _logger.Debug($"Navigate to {config.AppSettings.URL + END_POINT}");
+            Driver.Navigate().GoToUrl(config.AppSettings.URL + END_POINT);
         }
 
         // Create suite

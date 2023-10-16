@@ -19,13 +19,10 @@ namespace Tests.MixTests
         Project project { get; set; }
 
         public List<Defect> DefectsForDelete = new List<Defect>();
-        //public List<Project> ProjectsForDelete = new List<Project>();
 
         public DefectStep _defectStep;
-        //public ProjectStep _projectStep;
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
-        protected ProjectStep _projectStep;
 
         public string? BaseUrl;
         
@@ -41,6 +38,7 @@ namespace Tests.MixTests
             Driver = new Browser().Driver;
 
             logger = LogManager.GetCurrentClassLogger();
+            _apiClient = new ApiClient(config.Bearer!);
 
             _defectStep = new DefectStep(logger, Driver, _apiClient);
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -58,7 +56,7 @@ namespace Tests.MixTests
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject_API(project);
+            var createdProject = _projectStep!.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -76,11 +74,7 @@ namespace Tests.MixTests
 
             var createdTestDefect = _defectStep.CreateTestDefect_API(defect);
 
-            defect.Id = createdTestDefect.Result.id.ToString();
-
-            //Console.WriteLine(defect.Id);
-
-            //DefectsForDelete.Add(defect);
+            defect.Id = createdTestDefect.Result.id.ToString();                       
 
             NavigationSteps.NavigateToLoginPage();
             NavigationSteps.SuccessfulLogin(config.Admin!);
@@ -97,11 +91,14 @@ namespace Tests.MixTests
         [AllureTag("Smoke")]
         [Category("UI")]
         public void EditDefectMixTest()
-        {
-            defect.DefectTitle = "Edited Mix Defect UI test";
-            defect.ActualResult = "New Updated Result";            
-            
-            NavigationSteps.NavigateToProjectForEditCase_MIX();
+        {         
+            defect = new Defect()
+            {
+                DefectTitle = Faker.Name.FullName(),
+                ActualResult = Faker.Name.JobTitle()
+            };
+
+            NavigationSteps.NavigateToProjectForEditTest_MIX();
             _projectTPStepsPage.NavigateToDefectsPage();
             _defectStep.EditDefect_UI(defect);
             Assert.That(_defectStep.DefectTitleForFirstAssert_UI, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");
