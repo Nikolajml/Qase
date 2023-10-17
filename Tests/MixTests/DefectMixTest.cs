@@ -98,7 +98,7 @@ namespace Tests.MixTests
                 ActualResult = Faker.Name.JobTitle()
             };
 
-            NavigationSteps.NavigateToProjectForEditTest_MIX();
+            NavigationSteps.NavigateToProjectForEditMixTest_MIX();
             _projectTPStepsPage.NavigateToDefectsPage();
             _defectStep.EditDefect_UI(defect);
             Assert.That(_defectStep.DefectTitleForFirstAssert_UI, Is.EqualTo(defect.DefectTitle), "Edited Defect Title didn't match");

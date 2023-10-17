@@ -31,6 +31,7 @@ namespace Tests
         [OneTimeTearDown]           // скриншот делать один раз за класс 
         public void TearDown()      // вынести в TearDown часто повторяющиеся действия как Project
         {
+            
             foreach (var projectForDelete in ProjectsForDelete)
             {
                 _projectStep!.DeleteTestProject_API(projectForDelete);

@@ -9,7 +9,7 @@ namespace UI.Pages
         private static string END_POINT = "projects";            
 
         private IWebElement CreateNewProjectButtonBy => Driver.FindElement(By.XPath("//button[@class='j4xaa7 u0i1tV J4xngT']"));
-        private IWebElement ProjectTitleForMixTests => Driver.FindElement(By.XPath("(//*[@class='defect-title'])[3]"));
+        private IWebElement CreatedNewProjectForMixAndUITestsTitle => Driver.FindElement(By.XPath("(//*[@class='defect-title'])[3]"));
 
         public ProjectsPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
@@ -36,7 +36,14 @@ namespace UI.Pages
         public void NavigateToProjectForMixTest()
         {
             _logger.Debug($"Navigate to Projects for mix tests");
-            ProjectTitleForMixTests.Click();
+            CreatedNewProjectForMixAndUITestsTitle.Click();
         }
+
+        public void NavigateToCreatedProjectForUITest()
+        {
+            _logger.Debug($"Navigate to Projects for UI test");
+            CreatedNewProjectForMixAndUITestsTitle.Click();
+        }
+
     }
 }

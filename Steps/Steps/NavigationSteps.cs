@@ -37,11 +37,14 @@ namespace Steps.Steps
             return ProjectsPage.IsPageOpened();        
         }
                 
-
-
         public void NavigateToProjectForEditMixTest_MIX()
         {
             ProjectsPage.NavigateToProjectForMixTest();
+        }
+
+        public void NavigateToProjectForUITest_UI()
+        {
+            ProjectsPage.NavigateToCreatedProjectForUITest();
         }
     }
 }
