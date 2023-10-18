@@ -6,7 +6,7 @@ namespace UI.Pages
 {
     public class DefectsTPPage : BasePage
     {
-        private static string END_POINT = "defect/TP";                
+        private const string END_POINT = "defect/TP";                
 
         private IWebElement CreateNewDefectButtonBy => Driver.FindElement(By.XPath("//*[@class='btn btn-primary']"));
         private IWebElement DefectTitleInputBy => Driver.FindElement(By.XPath("//*[@id='title']"));

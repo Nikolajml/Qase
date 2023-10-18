@@ -19,6 +19,8 @@ namespace Tests.UI
 {
     public class RunCreateTest : CommonBaseTest
     {
+        //protected WaitService WaitService;
+
         protected ILogger logger;
         protected IWebDriver Driver;
 
@@ -39,7 +41,7 @@ namespace Tests.UI
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
-        {
+        {        
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
@@ -56,6 +58,8 @@ namespace Tests.UI
         [SetUp]
         public void SetUp()
         {
+            // WaitService = new WaitService(Driver);
+
             project = new Project()
             {
                 Code = "RUN",
@@ -87,6 +91,7 @@ namespace Tests.UI
 
             Case.Id = createdCase.Result.id.ToString();
             int CaseIdForRun = int.Parse(Case.Id);
+            logger.Debug($"Case Id: {Case.Id}");
             Console.WriteLine($"Case Id: {CaseIdForRun}");               
 
             NavigationSteps.NavigateToLoginPage();
@@ -106,23 +111,23 @@ namespace Tests.UI
         public void CreateTestRunTest()
         {     
             Run run = new RunBuilder()
-                .SetRunDescription(Faker.Name.FullName())
+                .SetRunDescription("sdsdsd")
                 .Build();
 
             NavigationSteps.NavigateToProjectForUITest_UI();
             ProjectTPStepsPage.NavigateToRunPage();
             _runStep.CreateTestRun(run);
 
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(_runStep.IsRunDescriptionVisiable(), "Created Test Run Description is not visiable");
+                Assert.That(_runStep.GetRunDescriptionForAssert(), Is.EqualTo(run.Description), "Created Test Run description didn't match");
+            });
 
+            //Assert.IsTrue(_runStep.IsRunDescriptionVisiable(), "Created Test Run Description is not visiable");
+            //Assert.That(_runStep.GetRunDescriptionForAssert(), Is.EqualTo(run.Description), "Created Test Run description didn't match");
 
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
-            //wait.Until(Driver => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']")).Displayed);
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@class='toastui-editor-contents']")));
-
-            Assert.That(_runStep.GetRunDescriptionForAssert(), Is.EqualTo(run.Description), "Created test run description didn't match");
-
-            
-        }
+        }       // Implicite wait Explicite wait
 
 
         [OneTimeTearDown]

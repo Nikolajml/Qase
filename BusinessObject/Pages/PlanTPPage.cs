@@ -6,7 +6,7 @@ namespace UI.Pages
 {
     public class PlanTPPage : BasePage
     {
-        private static string END_POINT = "plan/TP";                
+        private const string END_POINT = "plan/TP";                
 
         private IWebElement CreatePlanButtonBy => Driver.FindElement(By.XPath("//a[@id='createButton']"));
         private IWebElement PlanTitleInputBy => Driver.FindElement(By.XPath("//input[@id='title']"));

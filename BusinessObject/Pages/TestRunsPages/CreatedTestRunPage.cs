@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Core;
 
 namespace UI.Pages.TestRunsPages
 {
@@ -13,8 +14,7 @@ namespace UI.Pages.TestRunsPages
         private const string END_POINT = "/run/RUN/dashboard/1";
 
         private IWebElement TestRun_Description => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']"));       //(By.ClassName("toastui-editor-contents"));
-        //private IWebElement Done_Button => Driver.FindElement(By.XPath("(//*[@class='j4xaa7 u0i1tV J4xngT'])[4]"));
-
+        private By TestRun_Description_IsVisible = By.XPath("//*[@class='toastui-editor-contents']");
 
         public CreatedTestRunPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
@@ -36,15 +36,18 @@ namespace UI.Pages.TestRunsPages
         {
             _logger.Debug($"Navigate to {config.AppSettings.URL + END_POINT}");
             Driver.Navigate().GoToUrl(config.AppSettings.URL + END_POINT);
-        }                
+        }
 
         public string GetTestRunDescription()
         {
             _logger.Debug($"Get test run description for assert");
-            return TestRun_Description.GetAttribute("innerText");
+            return TestRun_Description.Text;
         }
 
-
-
+        public bool IsTestRunDescriptionVisiable()
+        {
+            _logger.Debug($"Checking that the test run description is visiable {TestRun_Description}");
+            return WaitService.GetVisibleElement(TestRun_Description_IsVisible) != null;
+        }
     }
 }

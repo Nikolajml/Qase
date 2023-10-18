@@ -7,7 +7,7 @@ namespace UI.Pages
 {
     public class LoginPage : BasePage
     {
-        private static string END_POINT = "";
+        private const string END_POINT = "";
                 
         private IWebElement EmailInputBy => Driver.FindElement(By.XPath("//*[@name='email']"));
         private IWebElement PasswordInputBy => Driver.FindElement(By.XPath("//*[@name='password']"));

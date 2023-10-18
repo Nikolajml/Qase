@@ -8,10 +8,7 @@ namespace UI.Pages.TestRuns
         private const string END_POINT = "/run/RUN";
 
         private IWebElement CreateTestRun_Button => Driver.FindElement(By.ClassName("ZwgkIF"));
-        //private IWebElement Description_Input => Driver.FindElement(By.ClassName(".toastui-editor-pseudo-clipboard"));
-        //private IWebElement SelectCase_Button => Driver.FindElement(By.CssSelector(".lLm7nE .ZwgkIF"));
-
-
+        
         public TestRunsPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
 

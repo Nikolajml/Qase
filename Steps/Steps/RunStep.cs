@@ -83,6 +83,11 @@ namespace Steps.Steps
             return CreatedTestRunPage.GetTestRunDescription();
         }
 
+        public bool IsRunDescriptionVisiable()
+        {
+            return CreatedTestRunPage.IsTestRunDescriptionVisiable();
+        }
+
 
     }
 }
