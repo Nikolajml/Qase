@@ -155,15 +155,13 @@ namespace Steps.Steps
 
         public List<DefectResult> GetAllTestDefect_API(string code)
         {
-            var request = new RestRequest(Endpoints.GET_ALL_DEFECT)
-                 .AddUrlSegment("code", code)
-                 .AddParameter("limit", 90);
-
-            var response = _apiClient.Execute<GetAllTestDefect>(request);
-
-            _logger.Info("Defect: " + response.ToString());
+            var response = DefectService.GetAllTestDefect_API(code);
 
             return response.Result.entities;
+
+            //_logger.Info("Defect: " + response.ToString());
+
+            //return response.Result.entities;
         }
     }
 }

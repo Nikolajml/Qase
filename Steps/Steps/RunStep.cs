@@ -2,12 +2,6 @@
 using Core.Client;
 using OpenQA.Selenium;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UI.Pages;
 using UI.Pages.TestRuns;
 using UI.Models;
 using UI.Pages.TestRunsPages;
@@ -87,7 +81,5 @@ namespace Steps.Steps
         {
             return CreatedTestRunPage.IsTestRunDescriptionVisiable();
         }
-
-
     }
 }

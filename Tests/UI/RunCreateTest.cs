@@ -18,13 +18,10 @@ using SeleniumExtras.WaitHelpers;
 namespace Tests.UI
 {
     public class RunCreateTest : CommonBaseTest
-    {
-        //protected WaitService WaitService;
-
+    {      
         protected ILogger logger;
         protected IWebDriver Driver;
-
-        Run run { get; set; }
+                
         Case Case { get; set; }
         Project project { get; set; }
         
@@ -111,7 +108,7 @@ namespace Tests.UI
         public void CreateTestRunTest()
         {     
             Run run = new RunBuilder()
-                .SetRunDescription("sdsdsd")
+                .SetRunDescription(Faker.Name.FullName())
                 .Build();
 
             NavigationSteps.NavigateToProjectForUITest_UI();
@@ -122,11 +119,7 @@ namespace Tests.UI
             {
                 Assert.IsTrue(_runStep.IsRunDescriptionVisiable(), "Created Test Run Description is not visiable");
                 Assert.That(_runStep.GetRunDescriptionForAssert(), Is.EqualTo(run.Description), "Created Test Run description didn't match");
-            });
-
-            //Assert.IsTrue(_runStep.IsRunDescriptionVisiable(), "Created Test Run Description is not visiable");
-            //Assert.That(_runStep.GetRunDescriptionForAssert(), Is.EqualTo(run.Description), "Created Test Run description didn't match");
-
+            });            
         }       // Implicite wait Explicite wait
 
 
@@ -145,5 +138,4 @@ namespace Tests.UI
             Driver.Dispose();
         }
     }
-
 }

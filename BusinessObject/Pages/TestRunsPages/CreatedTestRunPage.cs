@@ -1,10 +1,5 @@
 ﻿using OpenQA.Selenium;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Core;
 
 namespace UI.Pages.TestRunsPages
@@ -13,8 +8,8 @@ namespace UI.Pages.TestRunsPages
     {
         private const string END_POINT = "/run/RUN/dashboard/1";
 
-        private IWebElement TestRun_Description => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']"));       //(By.ClassName("toastui-editor-contents"));
-        private By TestRun_Description_IsVisible = By.XPath("//*[@class='toastui-editor-contents']");
+        //private IWebElement TestRun_Description => Driver.FindElement(By.XPath("//*[@class='toastui-editor-contents']"));       //(By.ClassName("toastui-editor-contents"));
+        private By TestRun_DescriptionBy = By.XPath("//*[@class='toastui-editor-contents']");
 
         public CreatedTestRunPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
         {
@@ -28,8 +23,8 @@ namespace UI.Pages.TestRunsPages
 
         public override bool IsPageOpened()
         {
-            _logger.Debug($"PlanTP Page opened status: {TestRun_Description.Displayed}");
-            return TestRun_Description.Displayed;
+            _logger.Debug($"PlanTP Page opened status: {Driver.FindElement(TestRun_DescriptionBy).Displayed}");
+            return Driver.FindElement(TestRun_DescriptionBy).Displayed;
         }
 
         public override void OpenPage()
@@ -41,13 +36,13 @@ namespace UI.Pages.TestRunsPages
         public string GetTestRunDescription()
         {
             _logger.Debug($"Get test run description for assert");
-            return TestRun_Description.Text;
+            return Driver.FindElement(TestRun_DescriptionBy).Text;
         }
 
         public bool IsTestRunDescriptionVisiable()
         {
-            _logger.Debug($"Checking that the test run description is visiable {TestRun_Description}");
-            return WaitService.GetVisibleElement(TestRun_Description_IsVisible) != null;
+            _logger.Debug($"Checking that the test run description is visiable {TestRun_DescriptionBy}");
+            return WaitService.GetVisibleElement(TestRun_DescriptionBy) != null;
         }
     }
 }

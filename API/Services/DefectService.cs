@@ -57,5 +57,14 @@ namespace API.Services
 
             return _apiClient.Execute<DefectApiModel>(request);
         }
+
+        public GetAllTestDefect GetAllTestDefect_API(string code)
+        {
+            var request = new RestRequest(Endpoints.GET_ALL_DEFECT)
+                 .AddUrlSegment("code", code)
+                 .AddParameter("limit", 90);
+
+            return _apiClient.Execute<GetAllTestDefect>(request);
+        }
     }
 }
