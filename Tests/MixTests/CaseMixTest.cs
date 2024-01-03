@@ -18,9 +18,7 @@ namespace Tests.MixTests
         Project project { get; set; }
 
         public List<Case> CasesForDelete = new List<Case>();
-        //public List<Project> ProjectsForDelete = new List<Project>();
 
-        //public ProjectStep _projectStep;
         public CaseStep _caseStep;
         public ProjectTPStepsPage _projectTPStepsPage;
         public NavigationSteps NavigationSteps;
@@ -38,7 +36,7 @@ namespace Tests.MixTests
             BaseUrl = config.AppSettings.URL;
             Driver = new Browser().Driver;
 
-            _apiClient = new ApiClient(new Configurator().Bearer);
+            _apiClient = new ApiClient(config.Bearer!);
             logger = LogManager.GetCurrentClassLogger();
 
             _projectStep = new ProjectStep(logger, _apiClient);
@@ -57,7 +55,7 @@ namespace Tests.MixTests
                 Access = "all"
             };
 
-            var createdProject = _projectStep.CreateTestProject_API(project);
+            var createdProject = _projectStep!.CreateTestProject_API(project);
 
             if (createdProject.Status == false)
             {
@@ -98,7 +96,7 @@ namespace Tests.MixTests
         {
             Case.Title = "Edited Case UI";
                         
-            NavigationSteps.NavigateToProjectForEditCase_MIX();
+            NavigationSteps.NavigateToProjectForEditMixTest_MIX();
             _projectTPStepsPage.NavigateToEditCase_MIX();
             _caseStep.EditCase(Case);
 

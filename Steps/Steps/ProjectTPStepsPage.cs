@@ -79,12 +79,20 @@ namespace Steps.Steps
             ProjectTPPage.NavigateToDefectsPage();
         }
 
-        // Steps for Defects
+        // Steps for Plans
 
         public void NavigateToPlansPage()
         {
             _logger.Info("Navigate to plan page");
             ProjectTPPage.NavigateToPlansPage();
+        }
+
+        // Steps for Runs
+
+        public void NavigateToRunPage()
+        {
+            _logger.Info("Navigate to plan page");
+            ProjectTPPage.NavigateToRunsPage();
         }
     }
 }

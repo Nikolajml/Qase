@@ -24,7 +24,8 @@ namespace UI.Pages
         private IWebElement CaseEditBy => Driver.FindElement(By.CssSelector(".tgn4gT .J4xngT"));
         private IWebElement SuiteNameTitleBy => Driver.FindElement(By.CssSelector(".hHBzWZ:last-child .fXc2Go"));
         private IWebElement DefectsCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Defects']"));
-        private IWebElement PlansCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Test Plans']"));    
+        private IWebElement PlansCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Test Plans']"));
+        private IWebElement RunsCategoryPanel => Driver.FindElement(By.XPath("//*[@aria-label='Test Runs']"));
         private string SuiteNameByTextTeplmate => "//*[@title='{0}']";
 
         public ProjectTPPage(ILogger logger, IWebDriver driver, bool openPageByUrl) : base(logger, driver, openPageByUrl)
@@ -44,8 +45,8 @@ namespace UI.Pages
 
         public override void OpenPage()
         {
-            _logger.Debug($"Navigate to {new Configurator().AppSettings.URL + END_POINT}");
-            Driver.Navigate().GoToUrl(new Configurator().AppSettings.URL + END_POINT);
+            _logger.Debug($"Navigate to {config.AppSettings.URL + END_POINT}");
+            Driver.Navigate().GoToUrl(config.AppSettings.URL + END_POINT);
         }
 
         // Create suite
@@ -168,6 +169,13 @@ namespace UI.Pages
         {
             _logger.Debug($"Navigate to PLANS category");
             PlansCategoryPanel.Click();
+        }
+
+        // Methods for Navigate to Runs Category
+        public void NavigateToRunsPage()
+        {
+            _logger.Debug($"Navigate to the *RUNS CATEGORY*");
+            RunsCategoryPanel.Click();
         }
     }
 }
